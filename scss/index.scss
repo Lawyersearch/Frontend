@@ -1,0 +1,22 @@
+@forward "abstract/colors";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+a {
+  color: unset;
+  text-decoration: none;
+}
+
+body {
+  margin: 0;
+  
+  #root {
+    min-height: 100vh;
+  }
+}
