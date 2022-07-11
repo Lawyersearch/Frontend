@@ -1,12 +1,12 @@
-import {useRouter} from "next/router";
-import {useEffect} from "react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export const useDropdownAuth = (callback: () => void) => {
-  const router = useRouter()
+  const router = useRouter();
 
-  useEffect(()=>{
-    if ((router.query.auth as string)?.startsWith('require')) {
-      callback()
+  useEffect(() => {
+    if ((router.query.auth as string)?.startsWith("require")) {
+      callback();
     }
-  }, [router.query.auth])
-}
+  }, [router.query.auth]);
+};

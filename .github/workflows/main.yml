@@ -1,0 +1,53 @@
+name: Next.Js
+
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+
+jobs:
+  build:
+    defaults:
+        run:
+          shell: bash
+          working-directory: Frontend
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            Frontend/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: '18.x'
+
+      - name: Install dependencies
+        run: npm install
+
+
+      - name: Build next
+        run: npm run build
+        
+      - name: Create dist folder
+        run: mkdir dist && mkdir dist/.next && cp -r .next/s* .next/*.json .next/BUILD_ID .next/trace dist/.next && cp package.json dist
+        
+      - name: Create archive
+        run: tar -czf dist.tar.gz -C dist .
+        
+      - name: Deploy
+        env:
+          key: ${{ secrets.DEPLOY_KEY }}
+        run: curl -F'file=@dist.tar.gz' -F"key=${key}" https://api.kuznetsovlabs.me/deploy/frontend

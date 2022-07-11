@@ -1,28 +1,26 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { User } from '../types/user'
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { User } from "../types/user";
 
 export const searchApi = createApi({
-  reducerPath: 'searchApi',
+  reducerPath: "searchApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.BACK_SERVER}/search`,
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem("token");
       if (token) {
-        headers.set('Authorization', 'Bearer ' + token)
+        headers.set("Authorization", "Bearer " + token);
       }
-      return headers
-    }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getUsersById: builder.query<User[], number>({
       query: (id: number) => ({
-        url: `/id/${id}`
+        url: `/id/${id}`,
       }),
-      transformResponse: (data: {value: User[]}) => data.value
-    })
-  })
-})
+      transformResponse: (data: { value: User[] }) => data.value,
+    }),
+  }),
+});
 
-export const {
-  useLazyGetUsersByIdQuery
-} = searchApi
+export const { useLazyGetUsersByIdQuery } = searchApi;

@@ -1,10 +1,13 @@
-import { Grid, GridProps } from '@mui/material'
-import React from 'react'
+import { Grid, GridProps } from "@mui/material";
+import React from "react";
 
-const GridCenterItem = ({ children, ...rest }: {children: JSX.Element} & GridProps) => (
-  <Grid container item justifyContent='center' {...rest}>
+const GridCenterItem = ({
+  children,
+  ...rest
+}: { children: JSX.Element } & GridProps) => (
+  <Grid container item justifyContent="center" {...rest}>
     {children}
   </Grid>
-)
+);
 
-export default GridCenterItem
+export default GridCenterItem;

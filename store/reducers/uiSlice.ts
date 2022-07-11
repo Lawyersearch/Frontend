@@ -1,45 +1,46 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Snack } from '../../types/snack'
-import { CategoryView } from '../../types/category'
-import {PaletteMode} from "@mui/material";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Snack } from "../../types/snack";
+import { CategoryView } from "../../types/category";
+import { PaletteMode } from "@mui/material";
 
 interface UiSlice {
-  pushSnack?: (snack: Snack) => void
-  categoryView: CategoryView[] | null
-  searchQuery?: string
-  mode: PaletteMode
+  pushSnack?: (snack: Snack) => void;
+  categoryView: CategoryView[] | null;
+  searchQuery?: string;
+  mode: PaletteMode;
 }
 
 const initialState: UiSlice = {
   categoryView: null,
-  mode: 'dark'
-}
+  mode: "dark",
+};
 
 export const uiSlice = createSlice({
-  name: 'ui',
+  name: "ui",
   initialState,
   reducers: {
-    setPushSnack: (state, action: PayloadAction< (snack: Snack) => void >) => {
-      state.pushSnack = action.payload
+    setPushSnack: (state, action: PayloadAction<(snack: Snack) => void>) => {
+      state.pushSnack = action.payload;
     },
     pushSnack: (state, action: PayloadAction<Snack>) => {
-      state.pushSnack && state.pushSnack(action.payload)
+      state.pushSnack && state.pushSnack(action.payload);
     },
     setCategoryView: (state, action: PayloadAction<CategoryView[]>) => {
-      state.categoryView = action.payload
+      state.categoryView = action.payload;
     },
     setSearchQuery: (state, action: PayloadAction<string>) => {
-      state.searchQuery = action.payload
+      state.searchQuery = action.payload;
     },
     setMode: (state, action: PayloadAction<PaletteMode>) => {
-      state.mode = action.payload
+      state.mode = action.payload;
     },
     toggleMode: (state) => {
-      state.mode = state.mode === 'light' ? 'dark' : 'light'
-    }
-  }
-})
+      state.mode = state.mode === "light" ? "dark" : "light";
+    },
+  },
+});
 
-export const { setPushSnack, pushSnack, setCategoryView, setMode, toggleMode } = uiSlice.actions
+export const { setPushSnack, pushSnack, setCategoryView, setMode, toggleMode } =
+  uiSlice.actions;
 
-export default uiSlice.reducer
+export default uiSlice.reducer;
