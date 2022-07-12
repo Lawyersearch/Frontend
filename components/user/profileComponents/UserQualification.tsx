@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Card, SxProps, Typography } from "@mui/material";
 import { Education } from "../../../types/user";
 import Gallery from "../../../ui/Gallery";
-import AddQualification from "./AddQualification";
-import Qualification from "./Qualification";
+import AddQualification from "./qualification/AddQualification";
+import Qualification from "./qualification/Qualification";
 import DeleteQualificationModal from "../../../ui/modal/DeleteQualificationModal";
-import UpdateQualification from "./UpdateQualification";
+import UpdateQualification from "./qualification/UpdateQualification";
 import useRemoveQualification from "../../../hooks/user/useRemoveQualification";
 import useUpdateQualification from "../../../hooks/user/useUpdateQualification";
 

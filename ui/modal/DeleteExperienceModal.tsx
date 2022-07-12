@@ -1,7 +1,7 @@
 import React from "react";
 import ConfirmModal from "./ConfirmModal";
 import { WorkExpirience } from "../../types/user";
-import Experience from "../../components/user/profileComponents/Experience";
+import Experience from "../../components/user/profileComponents/experience/Experience";
 
 interface DeleteExperienceModalProps {
   exp: WorkExpirience | null;

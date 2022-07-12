@@ -1,7 +1,7 @@
 import { IconButton, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import React from "react";
-import GenericModal from "../../../ui/modal/GenericModal";
+import GenericModal from "../../../../ui/modal/GenericModal";
 
 interface AddCardProps {
   show: boolean;
@@ -10,7 +10,7 @@ interface AddCardProps {
   children: React.ReactElement | React.ReactElement[];
 }
 
-const AddCard = ({ show, setShow, setHide, children }: AddCardProps) => {
+const AddItem = ({ show, setShow, setHide, children }: AddCardProps) => {
   return (
     <Stack
       key={0}
@@ -32,4 +32,4 @@ const AddCard = ({ show, setShow, setHide, children }: AddCardProps) => {
   );
 };
 
-export default AddCard;
+export default AddItem;

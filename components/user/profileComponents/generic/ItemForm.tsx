@@ -1,39 +1,40 @@
 import React, { useState } from "react";
 import { Button, FormControl, Stack } from "@mui/material";
-import ValidInput from "../../../ui/ValidInput";
-import { isNotEmpty } from "../../../utils/validation";
-import { notEmptyVerifyText } from "../../../ui/strings";
+import ValidInput from "../../../../ui/ValidInput";
+import { isNotEmpty } from "../../../../utils/validation";
+import { notEmptyVerifyText } from "../../../../ui/strings";
 import { DatePicker } from "@mui/x-date-pickers";
-import { Education } from "../../../types/user";
+import renderDateInput from "../../../../utils/renderDateInput";
 import { isBefore } from "date-fns";
-import renderDateInput from "../../../utils/renderDateInput";
+import { GenericItem } from "../../../../types/genericItem";
 
-interface QualificationFormProps {
-  qualification?: Education;
-  onSubmit: (qualification: Partial<Education>) => void;
+interface ItemFormProps {
+  initial?: GenericItem;
+  topTitle: string;
+  middleTitle: string;
+  onSubmit: (item: GenericItem) => void;
 }
-const QualificationForm = ({
-  qualification,
+
+const ItemForm = ({
+  initial,
   onSubmit,
-}: QualificationFormProps) => {
-  const [direction, setDirection] = useState<string>(
-    qualification?.direction ?? ""
-  );
-  const [studyPlace, setStudyPlace] = useState<string>(
-    qualification?.studyPlace ?? ""
-  );
+  topTitle,
+  middleTitle,
+}: ItemFormProps) => {
+  const [top, setTop] = useState<string>(initial?.topText ?? "");
+  const [middle, setMiddle] = useState<string>(initial?.middleText ?? "");
   const [startYear, setStartYear] = useState<Date | null>(
-    qualification?.startYear ? new Date(qualification.startYear) : null
+    initial?.startYear ? new Date(initial.startYear) : null
   );
   const [endYear, setEndYear] = useState<Date | null>(
-    qualification?.endYear ? new Date(qualification.endYear) : null
+    initial?.endYear ? new Date(initial.endYear) : null
   );
   const [submited, setSubmited] = useState(false);
 
   const submit = () => {
     if (
-      !isNotEmpty(direction) ||
-      !isNotEmpty(studyPlace) ||
+      !isNotEmpty(top) ||
+      !isNotEmpty(middle) ||
       isNaN(+(startYear ?? NaN)) ||
       isNaN(+(endYear ?? NaN)) ||
       !isBefore(startYear!, endYear!)
@@ -42,9 +43,9 @@ const QualificationForm = ({
       return;
     }
     onSubmit({
-      id: qualification?.id ?? undefined,
-      direction,
-      studyPlace,
+      id: initial?.id ?? undefined,
+      topText: top,
+      middleText: middle,
       startYear: startYear!.toISOString(),
       endYear: endYear!.toISOString(),
     });
@@ -55,18 +56,18 @@ const QualificationForm = ({
       <Stack spacing={4}>
         <ValidInput
           variant="standard"
-          label="Направление"
-          value={direction}
-          bindChange={setDirection}
+          label={topTitle}
+          value={top}
+          bindChange={setTop}
           valid={isNotEmpty}
           showError={submited}
           invalidText={notEmptyVerifyText}
         />
         <ValidInput
           variant="standard"
-          label="Место обучения"
-          value={studyPlace}
-          bindChange={setStudyPlace}
+          label={middleTitle}
+          value={middle}
+          bindChange={setMiddle}
           valid={isNotEmpty}
           showError={submited}
           invalidText={notEmptyVerifyText}
@@ -98,11 +99,11 @@ const QualificationForm = ({
           />
         </Stack>
         <Button variant="contained" onClick={submit}>
-          {qualification ? "Сохранить" : "Добавить"}
+          {initial ? "Сохранить" : "Добавить"}
         </Button>
       </Stack>
     </FormControl>
   );
 };
 
-export default QualificationForm;
+export default ItemForm;

@@ -5,7 +5,6 @@ import { useRemoveWorkExperienceMutation } from "../../services/workExperience";
 
 const useRemoveWorkExp = (
   setEds: React.Dispatch<React.SetStateAction<WorkExpirience[]>>
-) =>
-  useRemoveItem<WorkExpirience>(useRemoveWorkExperienceMutation as any, setEds);
+) => useRemoveItem<WorkExpirience>(useRemoveWorkExperienceMutation, setEds);
 
 export default useRemoveWorkExp;

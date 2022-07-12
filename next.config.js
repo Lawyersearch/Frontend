@@ -31,7 +31,7 @@ module.exports = (phase, { defaultConfig }) => {
   return {
     // Production
     ...commonConfig,
-    compress: false,
+    compress: true,
     env: {
       ...commonConfig.env,
       STATIC_REVALIDATE: 3600,

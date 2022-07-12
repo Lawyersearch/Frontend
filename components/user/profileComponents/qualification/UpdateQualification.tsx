@@ -5,11 +5,11 @@ import React, {
   useRef,
 } from "react";
 import { Typography } from "@mui/material";
-import { useUpdateEducationMutation } from "../../../services/education";
-import { Education } from "../../../types/user";
+import { useUpdateEducationMutation } from "../../../../services/education";
+import { Education } from "../../../../types/user";
 import QualificationForm from "./QualificationForm";
-import { useBoolean } from "../../../hooks/useBoolean";
-import GenericModal from "../../../ui/modal/GenericModal";
+import { useBoolean } from "../../../../hooks/useBoolean";
+import GenericModal from "../../../../ui/modal/GenericModal";
 
 export type UpdateQualificationRef =
   | {

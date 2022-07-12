@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Typography } from "@mui/material";
-import AddCard from "./AddCard";
-import { useAddWorkExperienceMutation } from "../../../services/workExperience";
-import { WorkExpirience } from "../../../types/user";
-import { useBoolean } from "../../../hooks/useBoolean";
+import AddItem from "../generic/AddItem";
+import { useAddWorkExperienceMutation } from "../../../../services/workExperience";
+import { WorkExpirience } from "../../../../types/user";
+import { useBoolean } from "../../../../hooks/useBoolean";
 import ExperienceForm from "./ExperienceForm";
 
 interface AddWorkExperienceProps {
@@ -23,12 +23,12 @@ const AddWorkExperience = ({ setWorkExp }: AddWorkExperienceProps) => {
   }, [isSuccess]);
 
   return (
-    <AddCard show={show} setShow={setShow} setHide={setHide}>
+    <AddItem show={show} setShow={setShow} setHide={setHide}>
       <Typography variant="h5" component="h2" mb={4}>
         Добавление опыта работы
       </Typography>
       <ExperienceForm onSubmit={addWorkExperience} />
-    </AddCard>
+    </AddItem>
   );
 };
 

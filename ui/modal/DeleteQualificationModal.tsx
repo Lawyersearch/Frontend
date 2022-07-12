@@ -1,7 +1,7 @@
 import React from "react";
 import ConfirmModal from "./ConfirmModal";
 import { Education } from "../../types/user";
-import Qualification from "../../components/user/profileComponents/Qualification";
+import Qualification from "../../components/user/profileComponents/qualification/Qualification";
 
 interface DeleteQualificationModalProps {
   ed: Education | null;

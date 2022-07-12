@@ -1,7 +1,11 @@
 import { useBoolean } from "../useBoolean";
 import React, { useCallback, useEffect, useRef } from "react";
+import { UseMutation } from "@reduxjs/toolkit/dist/query/react/buildHooks";
+import { MutationDefinition } from "@reduxjs/toolkit/query";
 
-type rtkRemoveItemHook = () => [(id: string) => void, { isSuccess: boolean }];
+type rtkRemoveItemHook = UseMutation<
+  MutationDefinition<string, any, never, void>
+>;
 
 const useRemoveItem = <T extends { id: string }>(
   hook: rtkRemoveItemHook,

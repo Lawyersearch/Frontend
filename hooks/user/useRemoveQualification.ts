@@ -5,6 +5,6 @@ import useRemoveItem from "./useRemoveItem";
 
 const useRemoveQualification = (
   setEds: React.Dispatch<React.SetStateAction<Education[]>>
-) => useRemoveItem<Education>(useRemoveEducationMutation as any, setEds);
+) => useRemoveItem<Education>(useRemoveEducationMutation, setEds);
 
 export default useRemoveQualification;

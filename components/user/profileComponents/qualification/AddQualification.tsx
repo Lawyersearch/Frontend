@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Typography } from "@mui/material";
-import AddCard from "./AddCard";
-import { useAddEducationMutation } from "../../../services/education";
-import { Education } from "../../../types/user";
-import { useBoolean } from "../../../hooks/useBoolean";
+import AddItem from "../generic/AddItem";
+import { useAddEducationMutation } from "../../../../services/education";
+import { Education } from "../../../../types/user";
+import { useBoolean } from "../../../../hooks/useBoolean";
 import QualificationForm from "./QualificationForm";
 
 interface AddQualificationProps {
@@ -23,12 +23,12 @@ const AddQualification = ({ setEds }: AddQualificationProps) => {
   }, [isSuccess]);
 
   return (
-    <AddCard show={show} setShow={setShow} setHide={setHide}>
+    <AddItem show={show} setShow={setShow} setHide={setHide}>
       <Typography variant="h5" component="h2" mb={4}>
         Добавление квалификации
       </Typography>
       <QualificationForm onSubmit={addEducation} />
-    </AddCard>
+    </AddItem>
   );
 };
 
