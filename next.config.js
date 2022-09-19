@@ -11,7 +11,7 @@ const commonConfig = {
     }
   ], */
   env: {
-    BACK_SERVER: "https://api.kuznetsovlabs.me",
+    BACK_SERVER: "https://api.lawyersearch.ru",
     PORT: "3000",
   },
 };
