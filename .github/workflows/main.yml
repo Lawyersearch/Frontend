@@ -49,4 +49,4 @@ jobs:
       - name: Deploy
         env:
           key: ${{ secrets.DEPLOY_KEY }}
-        run: curl -F'file=@dist.tar.gz' -F"key=${key}" https://api.kuznetsovlabs.me/deploy/frontend
+        run: curl -F'file=@dist.tar.gz' -F"key=${key}" https://api.lawyersearch.ru/deploy/frontend
