@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { User } from "../types/user";
 import { WebResponse } from "../types/webResponseBody";
+import { getData } from "./utils";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -20,14 +21,14 @@ export const userApi = createApi({
       query: (userId: string) => ({
         url: `/id/${userId}`,
       }),
-      transformResponse: (data: { value: User }) => data.value,
+      transformResponse: getData<User>,
       providesTags: (result, error, userId) => [{ type: "User", id: userId }],
     }),
     getSelf: builder.query<User, void>({
       query: () => ({
         url: "/myself",
       }),
-      transformResponse: (data: { value: User }) => data.value,
+      transformResponse: getData<User>,
       providesTags: (result, error) => [{ type: "User", id: result?.id }],
     }),
     uploadAvatar: builder.mutation<WebResponse<null>, FormData>({

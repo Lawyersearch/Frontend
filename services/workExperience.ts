@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { WorkExpirience } from "../types/user";
+import { getData } from "./utils";
 
 export const workExperienceApi = createApi({
   reducerPath: "workExperienceApi",
@@ -23,7 +24,7 @@ export const workExperienceApi = createApi({
         method: "POST",
         body: workExp,
       }),
-      transformResponse: (data: { value: WorkExpirience }) => data.value,
+      transformResponse: getData<WorkExpirience>,
     }),
     removeWorkExperience: builder.mutation<void, string>({
       query: (workExpId: string) => ({
@@ -40,7 +41,7 @@ export const workExperienceApi = createApi({
         method: "PUT",
         body: workExp,
       }),
-      transformResponse: (data: { value: WorkExpirience }) => data.value,
+      transformResponse: getData<WorkExpirience>,
     }),
   }),
 });

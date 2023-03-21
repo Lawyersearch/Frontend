@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Education } from "../types/user";
+import { getData } from "./utils";
 
 export const educationApi = createApi({
   reducerPath: "educationApi",
@@ -20,7 +21,7 @@ export const educationApi = createApi({
         method: "POST",
         body: education,
       }),
-      transformResponse: (data: { value: Education }) => data.value,
+      transformResponse: getData<Education>,
     }),
     removeEducation: builder.mutation<void, string>({
       query: (educationId: string) => ({
@@ -34,7 +35,7 @@ export const educationApi = createApi({
         method: "PUT",
         body: education,
       }),
-      transformResponse: (data: { value: Education }) => data.value,
+      transformResponse: getData<Education>,
     }),
   }),
 });

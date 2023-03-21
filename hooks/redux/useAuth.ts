@@ -22,7 +22,7 @@ const loginFromResponse = (
   response: RTKResponse<string>
 ) => {
   if (response.data !== undefined) {
-    localStorage.token = response.data.value;
+    localStorage.token = response.data.data;
     trigger(skipToken, false);
   }
 };

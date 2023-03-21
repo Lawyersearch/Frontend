@@ -84,9 +84,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
     `${process.env.BACK_SERVER_API}/user/id/${context!.params!.userId}`
   ).then((res) => res.json());
   return {
-    notFound: !user.value,
+    notFound: !user.data,
     props: {
-      user: user.value,
+      user: user.data,
     },
     revalidate: 60,
   };

@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { User } from "../types/user";
+import { getData } from "./utils";
 
 export const searchApi = createApi({
   reducerPath: "searchApi",
@@ -18,7 +19,7 @@ export const searchApi = createApi({
       query: (id: number) => ({
         url: `/id/${id}`,
       }),
-      transformResponse: (data: { value: User[] }) => data.value,
+      transformResponse: getData<User[]>,
     }),
   }),
 });

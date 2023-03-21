@@ -66,9 +66,9 @@ const SearchPage = ({ categories, view }: SearchPageProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const query = await fetch(
-    `${process.env.BACK_SERVER_API}/category`
-  ).then((res) => res.json());
+  const query = await fetch(`${process.env.BACK_SERVER_API}/category`).then(
+    (res) => res.json()
+  );
   const view: CategoryView[] = [];
   const fillView = (
     node: CategoryTree,
