@@ -1,36 +1,36 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:@next/next/recommended",
-    "plugin:react/recommended",
-    "standard",
-    "prettier"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+    "extends": [
+        "next/core-web-vitals",
+        "plugin:@next/next/recommended",
+        "plugin:react/recommended",
+        "standard",
+        "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
     },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
-  "plugins": ["only-warn", "react", "@typescript-eslint"],
-  "settings": {
-    "react": {
-      "pragma": "React",
-      "version": "18.2"
+    "plugins": ["only-warn", "react", "@typescript-eslint"],
+    "settings": {
+        "react": {
+            "pragma": "React",
+            "version": "18.2"
+        }
+    },
+    "env": {
+        "es2021": true
+    },
+    "rules": {
+        "react-hooks/exhaustive-deps": "off",
+        "react/display-name": "off",
+        "@next/next/no-title-in-document-head": "off",
+        "react/react-in-jsx-scope": "off"
+    },
+    "globals": {
+        "JSX": "readonly"
     }
-  },
-  "env": {
-    "es2021": true
-  },
-  "rules": {
-    "react-hooks/exhaustive-deps": "off",
-    "react/display-name": "off",
-    "@next/next/no-title-in-document-head": "off",
-    "react/react-in-jsx-scope": "off"
-  },
-  "globals": {
-    "JSX": "readonly"
-  }
 }

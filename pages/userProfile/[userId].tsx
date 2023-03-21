@@ -10,86 +10,74 @@ import { experienceString } from "../../utils/wordsEndings";
 import { useGetSelfQuery } from "../../services/user";
 
 const primaryBorder = {
-  border: 1,
-  borderColor: "primary.main",
-  backgroundColor: "background.default",
+    border: 1,
+    borderColor: "primary.main",
+    backgroundColor: "background.default",
 };
 
 interface UserProfilePageProps {
-  user: User;
+    user: User;
 }
 
 const UserProfilePage = ({ user }: UserProfilePageProps) => {
-  const { data: me } = useGetSelfQuery();
-  const isMyPage = useMemo(() => me?.id === user?.id, [user?.id, me?.id]);
-  return (
-    <Container>
-      <Stack spacing={3}>
-        {user && (
-          <UserDescription
-            experience={experienceString(user.expirience)}
-            feedBacks={user?.reviewsTo?.length}
-            rating={user?.rating!}
-            tasks={user?.categories!}
-            avatar={user?.avatar!}
-            userName={`${user?.lastName} ${user?.firstName} ${user?.middleName}`}
-            description={user?.description}
-            phone={user?.phone}
-            instagram={user?.instagram}
-            email={user?.email}
-            isMyPage={isMyPage}
-            {...primaryBorder}
-          />
-        )}
+    const { data: me } = useGetSelfQuery();
+    const isMyPage = useMemo(() => me?.id === user?.id, [user?.id, me?.id]);
+    return (
+        <Container>
+            <Stack spacing={3}>
+                {user && (
+                    <UserDescription
+                        experience={experienceString(user.expirience)}
+                        feedBacks={user?.reviewsTo?.length}
+                        rating={user?.rating!}
+                        tasks={user?.categories!}
+                        avatar={user?.avatar!}
+                        userName={`${user?.lastName} ${user?.firstName} ${user?.middleName}`}
+                        description={user?.description}
+                        phone={user?.phone}
+                        instagram={user?.instagram}
+                        email={user?.email}
+                        isMyPage={isMyPage}
+                        {...primaryBorder}
+                    />
+                )}
 
-        {user?.role ? (
-          <UserExperience
-            {...primaryBorder}
-            workExpiriences={user?.workExpiriences}
-            isMyPage={isMyPage}
-          />
-        ) : (
-          <></>
-        )}
+                {user?.role ? (
+                    <UserExperience {...primaryBorder} workExpiriences={user?.workExpiriences} isMyPage={isMyPage} />
+                ) : (
+                    <></>
+                )}
 
-        {user?.role ? (
-          <UserQualification
-            {...primaryBorder}
-            educations={user?.educations}
-            isMyPage={isMyPage}
-          />
-        ) : (
-          <></>
-        )}
+                {user?.role ? (
+                    <UserQualification {...primaryBorder} educations={user?.educations} isMyPage={isMyPage} />
+                ) : (
+                    <></>
+                )}
 
-        {user?.reviewsTo?.length ? (
-          <UserReviews {...primaryBorder} reviews={user?.reviewsTo} />
-        ) : (
-          <></>
-        )}
-      </Stack>
-    </Container>
-  );
+                {user?.reviewsTo?.length ? <UserReviews {...primaryBorder} reviews={user?.reviewsTo} /> : <></>}
+            </Stack>
+        </Container>
+    );
 };
 
 export const getStaticPaths: GetStaticPaths = () => {
-  return {
-    paths: [],
-    fallback: true,
-  };
+    return {
+        paths: [],
+        fallback: true,
+    };
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const user = await fetch(
-    `${process.env.BACK_SERVER_API}/user/id/${context!.params!.userId}`
-  ).then((res) => res.json());
-  return {
-    notFound: !user.data,
-    props: {
-      user: user.data,
-    },
-    revalidate: 60,
-  };
+export const getStaticProps: GetStaticProps = async context => {
+    const user = await fetch(`${process.env.BACK_SERVER_API}/user/id/${context!.params!.userId}`).then(res =>
+        res.json(),
+    );
+    return {
+        notFound: !user.data,
+        props: {
+            user: user.data,
+        },
+        revalidate: 60,
+    };
 };
 
 export default UserProfilePage;

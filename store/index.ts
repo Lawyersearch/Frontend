@@ -5,33 +5,30 @@ import uiReducer from "./reducers/uiSlice";
 import networkingMiddleware from "../ui/networkingMiddleware";
 import { authApi } from "../services/auth";
 import { userApi } from "../services/user";
-import { searchApi } from "../services/search";
 import { educationApi } from "../services/education";
 import { workExperienceApi } from "../services/workExperience";
 
 const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-    user: userReducer,
-    ui: uiReducer,
+    reducer: {
+        counter: counterReducer,
+        user: userReducer,
+        ui: uiReducer,
 
-    [authApi.reducerPath]: authApi.reducer,
-    [userApi.reducerPath]: userApi.reducer,
-    [searchApi.reducerPath]: searchApi.reducer,
-    [educationApi.reducerPath]: educationApi.reducer,
-    [workExperienceApi.reducerPath]: workExperienceApi.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoreActions: ["ui/setPushSnack"] as any,
-        ignoreState: ["ui/pushSnack"] as any,
-      },
-    })
-      .concat(networkingMiddleware)
-      .concat(authApi.middleware)
-      .concat(userApi.middleware)
-      .concat(searchApi.middleware),
+        [authApi.reducerPath]: authApi.reducer,
+        [userApi.reducerPath]: userApi.reducer,
+        [educationApi.reducerPath]: educationApi.reducer,
+        [workExperienceApi.reducerPath]: workExperienceApi.reducer,
+    },
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoreActions: ["ui/setPushSnack"] as any,
+                ignoreState: ["ui/pushSnack"] as any,
+            },
+        })
+            .concat(networkingMiddleware)
+            .concat(authApi.middleware)
+            .concat(userApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

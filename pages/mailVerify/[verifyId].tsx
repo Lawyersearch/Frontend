@@ -4,21 +4,21 @@ import { useLoginFromVerification } from "../../hooks/redux/useAuth";
 import { useRouter } from "next/router";
 
 const VerifyId = () => {
-  const router = useRouter();
-  const { verifyId } = router.query;
-  const [login, { isLoading, isError, isSuccess }] = useLoginFromVerification();
+    const router = useRouter();
+    const { verifyId } = router.query;
+    const [login, { isLoading, isError, isSuccess }] = useLoginFromVerification();
 
-  useEffect(() => {
-    login(verifyId as string);
-  }, []);
+    useEffect(() => {
+        login(verifyId as string);
+    }, []);
 
-  if (isLoading) {
-    return <Loading title="Верификация" />;
-  }
-  if (isSuccess || isError) {
-    router.push("/");
-  }
-  return <></>;
+    if (isLoading) {
+        return <Loading title="Верификация" />;
+    }
+    if (isSuccess || isError) {
+        router.push("/");
+    }
+    return <></>;
 };
 
 export default VerifyId;

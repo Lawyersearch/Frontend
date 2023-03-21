@@ -6,30 +6,26 @@ import { setPushSnack } from "../store/reducers/uiSlice";
 import { Snack } from "../types/snack";
 
 interface SnackbarProps {
-  children: JSX.Element | JSX.Element[];
+    children: JSX.Element | JSX.Element[];
 }
 
 const SnackbarHandler = ({ children }: SnackbarProps) => {
-  const dispatch = useAppDispatch();
-  const { enqueueSnackbar } = useSnackbar();
-  const pushSnack = useCallback(
-    (snack: Snack) =>
-      enqueueSnackbar(snack.message, { variant: snack.variant }),
-    []
-  );
-  dispatch(setPushSnack(pushSnack));
-  return <>{children}</>;
+    const dispatch = useAppDispatch();
+    const { enqueueSnackbar } = useSnackbar();
+    const pushSnack = useCallback((snack: Snack) => enqueueSnackbar(snack.message, { variant: snack.variant }), []);
+    dispatch(setPushSnack(pushSnack));
+    return <>{children}</>;
 };
 
 const SnackbarController = ({ children }: SnackbarProps) => (
-  <SnackbarProvider
-    maxSnack={3}
-    anchorOrigin={{ vertical: "top", horizontal: "right" }}
-    TransitionComponent={Slide}
-    autoHideDuration={2000}
-  >
-    <SnackbarHandler>{children}</SnackbarHandler>
-  </SnackbarProvider>
+    <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        TransitionComponent={Slide}
+        autoHideDuration={2000}
+    >
+        <SnackbarHandler>{children}</SnackbarHandler>
+    </SnackbarProvider>
 );
 
 export default SnackbarController;

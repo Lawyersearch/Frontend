@@ -17,48 +17,41 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache;
+    emotionCache?: EmotionCache;
 }
 
-function MyApp({
-  Component,
-  emotionCache = clientSideEmotionCache,
-  pageProps,
-}: MyAppProps) {
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: MyAppProps) {
+    const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
-  return (
-    <CacheProvider value={emotionCache}>
-      <Provider store={store}>
-        <SnackbarController>
-          <LocalizationProvider
-            dateAdapter={AdapterDateFns}
-            adapterLocale={ruLocale}
-          >
-            {isMounted ? (
-              <ColorModeProvider>
-                <NavBar />
-                <CssBaseline />
-                <Component {...pageProps} />
-              </ColorModeProvider>
-            ) : (
-              <CircularProgress
-                size={100}
-                sx={{
-                  mt: "calc(50vh - 90px)",
-                  ml: "calc(50vw - 50px)",
-                  color: "#ff9100",
-                }}
-              />
-            )}
-          </LocalizationProvider>
-        </SnackbarController>
-      </Provider>
-    </CacheProvider>
-  );
+    return (
+        <CacheProvider value={emotionCache}>
+            <Provider store={store}>
+                <SnackbarController>
+                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
+                        {isMounted ? (
+                            <ColorModeProvider>
+                                <NavBar />
+                                <CssBaseline />
+                                <Component {...pageProps} />
+                            </ColorModeProvider>
+                        ) : (
+                            <CircularProgress
+                                size={100}
+                                sx={{
+                                    mt: "calc(50vh - 90px)",
+                                    ml: "calc(50vw - 50px)",
+                                    color: "#ff9100",
+                                }}
+                            />
+                        )}
+                    </LocalizationProvider>
+                </SnackbarController>
+            </Provider>
+        </CacheProvider>
+    );
 }
 
 export default MyApp;
