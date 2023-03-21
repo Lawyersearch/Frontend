@@ -2,9 +2,9 @@ import React from "react";
 import { Box, Card, Chip, Divider, Rating, Stack, SxProps, Typography, Button } from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
 import { feedBacksString } from "../../utils/wordsEndings";
-import RoundedImage from "../../ui/RoundedImage";
 import Link from "next/link";
 import { Category } from "../../types/category";
+import Avatar from "../../ui/Avatar";
 
 interface UserProfileProps {
     id: string;
@@ -34,7 +34,7 @@ function UserCard({
                 <Box mr={2}>
                     <Link href={`/userProfile/${id}`}>
                         <a>
-                            <RoundedImage src={avatar} height={250} width={250} sx={{ mr: 2, mb: 2 }} />
+                            <Avatar src={avatar} height={250} width={250} sx={{ mr: 2, mb: 2 }} />
                         </a>
                     </Link>
                 </Box>

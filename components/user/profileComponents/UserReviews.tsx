@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Rating, Stack, SxProps, Typography } from "@mui/material";
 import Gallery from "../../../ui/Gallery";
 import { Review } from "../../../types/user";
-import RoundedImage from "../../../ui/RoundedImage";
+import Avatar from "../../../ui/Avatar";
 
 interface UserReviewsProps {
     reviews: Review[];
@@ -18,7 +18,7 @@ const UserReviews = ({ reviews, ...rest }: UserReviewsProps & SxProps) => {
                 {reviews.map(review => (
                     <Stack key={review.id} bgcolor="background.paper" borderRadius="10px" p={1} width={350} spacing={1}>
                         <Stack direction="row" spacing={1} alignItems="center">
-                            <RoundedImage src={review.avatar} height={40} width={40} />
+                            <Avatar src={review.avatar} height={40} width={40} />
                             <Typography variant="h5" color="text.primary">
                                 {review.name}
                             </Typography>

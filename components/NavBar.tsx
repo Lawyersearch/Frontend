@@ -11,9 +11,9 @@ import AuthorizedDropdown from "./auth/AuthorizedDropdown";
 import AuthForm from "./auth/AuthForm";
 import { useAppDispatch } from "../hooks/redux/useTypedRedux";
 import { toggleMode } from "../store/reducers/uiSlice";
-import RoundedImage from "../ui/RoundedImage";
 import { useBoolean } from "../hooks/useBoolean";
 import { useDropdownAuth } from "../hooks/useDropdownAuth";
+import Avatar from "../ui/Avatar";
 
 const NavBar = () => {
     const { data: user, isSuccess } = useGetSelfQuery(undefined);
@@ -76,7 +76,7 @@ const NavBar = () => {
                         <Box>
                             <IconButton size="large" edge="end" color="inherit" onClick={toggleModal}>
                                 {isSuccess && user ? (
-                                    <RoundedImage src={user.avatar} height={24} width={24} />
+                                    <Avatar src={user.avatar} height={24} width={24} />
                                 ) : (
                                     <AccountCircleIcon />
                                 )}

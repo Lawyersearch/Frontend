@@ -5,9 +5,9 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import { feedBacksString } from "../../../utils/wordsEndings";
-import RoundedImage from "../../../ui/RoundedImage";
 import { Category } from "../../../types/category";
 import Link from "next/link";
+import Avatar from "../../../ui/Avatar";
 
 interface UserProfileProps {
     avatar: string;
@@ -42,7 +42,7 @@ const UserDescription = ({
             <Stack flexDirection={{ xs: "column", md: "row" }} p={2}>
                 <Stack>
                     <Box alignSelf="center">
-                        <RoundedImage src={avatar} height={250} width={250} />
+                        <Avatar src={avatar} height={250} width={250} />
                     </Box>
                     <Stack alignItems="center" spacing={1}>
                         <Stack direction={{ xs: "column", md: "row" }} alignItems="center" width="max-content" mt={2}>
