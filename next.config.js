@@ -11,8 +11,8 @@ const commonConfig = {
     }
   ], */
   env: {
-    BACK_SERVER: "https://api.lawyersearch.ru",
     PORT: "3000",
+    BACK_SERVER_API: "https://api.lawyersearch.ru/api",
   },
 };
 
@@ -23,7 +23,7 @@ module.exports = (phase, { defaultConfig }) => {
       ...commonConfig,
       env: {
         ...commonConfig.env,
-        STATIC_REVALIDATE: 60,
+        STATIC_REVALIDATE: 30,
       },
     };
   }

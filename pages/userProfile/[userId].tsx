@@ -81,7 +81,7 @@ export const getStaticPaths: GetStaticPaths = () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const user = await fetch(
-    `${process.env.BACK_SERVER}/user/getUser/${context!.params!.userId}`
+    `${process.env.BACK_SERVER_API}/user/id/${context!.params!.userId}`
   ).then((res) => res.json());
   return {
     notFound: !user.value,

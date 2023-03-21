@@ -4,7 +4,7 @@ import { WorkExpirience } from "../types/user";
 export const workExperienceApi = createApi({
   reducerPath: "workExperienceApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.BACK_SERVER}/workExpirience`,
+    baseUrl: `${process.env.BACK_SERVER_API}/workExpirience`,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
@@ -19,7 +19,7 @@ export const workExperienceApi = createApi({
       Partial<WorkExpirience>
     >({
       query: (workExp: WorkExpirience) => ({
-        url: "/add",
+        url: "/",
         method: "POST",
         body: workExp,
       }),
@@ -27,7 +27,7 @@ export const workExperienceApi = createApi({
     }),
     removeWorkExperience: builder.mutation<void, string>({
       query: (workExpId: string) => ({
-        url: `/delete/${workExpId}`,
+        url: `/${workExpId}`,
         method: "DELETE",
       }),
     }),
@@ -36,7 +36,7 @@ export const workExperienceApi = createApi({
       Partial<WorkExpirience>
     >({
       query: (workExp: WorkExpirience) => ({
-        url: "/update",
+        url: `/${workExp.id}`,
         method: "PUT",
         body: workExp,
       }),

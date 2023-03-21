@@ -5,7 +5,7 @@ import { WebResponse } from "../types/webResponseBody";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.BACK_SERVER}/user`,
+    baseUrl: `${process.env.BACK_SERVER_API}/user`,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
@@ -18,14 +18,14 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     getUser: builder.query<User, string>({
       query: (userId: string) => ({
-        url: `/getUser/${userId}`,
+        url: `/id/${userId}`,
       }),
       transformResponse: (data: { value: User }) => data.value,
       providesTags: (result, error, userId) => [{ type: "User", id: userId }],
     }),
     getSelf: builder.query<User, void>({
       query: () => ({
-        url: "/getMySelf",
+        url: "/myself",
       }),
       transformResponse: (data: { value: User }) => data.value,
       providesTags: (result, error) => [{ type: "User", id: result?.id }],

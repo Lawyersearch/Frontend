@@ -5,7 +5,7 @@ import { WebResponse } from "../types/webResponseBody";
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.BACK_SERVER}/auth`,
+    baseUrl: `${process.env.BACK_SERVER_API}/auth`,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
@@ -35,7 +35,7 @@ export const authApi = createApi({
     }),
     register: builder.mutation<WebResponse<null>, UserCredentials>({
       query: (credentials: UserCredentials) => ({
-        url: "/register",
+        url: "/registration",
         method: "POST",
         body: credentials,
       }),

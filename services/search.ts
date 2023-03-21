@@ -4,7 +4,7 @@ import { User } from "../types/user";
 export const searchApi = createApi({
   reducerPath: "searchApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.BACK_SERVER}/search`,
+    baseUrl: `${process.env.BACK_SERVER_API}/search`,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {

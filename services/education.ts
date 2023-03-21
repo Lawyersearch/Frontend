@@ -4,7 +4,7 @@ import { Education } from "../types/user";
 export const educationApi = createApi({
   reducerPath: "educationApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.BACK_SERVER}/education`,
+    baseUrl: `${process.env.BACK_SERVER_API}/education`,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
@@ -16,7 +16,7 @@ export const educationApi = createApi({
   endpoints: (builder) => ({
     addEducation: builder.mutation<Education, Partial<Education>>({
       query: (education: Partial<Education>) => ({
-        url: "/add",
+        url: "/",
         method: "POST",
         body: education,
       }),
@@ -24,13 +24,13 @@ export const educationApi = createApi({
     }),
     removeEducation: builder.mutation<void, string>({
       query: (educationId: string) => ({
-        url: `/delete/${educationId}`,
+        url: `/${educationId}`,
         method: "DELETE",
       }),
     }),
     updateEducation: builder.mutation<Education, Partial<Education>>({
       query: (education: Partial<Education>) => ({
-        url: "/update",
+        url: `/${education.id}`,
         method: "PUT",
         body: education,
       }),

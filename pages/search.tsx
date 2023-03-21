@@ -67,7 +67,7 @@ const SearchPage = ({ categories, view }: SearchPageProps) => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const query = await fetch(
-    `${process.env.BACK_SERVER}/category/getCategories`
+    `${process.env.BACK_SERVER_API}/category`
   ).then((res) => res.json());
   const view: CategoryView[] = [];
   const fillView = (
@@ -82,13 +82,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
       view.push({ label: node.title, parents, id: node.id });
     }
   };
-  for (const node of query?.value ?? []) {
+  for (const node of query?.data ?? []) {
     fillView(node);
   }
 
   return {
     props: {
-      categories: query.value,
+      categories: query.data,
       view,
     },
     revalidate: +process.env.STATIC_REVALIDATE!,
