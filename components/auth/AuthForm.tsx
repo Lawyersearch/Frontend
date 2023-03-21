@@ -19,7 +19,7 @@ const AuthForm = () => {
 
     useEventListener("keypress", ev => {
         if (ev.key === "Enter") {
-            login({ email, password });
+            submit(false);
         }
     });
 
