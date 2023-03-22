@@ -2,9 +2,9 @@ import React from "react";
 import { Box, Card, Chip, Divider, Rating, Stack, SxProps, Typography, Button } from "@mui/material";
 import MessageIcon from "@mui/icons-material/Message";
 import { feedBacksString } from "../../utils/wordsEndings";
-import Link from "next/link";
 import { Category } from "../../types/category";
 import Avatar from "../../ui/Avatar";
+import NextLink from "../../ui/NextLink";
 
 interface UserProfileProps {
     id: string;
@@ -32,27 +32,22 @@ function UserCard({
         <Card sx={{ borderRadius: 4, ...rest }}>
             <Box sx={{ p: 2, display: "flex" }}>
                 <Box mr={2}>
-                    <Link href={`/userProfile/${id}`}>
-                        <a>
-                            <Avatar src={avatar} height={250} width={250} sx={{ mr: 2, mb: 2 }} />
-                        </a>
-                    </Link>
+                    <NextLink href={`/userProfile/${id}`}>
+                        <Avatar src={avatar} height={250} width={250} sx={{ mr: 2, mb: 2 }} />
+                    </NextLink>
                 </Box>
                 <Stack spacing={1} width="100%">
-                    <Link href={`/userProfile/${id}`}>
-                        <a>
-                            <Typography
-                                fontWeight={700}
-                                sx={{
-                                    cursor: "pointer",
-                                    textAlign: { xs: "center", md: "inherit" },
-                                    ":hover": { textDecoration: "underline" },
-                                }}
-                            >
-                                {userName}
-                            </Typography>
-                        </a>
-                    </Link>
+                    <NextLink href={`/userProfile/${id}`}>
+                        <Typography
+                            fontWeight={700}
+                            sx={{
+                                textAlign: { xs: "center", md: "inherit" },
+                                ":hover": { textDecoration: "underline" },
+                            }}
+                        >
+                            {userName}
+                        </Typography>
+                    </NextLink>
                     <Stack
                         direction="row"
                         spacing={1}
@@ -64,17 +59,15 @@ function UserCard({
                         <Typography variant="body1" fontWeight={300}>
                             ({Math.round(rating * 100) / 100} / 5.0)
                         </Typography>
-                        <Link href={`/userProfile/${id}#reviews`}>
-                            <a>
-                                <Typography
-                                    variant="body1"
-                                    fontWeight={300}
-                                    color={theme => theme.palette.primary.main}
-                                >
-                                    {feedBacksString(feedBacks)}
-                                </Typography>
-                            </a>
-                        </Link>
+                        <NextLink href={`/userProfile/${id}#reviews`}>
+                            <Typography
+                                variant="body1"
+                                fontWeight={300}
+                                color={theme => theme.palette.primary.main}
+                            >
+                                {feedBacksString(feedBacks)}
+                            </Typography>
+                        </NextLink>
                     </Stack>
                     <Typography variant="body1" fontWeight={300} textAlign={{ xs: "center", md: "inherit" }}>
                         Опыт: {experience}
@@ -104,11 +97,9 @@ function UserCard({
                 sx={{ px: 2, py: 1, bgcolor: "background.default" }}
             >
                 {tasks.map(task => (
-                    <Link href={`/search?q=${task.id}`} key={task.id} shallow>
-                        <a>
-                            <Chip label={task.name} sx={{ m: 0.5, ":hover": { cursor: "pointer" } }} />
-                        </a>
-                    </Link>
+                    <NextLink href={`/search?q=${task.id}`} key={task.id} shallow>
+                        <Chip label={task.name} sx={{ m: 0.5 }} />
+                    </NextLink>
                 ))}
             </Stack>
         </Card>

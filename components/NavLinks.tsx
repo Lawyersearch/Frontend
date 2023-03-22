@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Stack } from "@mui/material";
-import Link from "next/link";
 import { useGetSelfQuery } from "../services/user";
+import NextLink from "../ui/NextLink";
 
 interface NavLinksProps {
     show: boolean;
@@ -32,27 +32,25 @@ const NavLinks = ({ show, lastShow }: NavLinksProps) => {
             visibility={lastShow ? "visible" : "hidden"}
         >
             {links.map(link => (
-                <Link key={link.title} href={link.to}>
-                    <a>
-                        <Button
-                            variant="contained"
-                            component="div"
-                            sx={{
-                                display: link.show ? "block" : "none",
-                                p: { xs: "3px 4px", sm: "6px 16px" },
-                                width: "max-content",
-                                transition: ".2s transform ease-in-out",
-                                transform: show ? "" : `translateX(${link.tf}px)`,
-                                "&:hover": {
-                                    backgroundColor: "primary.main",
-                                    opacity: 1,
-                                },
-                            }}
-                        >
-                            {link.title}
-                        </Button>
-                    </a>
-                </Link>
+                <NextLink key={link.title} href={link.to}>
+                    <Button
+                        variant="contained"
+                        component="div"
+                        sx={{
+                            display: link.show ? "block" : "none",
+                            p: { xs: "3px 4px", sm: "6px 16px" },
+                            width: "max-content",
+                            transition: ".2s transform ease-in-out",
+                            transform: show ? "" : `translateX(${link.tf}px)`,
+                            "&:hover": {
+                                backgroundColor: "primary.main",
+                                opacity: 1,
+                            },
+                        }}
+                    >
+                        {link.title}
+                    </Button>
+                </NextLink>
             ))}
         </Stack>
     );

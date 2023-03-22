@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Stack, Typography } from "@mui/material";
-import Link from "next/link";
 import { useGetSelfQuery } from "../../services/user";
 import Avatar from "../../ui/Avatar";
+import NextLink from "../../ui/NextLink";
 
 interface AuthorizedDropdownProps {
     onClick?: () => void;
@@ -28,13 +28,11 @@ const AuthorizedDropdown = ({ onClick }: AuthorizedDropdownProps) => {
             <Typography fontSize={16} color="text.secondary" gutterBottom>
                 {user?.email}
             </Typography>
-            <Link href={`/userProfile/${user?.id}`}>
-                <a>
-                    <Button component="div" variant="outlined" sx={{ my: 2 }} onClick={onClickAction}>
-                        Моя страница
-                    </Button>
-                </a>
-            </Link>
+            <NextLink href={`/userProfile/${user?.id}`}>
+                <Button component="div" variant="outlined" sx={{ my: 2 }} onClick={onClickAction}>
+                    Моя страница
+                </Button>
+            </NextLink>
             <Button variant="outlined" onClick={logout}>
                 Выйти
             </Button>

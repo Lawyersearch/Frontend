@@ -1,5 +1,5 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
-import Link from "next/link";
+import NextLink from "../ui/NextLink";
 
 const NotFound = () => {
     return (
@@ -17,13 +17,11 @@ const NotFound = () => {
                     404
                 </Typography>
                 <Box mt="auto">
-                    <Link href="/">
-                        <a>
-                            <Typography mt="auto" variant="body1" sx={{ textDecoration: "underline" }} color="#fff">
-                                Перейти на главную страницу
-                            </Typography>
-                        </a>
-                    </Link>
+                    <NextLink href="/">
+                        <Typography mt="auto" variant="body1" sx={{ textDecoration: "underline" }} color="#fff">
+                            Перейти на главную страницу
+                        </Typography>
+                    </NextLink>
                 </Box>
             </Stack>
         </Container>

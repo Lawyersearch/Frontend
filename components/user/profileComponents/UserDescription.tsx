@@ -6,8 +6,8 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import { feedBacksString } from "../../../utils/wordsEndings";
 import { Category } from "../../../types/category";
-import Link from "next/link";
 import Avatar from "../../../ui/Avatar";
+import NextLink from "../../../ui/NextLink";
 
 interface UserProfileProps {
     avatar: string;
@@ -122,11 +122,9 @@ const UserDescription = ({
                         sx={{ px: 2, py: 1, bgcolor: "background.default" }}
                     >
                         {tasks?.map(task => (
-                            <Link href={`/search?q=${task.id}`} key={task.id} shallow>
-                                <a>
-                                    <Chip label={task.name} sx={{ m: 0.5, ":hover": { cursor: "pointer" } }} />
-                                </a>
-                            </Link>
+                            <NextLink href={`/search?q=${task.id}`} key={task.id} shallow>
+                                <Chip label={task.name} sx={{ m: 0.5, ":hover": { cursor: "pointer" } }} />
+                            </NextLink>
                         ))}
                     </Stack>
                 </>

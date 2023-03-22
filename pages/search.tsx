@@ -7,6 +7,7 @@ import { useSearch } from "../hooks/useSearch";
 import { CategoryTree, CategoryView } from "../types/category";
 import { GetStaticProps } from "next";
 import { experienceString } from "../utils/wordsEndings";
+import { queryView } from "../utils/query";
 
 interface SearchPageProps {
     categories: CategoryTree[];
@@ -48,26 +49,10 @@ const SearchPage = ({ categories, view }: SearchPageProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async context => {
-    const query = await fetch(`${process.env.BACK_SERVER_API}/category`).then(res => res.json());
-    const view: CategoryView[] = [];
-    const fillView = (node: CategoryTree, parents: { label: string; id: number }[] = []) => {
-        if (node.childs?.length) {
-            for (const newNode of node.childs) {
-                fillView(newNode, [...parents, { label: node.title, id: node.id }]);
-            }
-        } else {
-            view.push({ label: node.title, parents, id: node.id });
-        }
-    };
-    for (const node of query?.data ?? []) {
-        fillView(node);
-    }
+    const { view, categories } = await queryView();
 
     return {
-        props: {
-            categories: query.data,
-            view,
-        },
+        props: { categories,view },
         revalidate: +process.env.STATIC_REVALIDATE!,
     };
 };
