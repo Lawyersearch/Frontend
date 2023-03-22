@@ -1,30 +1,24 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import NextLink from "../ui/NextLink";
 
 const NotFound = () => {
     return (
-        <Container>
-            <Stack
-                alignItems="center"
-                height="calc(100vh - 64px - 16px)"
-                borderRadius={4}
-                p={2}
-                sx={{
-                    backgroundColor: "#d32f2f",
-                }}
-            >
-                <Typography variant="h1" mt="auto" color="#fff">
-                    404
-                </Typography>
-                <Box mt="auto">
-                    <NextLink href="/">
-                        <Typography mt="auto" variant="body1" sx={{ textDecoration: "underline" }} color="#fff">
-                            Перейти на главную страницу
-                        </Typography>
-                    </NextLink>
-                </Box>
+        <Stack alignItems="center">
+            <Stack width="80vw" alignItems="center" mt="10vh">
+                <Typography variant="h1" fontWeight={500}>404</Typography>
+                <Typography variant="h4" fontWeight={400}>Упс! Что-то пошло не так</Typography>
+                <NextLink href="/">
+                    <Typography variant="h5" mt={2} sx={{
+                        textDecoration: "underline",
+                        ":hover": {
+                            color: "primary.main"
+                        }
+                    }}>
+                        Вернуться на главную страницу
+                    </Typography>
+                </NextLink>
             </Stack>
-        </Container>
+        </Stack>
     );
 };
 
