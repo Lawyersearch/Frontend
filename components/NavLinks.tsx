@@ -2,24 +2,20 @@ import React from "react";
 import { Button, Stack } from "@mui/material";
 import { useGetSelfQuery } from "../services/user";
 import NextLink from "../ui/NextLink";
+import { isUserPerformer } from "../utils/user";
 
-interface NavLinksProps {
-    show: boolean;
-    lastShow: boolean;
-}
-
-const NavLinks = ({ show, lastShow }: NavLinksProps) => {
+const NavLinks = () => {
     const { data: user, isSuccess: isLogin } = useGetSelfQuery(undefined);
 
     const links = [
-        { title: "Главная", to: "/", tf: -70, show: true },
+        { title: "Главная", to: "/", show: true },
         {
             title: "Моя страница",
             to: `/userProfile/${user?.id}`,
-            tf: -185,
             show: isLogin,
         },
-        { title: "Поиск", to: "/search", tf: -347 + 150 * +!isLogin, show: true },
+        { title: "Доска заказов", to: "/orders", show: isUserPerformer(user?.role) },
+        { title: "Поиск", to: "/search", show: true },
     ];
 
     return (
@@ -28,20 +24,17 @@ const NavLinks = ({ show, lastShow }: NavLinksProps) => {
             direction="row"
             alignItems="center"
             spacing={{ xs: 1.5, sm: 2 }}
-            width={lastShow ? "fit-content" : 0}
-            visibility={lastShow ? "visible" : "hidden"}
+            width="fit-content"
+            visibility="visible"
         >
-            {links.map(link => (
+            {links.filter(link => link.show).map(link => (
                 <NextLink key={link.title} href={link.to}>
                     <Button
                         variant="contained"
                         component="div"
                         sx={{
-                            display: link.show ? "block" : "none",
                             p: { xs: "3px 4px", sm: "6px 16px" },
                             width: "max-content",
-                            transition: ".2s transform ease-in-out",
-                            transform: show ? "" : `translateX(${link.tf}px)`,
                             "&:hover": {
                                 backgroundColor: "primary.main",
                                 opacity: 1,

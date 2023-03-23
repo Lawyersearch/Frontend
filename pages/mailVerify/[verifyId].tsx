@@ -3,7 +3,7 @@ import Loading from "../../ui/Loading";
 import { useLoginFromVerification } from "../../hooks/redux/useAuth";
 import { useRouter } from "next/router";
 
-const VerifyId = () => {
+const MailVerifyPage = () => {
     const router = useRouter();
     const { verifyId } = router.query;
     const [login, { isLoading, isError, isSuccess }] = useLoginFromVerification();
@@ -21,4 +21,4 @@ const VerifyId = () => {
     return <></>;
 };
 
-export default VerifyId;
+export default MailVerifyPage;

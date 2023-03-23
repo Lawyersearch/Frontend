@@ -14,25 +14,32 @@ export const useSearch = (view: CategoryView[]) => {
         expanded: [],
     });
     const [trigger, { data: users, isLoading, isSuccess, error }] = useLazyGetUsersByCategorIdQuery();
+
     useEffect(() => {
         dispatch(setCategoryView(view));
     }, []);
+
     useEffect(() => {
         if (!router.query.q) {
             return;
         }
+
         const category = view.find(cat => cat.id === +router.query.q!);
+
         if (!category) {
             return;
         }
+
         categoryRef.current = {
             selected: category.id.toString(),
             expanded: category.parents.map(parent => parent.id.toString()),
         };
+
         searchQueryRef.current = {
             id: category.id,
             label: category.label,
         };
+
         trigger(category.id, true);
     }, [router.query.q]);
 
@@ -44,8 +51,11 @@ export const useSearch = (view: CategoryView[]) => {
                 expanded: category.parents.map(parent => parent.id.toString()),
             };
         }
+    
         searchQueryRef.current = arg;
+
         trigger(arg.id, true);
+
         router.push("", `?q=${arg.id}`, { shallow: true });
     }, []);
 

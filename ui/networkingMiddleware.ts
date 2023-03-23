@@ -1,4 +1,5 @@
 import { Middleware, MiddlewareAPI, PayloadAction } from "@reduxjs/toolkit";
+import Cookie from "js-cookie";
 import { pushSnack } from "../store/reducers/uiSlice";
 import _get from "lodash/get";
 import { RTKResponse } from "../types/RTKResponse";
@@ -10,7 +11,7 @@ const rtkQueryHandler: Middleware =
         const cached: boolean = _get(action, "meta.condition", true);
         if (invalidRequest && !cached) {
             if (action.payload?.status === 401) {
-                localStorage.removeItem("token");
+                Cookie.remove("token");
             } else {
                 api.dispatch(
                     pushSnack({

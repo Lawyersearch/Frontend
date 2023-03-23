@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import TreeView from "@mui/lab/TreeView";
 import TreeItem, { TreeItemProps, treeItemClasses } from "@mui/lab/TreeItem";
-import { Box, Stack, Collapse, styled, SvgIconProps, Theme, Typography, IconButton } from "@mui/material";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { Box, styled, SvgIconProps, Typography } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { CategoryTree } from "../types/category";
+import CollapsedList from "./CollapsedList";
 
 type StyledTreeItemProps = TreeItemProps & {
     bgColor?: string;
@@ -47,26 +47,22 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     },
 }));
 
-function StyledTreeItem(props: StyledTreeItemProps, theme: Theme) {
-    const { labelIcon: LabelIcon, labelInfo, labelText, ...other } = props;
-
-    return (
-        <StyledTreeItemRoot
-            label={
-                <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-                    <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
-                    <Typography variant="body2" sx={{ fontWeight: "inherit", flexGrow: 1 }}>
-                        {labelText}
-                    </Typography>
-                    <Typography variant="caption" color="inherit">
-                        {labelInfo}
-                    </Typography>
-                </Box>
-            }
-            {...other}
-        />
-    );
-}
+const StyledTreeItem = ({labelIcon, labelInfo, labelText, ...other}: StyledTreeItemProps) => (
+    <StyledTreeItemRoot
+        label={
+            <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
+                <Box component={labelIcon} color="inherit" sx={{ mr: 1 }} />
+                <Typography variant="body2" sx={{ fontWeight: "inherit", flexGrow: 1 }}>
+                    {labelText}
+                </Typography>
+                <Typography variant="caption" color="inherit">
+                    {labelInfo}
+                </Typography>
+            </Box>
+        }
+        {...other}
+    />
+);
 
 interface CategoriesProps {
     tree: CategoryTree[];
@@ -91,7 +87,7 @@ const Categories = ({ tree, category, switchCategory }: CategoriesProps) => {
         }
     };
 
-    const mobToggle = () => {
+    const onCollapsedToggle = useCallback(() => {
         if (mobExpanded) {
             setSelected("");
             setExpanded([]);
@@ -99,85 +95,54 @@ const Categories = ({ tree, category, switchCategory }: CategoriesProps) => {
         } else {
             setMobExpanded(true);
         }
-    };
+    }, [setSelected, setExpanded, setMobExpanded]);
 
     return (
-        <Collapse
-            collapsedSize={60}
-            in={mobExpanded}
-            sx={{
-                borderRadius: 4,
-                display: { xs: "block", md: "contents" },
-                backgroundColor: "background.paper",
-                justifyContent: "center",
-            }}
-        >
-            <Box
+        <CollapsedList title="Категории" expanded={mobExpanded} onToggle={onCollapsedToggle}>
+            <TreeView
+                disableSelection={!mobExpanded}
+                selected={selected}
+                expanded={expanded}
+                onNodeToggle={(_ev: any, nodeIds: string[]) => setExpanded(nodeIds)}
+                onNodeSelect={(_ev: any, nodeIds: string) => setSelected(nodeIds)}
+                defaultCollapseIcon={<ArrowDropDownIcon fontSize="large" />}
+                defaultExpandIcon={<ArrowRightIcon fontSize="large" />}
                 sx={{
-                    w: 1,
-                    px: { xs: 3, md: 1 },
-                    py: 1.7,
                     height: "fit-content",
+                    flexGrow: 1,
+                    pr: { xs: 0, md: 3 },
+                    userSelect: "none",
+                    ml: { xs: "-15px", md: 0 },
                 }}
             >
-                <Stack direction="row" justifyContent="space-between">
-                    <Typography
-                        variant="h6"
-                        component="h3"
-                        color={theme => theme.palette.primary.contrastText}
-                        ml={1}
-                        mb={{ xs: 1, md: 0 }}
+                {tree.map(fNode => (
+                    <StyledTreeItem
+                        nodeId={fNode.id.toString()}
+                        key={fNode.id}
+                        labelText={fNode.title}
+                        sx={{ m: { xs: 0 }, md: 2 }}
                     >
-                        Категории
-                    </Typography>
-                    <IconButton onClick={mobToggle} sx={{ display: { xs: "block", md: "none" }, mt: -1 }}>
-                        {mobExpanded ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
-                    </IconButton>
-                </Stack>
-                <TreeView
-                    selected={selected}
-                    expanded={expanded}
-                    onNodeToggle={(_ev: any, nodeIds: string[]) => setExpanded(nodeIds)}
-                    onNodeSelect={(_ev: any, nodeIds: string) => setSelected(nodeIds)}
-                    defaultCollapseIcon={<ArrowDropDownIcon fontSize="large" />}
-                    defaultExpandIcon={<ArrowRightIcon fontSize="large" />}
-                    sx={{
-                        height: "fit-content",
-                        flexGrow: 1,
-                        pr: { xs: 0, md: 3 },
-                        userSelect: "none",
-                        ml: { xs: "-15px", md: 0 },
-                    }}
-                >
-                    {tree.map(fNode => (
-                        <StyledTreeItem
-                            nodeId={fNode.id.toString()}
-                            key={fNode.id}
-                            labelText={fNode.title}
-                            sx={{ m: { xs: 0 }, md: 2 }}
-                        >
-                            {fNode.childs?.map(sNode => (
-                                <StyledTreeItem
-                                    nodeId={sNode.id.toString()}
-                                    key={sNode.id}
-                                    labelText={sNode?.title}
-                                    onClick={() => handleClick(sNode)}
-                                >
-                                    {sNode.childs?.map(tNode => (
-                                        <StyledTreeItem
-                                            nodeId={tNode.id.toString()}
-                                            key={tNode.id}
-                                            labelText={tNode?.title}
-                                            onClick={() => handleClick(tNode)}
-                                        />
-                                    ))}
-                                </StyledTreeItem>
-                            ))}
-                        </StyledTreeItem>
-                    ))}
-                </TreeView>
-            </Box>
-        </Collapse>
+                        {fNode.childs?.map(sNode => (
+                            <StyledTreeItem
+                                nodeId={sNode.id.toString()}
+                                key={sNode.id}
+                                labelText={sNode?.title}
+                                onClick={() => handleClick(sNode)}
+                            >
+                                {sNode.childs?.map(tNode => (
+                                    <StyledTreeItem
+                                        nodeId={tNode.id.toString()}
+                                        key={tNode.id}
+                                        labelText={tNode?.title}
+                                        onClick={() => handleClick(tNode)}
+                                    />
+                                ))}
+                            </StyledTreeItem>
+                        ))}
+                    </StyledTreeItem>
+                ))}
+            </TreeView>
+        </CollapsedList>
     );
 };
 

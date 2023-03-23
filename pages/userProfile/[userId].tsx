@@ -1,13 +1,13 @@
+import _isString from "lodash/isString";
 import { Container, Stack } from "@mui/material";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { User } from "../../types/user";
 import UserDescription from "../../components/user/profileComponents/UserDescription";
 import UserExperience from "../../components/user/profileComponents/UserExperience";
 import UserQualification from "../../components/user/profileComponents/UserQualification";
 import UserReviews from "../../components/user/profileComponents/UserReviews";
-import React, { useMemo } from "react";
 import { experienceString } from "../../utils/wordsEndings";
-import { useGetSelfQuery } from "../../services/user";
+import { querySelf, queryUser } from "../../utils/query";
 
 const primaryBorder = {
     border: 1,
@@ -17,66 +17,63 @@ const primaryBorder = {
 
 interface UserProfilePageProps {
     user: User;
+    isMyPage: boolean;
 }
 
-const UserProfilePage = ({ user }: UserProfilePageProps) => {
-    const { data: me } = useGetSelfQuery();
-    const isMyPage = useMemo(() => me?.id === user?.id, [user?.id, me?.id]);
-    return (
-        <Container>
-            <Stack spacing={3}>
-                {user && (
-                    <UserDescription
-                        experience={experienceString(user.expirience)}
-                        feedBacks={user?.reviewsTo?.length}
-                        rating={user?.rating!}
-                        tasks={user?.categories!}
-                        avatar={user?.avatar!}
-                        userName={`${user?.lastName} ${user?.firstName} ${user?.middleName}`}
-                        description={user?.description}
-                        phone={user?.phone}
-                        instagram={user?.instagram}
-                        email={user?.email}
-                        isMyPage={isMyPage}
-                        {...primaryBorder}
-                    />
-                )}
+const UserProfilePage = ({ user, isMyPage }: UserProfilePageProps) => (
+    <Container>
+        <Stack spacing={3}>
+            {user && (
+                <UserDescription
+                    experience={experienceString(user.expirience)}
+                    feedBacks={user?.reviewsTo?.length}
+                    rating={user?.rating!}
+                    tasks={user?.categories!}
+                    avatar={user?.avatar!}
+                    userName={`${user?.lastName} ${user?.firstName} ${user?.middleName}`}
+                    description={user?.description}
+                    phone={user?.phone}
+                    instagram={user?.instagram}
+                    email={user?.email}
+                    isMyPage={isMyPage}
+                    {...primaryBorder}
+                />
+            )}
 
-                {user?.role ? (
-                    <UserExperience {...primaryBorder} workExpiriences={user?.workExpiriences} isMyPage={isMyPage} />
-                ) : (
-                    <></>
-                )}
+            {user?.role ? (
+                <UserExperience {...primaryBorder} workExpiriences={user?.workExpiriences} isMyPage={isMyPage} />
+            ) : (
+                <></>
+            )}
 
-                {user?.role ? (
-                    <UserQualification {...primaryBorder} educations={user?.educations} isMyPage={isMyPage} />
-                ) : (
-                    <></>
-                )}
+            {user?.role ? (
+                <UserQualification {...primaryBorder} educations={user?.educations} isMyPage={isMyPage} />
+            ) : (
+                <></>
+            )}
 
-                {user?.reviewsTo?.length ? <UserReviews {...primaryBorder} reviews={user?.reviewsTo} /> : <></>}
-            </Stack>
-        </Container>
-    );
-};
+            {user?.reviewsTo?.length ? <UserReviews {...primaryBorder} reviews={user?.reviewsTo} /> : <></>}
+        </Stack>
+    </Container>
+);
 
-export const getStaticPaths: GetStaticPaths = () => {
+export const getServerSideProps: GetServerSideProps = async context => {
+    if (!_isString(context?.params?.userId)) {
+        return {notFound: true}
+    }
+
+    const token = context.req.cookies["token"];
+    const [user, myself] = await Promise.all([
+        queryUser(context.params!.userId as string),
+        querySelf(token)
+    ]);
+
     return {
-        paths: [],
-        fallback: true,
-    };
-};
-
-export const getStaticProps: GetStaticProps = async context => {
-    const user = await fetch(`${process.env.BACK_SERVER_API}/user/id/${context!.params!.userId}`).then(res =>
-        res.json(),
-    );
-    return {
-        notFound: !user.data,
+        notFound: !user,
         props: {
-            user: user.data,
-        },
-        revalidate: 60,
+            user,
+            isMyPage: user?.id === myself?.id
+        }
     };
 };
 

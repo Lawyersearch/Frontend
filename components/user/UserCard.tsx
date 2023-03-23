@@ -28,9 +28,10 @@ function UserCard({
     experience,
     ...rest
 }: UserProfileProps & SxProps) {
+
     return (
         <Card sx={{ borderRadius: 4, ...rest }}>
-            <Box sx={{ p: 2, display: "flex" }}>
+            <Box display="flex" p={2}>
                 <Box mr={2}>
                     <NextLink href={`/userProfile/${id}`}>
                         <Avatar src={avatar} height={250} width={250} sx={{ mr: 2, mb: 2 }} />
@@ -63,7 +64,7 @@ function UserCard({
                             <Typography
                                 variant="body1"
                                 fontWeight={300}
-                                color={theme => theme.palette.primary.main}
+                                color="primary.main"
                             >
                                 {feedBacksString(feedBacks)}
                             </Typography>

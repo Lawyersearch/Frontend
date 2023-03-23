@@ -1,3 +1,5 @@
+import { useSnackbar } from "notistack";
+import Cookie from "js-cookie";
 import {
     useLoginFromCredsMutation,
     useLoginFromVerificationMutation,
@@ -8,14 +10,18 @@ import {
 import { UserCredentials } from "../../types/userCredentials";
 import { RTKResponse } from "../../types/RTKResponse";
 import { RTKStatus } from "../../types/RTKStatus";
-import { useSnackbar } from "notistack";
 import { mailVerifiedText, mailVerifySentText, passwordChangedText } from "../../ui/strings";
 import { useLazyGetSelfQuery } from "../../services/user";
 import { skipToken } from "@reduxjs/toolkit/query";
 
-const loginFromResponse = (trigger: (opt: any, cache: boolean) => void, response: RTKResponse<string>) => {
-    if (response.data !== undefined) {
-        localStorage.token = response.data.data;
+const loginFromResponse = (trigger: (opt: any, cache: boolean) => void, {data: response}: RTKResponse<string>) => {
+    if (response !== undefined) {
+        Cookie.set("token", response.data, {
+            expires: 30,
+            secure: true,
+            sameSite: "strict"
+        });
+
         trigger(skipToken, false);
     }
 };

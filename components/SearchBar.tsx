@@ -90,7 +90,7 @@ const SearchBar = ({ switchCategory, searchQuery }: SearchBarProps) => {
                 <IconButton
                     sx={{
                         color: "white",
-                        backgroundColor: theme => theme.palette.primary.main,
+                        backgroundColor: "primary.main",
                         borderRadius: 0,
                         borderTopRightRadius: 5,
                         borderBottomRightRadius: 5,

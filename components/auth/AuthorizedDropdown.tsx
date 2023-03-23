@@ -1,4 +1,5 @@
 import React from "react";
+import Cookie from "js-cookie";
 import { Button, Stack, Typography } from "@mui/material";
 import { useGetSelfQuery } from "../../services/user";
 import Avatar from "../../ui/Avatar";
@@ -14,7 +15,7 @@ const AuthorizedDropdown = ({ onClick }: AuthorizedDropdownProps) => {
     const onClickAction = () => onClick && onClick();
 
     const logout = () => {
-        localStorage.removeItem("token");
+        Cookie.remove("token");
         refetch();
         onClickAction();
     };

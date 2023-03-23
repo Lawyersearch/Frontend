@@ -61,7 +61,7 @@ const UserDescription = ({
                             variant="body1"
                             component="a"
                             fontWeight={300}
-                            color={theme => theme.palette.primary.main}
+                            color="primary.main"
                             href="#reviews"
                         >
                             {feedBacksString(feedBacks)}

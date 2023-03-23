@@ -12,7 +12,7 @@ interface IndexPageProps {
     view: CategoryView[];
 }
 
-const Index = ({view}: IndexPageProps) => {
+const IndexPage = ({view}: IndexPageProps) => {
     const { searchQuery } = useSearch(view);
     const router = useRouter();
     const switchCategory = useCallback(({id}: {id: number}) => {
@@ -25,9 +25,9 @@ const Index = ({view}: IndexPageProps) => {
                 <Typography variant="h1" fontWeight={400}>Лучше пишите нам</Typography>
                 <SearchBar searchQuery={searchQuery} switchCategory={switchCategory} />
                 <Stack direction="row" spacing={2}>
-                    {view.map(category => (
-                        <NextLink href={`/search?q=${category.id}`}>
-                            <Chip label={category.label}></Chip>
+                    {view.map(({id, label}) => (
+                        <NextLink key={id} href={`/search?q=${id}`}>
+                            <Chip label={label}></Chip>
                         </NextLink>
                     ))}
                 </Stack>
@@ -45,4 +45,4 @@ export const getStaticProps: GetStaticProps = async context => {
     };
 };
 
-export default Index;
+export default IndexPage;

@@ -23,7 +23,7 @@ module.exports = (phase, { defaultConfig }) => {
             ...commonConfig,
             env: {
                 ...commonConfig.env,
-                STATIC_REVALIDATE: 30,
+                STATIC_REVALIDATE: 1,
             },
         };
     }
@@ -34,7 +34,7 @@ module.exports = (phase, { defaultConfig }) => {
         compress: true,
         env: {
             ...commonConfig.env,
-            STATIC_REVALIDATE: 3600,
+            STATIC_REVALIDATE: 30,
         },
     };
 };

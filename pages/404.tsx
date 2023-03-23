@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import NextLink from "../ui/NextLink";
 
-const NotFound = () => {
+const NotFoundPage = () => {
     return (
         <Stack alignItems="center">
             <Stack width="80vw" alignItems="center" mt="10vh">
@@ -22,4 +22,4 @@ const NotFound = () => {
     );
 };
 
-export default NotFound;
+export default NotFoundPage;

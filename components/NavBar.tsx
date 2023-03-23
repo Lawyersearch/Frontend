@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { AppBar, IconButton, Toolbar, Typography, Badge, useTheme, Box, ClickAwayListener, Stack } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NavLinks from "./NavLinks";
@@ -14,28 +13,20 @@ import { toggleMode } from "../store/reducers/uiSlice";
 import { useBoolean } from "../hooks/useBoolean";
 import { useDropdownAuth } from "../hooks/useDropdownAuth";
 import Avatar from "../ui/Avatar";
+import { GetServerSideProps } from "next";
+import { querySelf } from "../utils/query";
 
 const NavBar = () => {
     const { data: user, isSuccess } = useGetSelfQuery(undefined);
-    const [showLinks, , hideLinks, toggleLinks] = useBoolean(false);
-    const [lastShow, trueLastShow, falseLastShow] = useBoolean(false);
     const [showModal, setShowModal, setHideModal, toggleModal] = useBoolean(false);
     const dispatch = useAppDispatch();
     const theme = useTheme();
+
     useDropdownAuth(() => {
         if (!isSuccess) {
             setShowModal();
         }
     });
-
-    useEffect(() => {
-        if (!showLinks && lastShow) {
-            setTimeout(falseLastShow, 200);
-        }
-        if (showLinks && !lastShow) {
-            trueLastShow();
-        }
-    }, [showLinks]);
 
     const toggleColorMode = () => {
         dispatch(toggleMode());
@@ -44,21 +35,16 @@ const NavBar = () => {
     return (
         <AppBar position="static" sx={{ mb: 1, height: 64 }}>
             <Toolbar>
-                <ClickAwayListener onClickAway={hideLinks}>
-                    <Stack direction="row" alignItems="center">
-                        <IconButton onClick={toggleLinks}>
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography variant="h6" component="h1" display={lastShow ? "none" : "block"}>
-                            StartUp
-                        </Typography>
-                        <NavLinks show={showLinks} lastShow={lastShow} />
-                    </Stack>
-                </ClickAwayListener>
+                <Stack direction="row" alignItems="center">
+                    <Typography variant="h6" component="h1" display={{xs: "none", sm: "block"}} mr={2}>
+                        StartUp
+                    </Typography>
+                    <NavLinks />
+                </Stack>
                 <Box
                     sx={{
                         display: {
-                            xs: showLinks || lastShow ? "none" : "flex",
+                            xs: "none",
                             sm: "flex",
                         },
                         ml: "auto",

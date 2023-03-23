@@ -1,19 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { WorkExpirience } from "../types/user";
-import { getData } from "./utils";
+import { authenticatedBaseQuery, getData } from "./utils";
 
 export const workExperienceApi = createApi({
     reducerPath: "workExperienceApi",
-    baseQuery: fetchBaseQuery({
-        baseUrl: `${process.env.BACK_SERVER_API}/workExpirience`,
-        prepareHeaders: headers => {
-            const token = localStorage.getItem("token");
-            if (token) {
-                headers.set("Authorization", "Bearer " + token);
-            }
-            return headers;
-        },
-    }),
+    baseQuery: authenticatedBaseQuery("workExpirience"),
     endpoints: builder => ({
         addWorkExperience: builder.mutation<WorkExpirience, Partial<WorkExpirience>>({
             query: (workExp: WorkExpirience) => ({

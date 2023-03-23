@@ -7,7 +7,7 @@ import { isValidPassword } from "../../utils/validation";
 import { invalidPasswordText, notMatchingPasswordText } from "../../ui/strings";
 import { useRouter } from "next/router";
 
-const VerifyId = () => {
+const PasswordRestorePage = () => {
     const router = useRouter();
     const { verifyId } = router.query;
     const [newPassword, setNewPassword] = useState("");
@@ -71,4 +71,4 @@ const VerifyId = () => {
     );
 };
 
-export default VerifyId;
+export default PasswordRestorePage;
