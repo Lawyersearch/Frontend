@@ -1,11 +1,16 @@
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Chip, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 import PublicIcon from '@mui/icons-material/Public';
 import CollapsedList from "../CollapsedList";
 import { useState } from "react";
+import { Order } from "../../types/order";
 
+interface OrderTypesProps {
+    onTypeClick: (type: number) => void;
+    orders: Order[][]
+}
 
-const OrderTypes = () => {
+const OrderTypes = ({onTypeClick, orders}: OrderTypesProps) => {
     const [expanded, setExpanded] = useState(false);
     const types = [
         {type: 0, label: "Мои заказы", Icon: PersonIcon},
@@ -13,15 +18,16 @@ const OrderTypes = () => {
     ];
 
     return (
-        <CollapsedList title={"Заказы"} expanded={expanded} onToggle={()=>setExpanded(!expanded)}>
+        <CollapsedList title="Заказы" expanded={expanded} onToggle={()=>setExpanded(!expanded)}>
             <List>
                 {types.map(({type, label, Icon}) => (
                     <ListItem key={type}>
-                        <ListItemButton>
+                        <ListItemButton onClick={() => onTypeClick(type)}>
                             <ListItemIcon>
                                 <Icon/>
                             </ListItemIcon>
                             <ListItemText primary={label} />
+                            <Chip label={orders[type].length}/>
                         </ListItemButton>
                     </ListItem>
                 ))}

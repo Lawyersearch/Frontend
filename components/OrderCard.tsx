@@ -24,7 +24,7 @@ const OrderCard = (order: Order) => {
                 </Stack>
                 <Box display="grid" gridTemplateColumns="auto 1fr" gap={2}>
                     <Typography fontWeight={550}>Автор</Typography>
-                    <ProfileLink id={order.userId} userName={"Какое-то имя"} src=""/>
+                    <ProfileLink id={order.userId} userName={order.creatorName} src={order.avatar}/>
                     <Typography fontWeight={550}>Описание</Typography>
                     <Typography>{order.description}</Typography>
                     <Typography fontWeight={550}>Цена</Typography>

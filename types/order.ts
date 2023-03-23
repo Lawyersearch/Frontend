@@ -1,5 +1,7 @@
 export interface Order {
     id: string,
+    creatorName: string,
+    avatar: string,
     userId: string,
     performerId?: string,
     offerId?: string,
@@ -9,5 +11,10 @@ export interface Order {
     categoryId: number,
     createdDate: string,
     orderStatus: number,
-    orderType: number
+    orderType: OrderType
+}
+
+export enum OrderType {
+    PRIVATE = 0,
+    PUBLIC = 1
 }

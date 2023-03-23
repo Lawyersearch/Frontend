@@ -29,7 +29,7 @@ const CollapsedList = ({title, children, onToggle, expanded}: CollapsedListProps
                 height: "fit-content",
             }}
         >
-            <Stack direction="row" justifyContent="space-between" onClick={() => onToggle(!expanded)}>
+            <Stack direction="row" justifyContent={{xs: "space-between", md: "center"}} onClick={() => onToggle(!expanded)}>
                 <Typography
                     variant="h6"
                     component="h3"

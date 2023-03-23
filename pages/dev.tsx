@@ -8,6 +8,8 @@ import OrderTypes from "../components/order/types";
 const testingOrder: Order = {
     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     "userId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "creatorName": "Василий Пупкин",
+    "avatar": "",
     "performerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     "offerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     "price": 0,
@@ -32,7 +34,6 @@ export const TestingComponent = () => {
                 <OrderCard {...testingOrder} />
             </Container>
             <Card>
-                <OrderTypes />
             </Card>
             <label htmlFor={id}>
                 <Button variant="outlined" sx={{ textTransform: "none" }} component="div">
