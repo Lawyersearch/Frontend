@@ -13,6 +13,9 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import ruLocale from "date-fns/locale/ru";
 import { useEffect, useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import { runInBrowser } from "../utils/ssr";
+import { useRouter } from "next/router";
+import FullpageLoader from "../ui/FullpageLoader";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -20,11 +23,18 @@ interface MyAppProps extends AppProps {
     emotionCache?: EmotionCache;
 }
 
-function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: MyAppProps) {
-    const [isMounted, setIsMounted] = useState(false);
+const MyApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps }: MyAppProps) => {
+    const router = useRouter();
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    runInBrowser(() => {
+        document.body.style.backgroundColor = localStorage.getItem("mode") === "dark" ? "#1e1e1e" : "#f0f0f0";
+    });
 
     useEffect(() => {
-        setIsMounted(true);
+        router.events.on("routeChangeStart", () => setIsLoaded(false));
+        router.events.on("routeChangeComplete", () => setIsLoaded(true));
+        setIsLoaded(true);
     }, []);
 
     return (
@@ -32,22 +42,12 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
             <Provider store={store}>
                 <SnackbarController>
                     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
-                        {isMounted ? (
-                            <ColorModeProvider>
-                                <NavBar />
-                                <CssBaseline />
-                                <Component {...pageProps} />
-                            </ColorModeProvider>
-                        ) : (
-                            <CircularProgress
-                                size={100}
-                                sx={{
-                                    mt: "calc(50vh - 90px)",
-                                    ml: "calc(50vw - 50px)",
-                                    color: "#ff9100",
-                                }}
-                            />
-                        )}
+                        {!isLoaded && <FullpageLoader />}
+                        <ColorModeProvider>
+                            <NavBar />
+                            <CssBaseline />
+                            <Component {...pageProps} />
+                        </ColorModeProvider>
                     </LocalizationProvider>
                 </SnackbarController>
             </Provider>

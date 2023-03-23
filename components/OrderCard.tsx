@@ -14,7 +14,7 @@ const OrderCard = (order: Order) => {
     return (
         <Card sx={{ borderRadius: 4 }}>
             <Stack p={2} spacing={3}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Stack direction="row" justifyContent="space-between">
                     <Typography variant="h3">
                         {order.title}
                     </Typography>

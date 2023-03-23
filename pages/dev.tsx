@@ -1,8 +1,9 @@
 import { useId, useRef } from "react";
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography, Card } from "@mui/material";
 import { Order } from "../types/order";
 import OrderCard from "../components/OrderCard";
 import ProfileLink from "../ui/ProfileLink";
+import OrderTypes from "../components/order/types";
 
 const testingOrder: Order = {
     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -30,6 +31,9 @@ export const TestingComponent = () => {
             <Container>
                 <OrderCard {...testingOrder} />
             </Container>
+            <Card>
+                <OrderTypes />
+            </Card>
             <label htmlFor={id}>
                 <Button variant="outlined" sx={{ textTransform: "none" }} component="div">
                     <Typography>Тут какой то текст</Typography>

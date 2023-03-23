@@ -83,6 +83,7 @@ const Categories = ({ tree, category, switchCategory }: CategoriesProps) => {
     const handleClick = (node: CategoryTree) => {
         if (!node.childs?.length) {
             switchCategory({ id: node.id, label: node.title, expanded });
+            setSelected(String(node.id));
             mobExpanded && setMobExpanded(false);
         }
     };
