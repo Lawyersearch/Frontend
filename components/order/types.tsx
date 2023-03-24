@@ -1,3 +1,4 @@
+import _isEmpty from "lodash/isEmpty";
 import { Chip, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import PublicIcon from "@mui/icons-material/Public";
@@ -22,7 +23,7 @@ const OrderTypes = ({ onTypeClick, orders }: OrderTypesProps) => {
             <List>
                 {types.map(({ type, label, Icon }) => (
                     <ListItem key={type}>
-                        <ListItemButton onClick={() => onTypeClick(type)}>
+                        <ListItemButton disabled={_isEmpty(orders[type])} onClick={() => onTypeClick(type)}>
                             <ListItemIcon>
                                 <Icon />
                             </ListItemIcon>

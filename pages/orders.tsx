@@ -1,5 +1,5 @@
 import _isEmpty from "lodash/isEmpty";
-import { Container, Grid, Stack } from "@mui/material";
+import { Container, Grid, Stack, Typography } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
 import OrderTypes from "../components/order/types";
@@ -27,11 +27,18 @@ const OrdersPage = ({ orders, isAuthorized }: OrdersPageProps) => {
                     </Grid>
                 )}
                 <Grid item xs={12} md={9 + Number(!isAuthorized) * 3}>
-                    <Stack spacing={3}>
-                        {orders[type].map(order => (
-                            <OrderCard key={order.id} {...order} />
-                        ))}
-                    </Stack>
+                    {orders[type].length ? (
+                        <Stack spacing={3}>
+                            {orders[type].map(order => (
+                                <OrderCard key={order.id} {...order} />
+                            ))}
+                        </Stack> 
+                    ) : (
+                        <Typography mt={10} textAlign="center" variant="h3"
+                        >
+                            Здесь ничего нет
+                        </Typography>
+                    )}
                 </Grid>
             </Grid>
         </Container>

@@ -16,7 +16,7 @@ const OrderCard = (order: Order) => {
             <Stack p={2} spacing={3}>
                 <Stack direction="row" justifyContent="space-between">
                     <Typography variant="h3">{order.title}</Typography>
-                    <Typography>{fnsFormat(new Date(order.createdDate), "dd.mm.yyyy")}</Typography>
+                    <Typography>{fnsFormat(new Date(order.createdDate), "dd.MM.yyyy")}</Typography>
                 </Stack>
                 <Box display="grid" gridTemplateColumns="auto 1fr" gap={2}>
                     <Typography fontWeight={550}>Автор</Typography>
