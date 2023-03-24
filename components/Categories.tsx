@@ -99,7 +99,12 @@ const Categories = ({ tree, category, switchCategory }: CategoriesProps) => {
     }, [setSelected, setExpanded, setMobExpanded]);
 
     return (
-        <CollapsedList title="Категории" expanded={mobExpanded} onToggle={onCollapsedToggle}>
+        <CollapsedList
+            title="Категории"
+            titleAlignment="space-between"
+            expanded={mobExpanded}
+            onToggle={onCollapsedToggle}
+        >
             <TreeView
                 disableSelection={!mobExpanded}
                 selected={selected}

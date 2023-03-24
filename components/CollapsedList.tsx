@@ -5,12 +5,13 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 interface CollapsedListProps {
     title: string;
+    titleAlignment?: "center" | "space-between";
     children: React.ReactNode | React.ReactNode[];
     expanded: boolean;
     onToggle: (curState: boolean) => void;
 }
 
-const CollapsedList = ({ title, children, onToggle, expanded }: CollapsedListProps) => (
+const CollapsedList = ({ title, titleAlignment = "center", children, onToggle, expanded }: CollapsedListProps) => (
     <Collapse
         collapsedSize={60}
         in={expanded}
@@ -31,7 +32,7 @@ const CollapsedList = ({ title, children, onToggle, expanded }: CollapsedListPro
         >
             <Stack
                 direction="row"
-                justifyContent={{ xs: "space-between", md: "center" }}
+                justifyContent={{ xs: "space-between", md: titleAlignment }}
                 onClick={() => onToggle(!expanded)}
             >
                 <Typography variant="h6" component="h3" color="primary.contrastText" ml={1} mb={{ xs: 1, md: 0 }}>
