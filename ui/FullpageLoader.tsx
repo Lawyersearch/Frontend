@@ -1,6 +1,5 @@
 import { CircularProgress } from "@mui/material";
 
-
 const FullpageLoader = () => (
     <CircularProgress
         size={100}

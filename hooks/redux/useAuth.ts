@@ -14,12 +14,12 @@ import { mailVerifiedText, mailVerifySentText, passwordChangedText } from "../..
 import { useLazyGetSelfQuery } from "../../services/user";
 import { skipToken } from "@reduxjs/toolkit/query";
 
-const loginFromResponse = (trigger: (opt: any, cache: boolean) => void, {data: response}: RTKResponse<string>) => {
+const loginFromResponse = (trigger: (opt: any, cache: boolean) => void, { data: response }: RTKResponse<string>) => {
     if (response !== undefined) {
         Cookie.set("token", response.data, {
             expires: 30,
             secure: true,
-            sameSite: "strict"
+            sameSite: "strict",
         });
 
         trigger(skipToken, false);

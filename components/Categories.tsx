@@ -47,7 +47,7 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     },
 }));
 
-const StyledTreeItem = ({labelIcon, labelInfo, labelText, ...other}: StyledTreeItemProps) => (
+const StyledTreeItem = ({ labelIcon, labelInfo, labelText, ...other }: StyledTreeItemProps) => (
     <StyledTreeItemRoot
         label={
             <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>

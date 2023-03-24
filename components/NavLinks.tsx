@@ -14,7 +14,7 @@ const NavLinks = () => {
             to: `/userProfile/${user?.id}`,
             show: isLogin,
         },
-        { title: "Доска заказов", to: "/orders", show: isUserPerformer(user?.role) },
+        { title: "Доска заказов", to: "/orders", show: true },
         { title: "Поиск", to: "/search", show: true },
     ];
 
@@ -27,24 +27,26 @@ const NavLinks = () => {
             width="fit-content"
             visibility="visible"
         >
-            {links.filter(link => link.show).map(link => (
-                <NextLink key={link.title} href={link.to}>
-                    <Button
-                        variant="contained"
-                        component="div"
-                        sx={{
-                            p: { xs: "3px 4px", sm: "6px 16px" },
-                            width: "max-content",
-                            "&:hover": {
-                                backgroundColor: "primary.main",
-                                opacity: 1,
-                            },
-                        }}
-                    >
-                        {link.title}
-                    </Button>
-                </NextLink>
-            ))}
+            {links
+                .filter(link => link.show)
+                .map(link => (
+                    <NextLink key={link.title} href={link.to}>
+                        <Button
+                            variant="contained"
+                            component="div"
+                            sx={{
+                                p: { xs: "3px 4px", sm: "6px 16px" },
+                                width: "max-content",
+                                "&:hover": {
+                                    backgroundColor: "primary.main",
+                                    opacity: 1,
+                                },
+                            }}
+                        >
+                            {link.title}
+                        </Button>
+                    </NextLink>
+                ))}
         </Stack>
     );
 };

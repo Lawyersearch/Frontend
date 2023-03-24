@@ -1,16 +1,16 @@
 import React from "react";
-import { Collapse, Box, Stack, Typography, IconButton } from "@mui/material"
+import { Collapse, Box, Stack, Typography, IconButton } from "@mui/material";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 interface CollapsedListProps {
-    title: string
-    children: React.ReactNode | React.ReactNode[]
-    expanded: boolean
-    onToggle: (curState: boolean) => void
+    title: string;
+    children: React.ReactNode | React.ReactNode[];
+    expanded: boolean;
+    onToggle: (curState: boolean) => void;
 }
 
-const CollapsedList = ({title, children, onToggle, expanded}: CollapsedListProps) => (
+const CollapsedList = ({ title, children, onToggle, expanded }: CollapsedListProps) => (
     <Collapse
         collapsedSize={60}
         in={expanded}
@@ -29,14 +29,12 @@ const CollapsedList = ({title, children, onToggle, expanded}: CollapsedListProps
                 height: "fit-content",
             }}
         >
-            <Stack direction="row" justifyContent={{xs: "space-between", md: "center"}} onClick={() => onToggle(!expanded)}>
-                <Typography
-                    variant="h6"
-                    component="h3"
-                    color="primary.contrastText"
-                    ml={1}
-                    mb={{ xs: 1, md: 0 }}
-                >
+            <Stack
+                direction="row"
+                justifyContent={{ xs: "space-between", md: "center" }}
+                onClick={() => onToggle(!expanded)}
+            >
+                <Typography variant="h6" component="h3" color="primary.contrastText" ml={1} mb={{ xs: 1, md: 0 }}>
                     {title}
                 </Typography>
                 <IconButton sx={{ display: { xs: "block", md: "none" }, mt: -1 }}>

@@ -36,7 +36,7 @@ const NavBar = () => {
         <AppBar position="static" sx={{ mb: 1, height: 64 }}>
             <Toolbar>
                 <Stack direction="row" alignItems="center">
-                    <Typography variant="h6" component="h1" display={{xs: "none", sm: "block"}} mr={2}>
+                    <Typography variant="h6" component="h1" display={{ xs: "none", sm: "block" }} mr={2}>
                         StartUp
                     </Typography>
                     <NavLinks />

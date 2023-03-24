@@ -1,10 +1,10 @@
-export const runInBrowser = <T=void>(cb: () => T) => {
+export const runInBrowser = <T = void>(cb: () => T) => {
     if (typeof window !== "undefined") {
-        return cb()
+        return cb();
     }
 };
 
-export const runInServer = <T=void>(cb: () => T) => {
+export const runInServer = <T = void>(cb: () => T) => {
     if (typeof window === "undefined") {
         return cb();
     }

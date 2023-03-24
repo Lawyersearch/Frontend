@@ -28,7 +28,6 @@ function UserCard({
     experience,
     ...rest
 }: UserProfileProps & SxProps) {
-
     return (
         <Card sx={{ borderRadius: 4, ...rest }}>
             <Box display="flex" p={2}>
@@ -61,11 +60,7 @@ function UserCard({
                             ({Math.round(rating * 100) / 100} / 5.0)
                         </Typography>
                         <NextLink href={`/userProfile/${id}#reviews`}>
-                            <Typography
-                                variant="body1"
-                                fontWeight={300}
-                                color="primary.main"
-                            >
+                            <Typography variant="body1" fontWeight={300} color="primary.main">
                                 {feedBacksString(feedBacks)}
                             </Typography>
                         </NextLink>

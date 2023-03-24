@@ -57,13 +57,7 @@ const UserDescription = ({
                                 ({Math.round(rating * 100) / 100} / 5.0)
                             </Typography>
                         </Stack>
-                        <Typography
-                            variant="body1"
-                            component="a"
-                            fontWeight={300}
-                            color="primary.main"
-                            href="#reviews"
-                        >
+                        <Typography variant="body1" component="a" fontWeight={300} color="primary.main" href="#reviews">
                             {feedBacksString(feedBacks)}
                         </Typography>
                     </Stack>

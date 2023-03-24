@@ -51,7 +51,7 @@ export const useSearch = (view: CategoryView[]) => {
                 expanded: category.parents.map(parent => parent.id.toString()),
             };
         }
-    
+
         searchQueryRef.current = arg;
 
         trigger(arg.id, true);

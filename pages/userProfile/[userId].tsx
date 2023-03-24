@@ -59,21 +59,18 @@ const UserProfilePage = ({ user, isMyPage }: UserProfilePageProps) => (
 
 export const getServerSideProps: GetServerSideProps = async context => {
     if (!_isString(context?.params?.userId)) {
-        return {notFound: true}
+        return { notFound: true };
     }
 
     const token = context.req.cookies["token"];
-    const [user, myself] = await Promise.all([
-        queryUser(context.params!.userId as string),
-        querySelf(token)
-    ]);
+    const [user, myself] = await Promise.all([queryUser(context.params!.userId as string), querySelf(token)]);
 
     return {
         notFound: !user,
         props: {
             user,
-            isMyPage: user?.id === myself?.id
-        }
+            isMyPage: user?.id === myself?.id,
+        },
     };
 };
 

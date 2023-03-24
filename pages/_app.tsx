@@ -53,6 +53,6 @@ const MyApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
             </Provider>
         </CacheProvider>
     );
-}
+};
 
 export default MyApp;

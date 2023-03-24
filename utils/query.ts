@@ -9,18 +9,19 @@ const query = async <T>(url: string, opts?: RequestInit) => {
         return;
     }
 
-    const {data: body} = await response.json();
+    const { data: body } = await response.json();
 
     return body as T;
-}
+};
 
 const createAuthOpts = (token?: string): RequestInit => {
     return token
         ? {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        }: {};
+              headers: {
+                  Authorization: "Bearer " + token,
+              },
+          }
+        : {};
 };
 
 export const queryView = async () => {
@@ -41,8 +42,8 @@ export const queryView = async () => {
         fillView(node);
     }
 
-    return {view, categories};
-}
+    return { view, categories };
+};
 
 export const queryPublicOrders = () => query<Order[]>("/order");
 

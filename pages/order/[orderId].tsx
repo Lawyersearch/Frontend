@@ -1,5 +1,3 @@
-const OrderPage = () => {
-
-};
+const OrderPage = () => {};
 
 export default OrderPage;

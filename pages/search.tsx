@@ -52,7 +52,7 @@ export const getStaticProps: GetStaticProps = async context => {
     const { view, categories } = await queryView();
 
     return {
-        props: { categories,view },
+        props: { categories, view },
         revalidate: +process.env.STATIC_REVALIDATE!,
     };
 };
