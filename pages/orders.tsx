@@ -8,13 +8,14 @@ import { Order, OrderType } from "../types/order";
 import { queryPrivateOrders, queryPublicOrders, queryUserOrders } from "../utils/query";
 import { isUserPerformer } from "../utils/user";
 import { wrapper } from "../store";
+import { useAppSelector } from "../hooks/redux/useTypedRedux";
 
 interface OrdersPageProps {
     orders: { [key in keyof typeof OrderType]: Order[] };
-    isAuthorized: boolean;
 }
 
-const OrdersPage = ({ orders, isAuthorized }: OrdersPageProps) => {
+const OrdersPage = ({ orders }: OrdersPageProps) => {
+    const isAuthorized = useAppSelector(state => Boolean(state.user.self));
     const [type, setType] = useState<number>(
         _isEmpty(orders[OrderType.PRIVATE]) ? OrderType.PUBLIC : OrderType.PRIVATE,
     );
@@ -59,7 +60,6 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
                 [OrderType.PRIVATE]: privateOrders,
                 [OrderType.PUBLIC]: publicOrders,
             },
-            isAuthorized: Boolean(self),
         },
     };
 });

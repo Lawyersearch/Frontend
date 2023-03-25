@@ -1,23 +1,17 @@
 import { CategoryView } from "../types/category";
 import { useAppDispatch } from "./redux/useTypedRedux";
-import { setCategoryView } from "../store/reducers/uiSlice";
 import { useCallback, useEffect, useRef } from "react";
 import { useLazyGetUsersByCategorIdQuery } from "../services/user";
 import { useRouter } from "next/router";
 
 export const useSearch = (view: CategoryView[]) => {
     const router = useRouter();
-    const dispatch = useAppDispatch();
     const searchQueryRef = useRef<{ id?: number; label: string }>({ label: "" });
     const categoryRef = useRef<{ selected: string; expanded: string[] }>({
         selected: "0",
         expanded: [],
     });
     const [trigger, { data: users, isLoading, isSuccess, error }] = useLazyGetUsersByCategorIdQuery();
-
-    useEffect(() => {
-        dispatch(setCategoryView(view));
-    }, []);
 
     useEffect(() => {
         if (!router.query.q) {

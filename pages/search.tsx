@@ -9,6 +9,7 @@ import { GetStaticProps } from "next";
 import { experienceString } from "../utils/wordsEndings";
 import { queryView } from "../utils/query";
 import { wrapper } from "../store";
+import { setCategoryView } from "../store/reducers/uiSlice";
 
 interface SearchPageProps {
     categories: CategoryTree[];
@@ -51,6 +52,8 @@ const SearchPage = ({ categories, view }: SearchPageProps) => {
 
 export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => async context => {
     const { view, categories } = await queryView();
+    console.log("setting cat view", view);
+    store.dispatch(setCategoryView(view));
 
     return {
         props: { categories, view },

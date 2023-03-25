@@ -6,7 +6,7 @@ const query = async <T>(url: string, opts?: RequestInit) => {
     const response = await fetch(process.env.BACK_SERVER_API + url, opts);
 
     if (!response.ok) {
-        return;
+        return null;
     }
 
     const { data: body } = await response.json();

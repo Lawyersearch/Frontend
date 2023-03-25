@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { Box } from "@mui/material";
+import Cookie from "js-cookie";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import getDesignTokens from "./mainTheme";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux/useTypedRedux";
@@ -14,7 +15,8 @@ const ColorModeProvider = ({ children }: ColorModeProviderProps) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        const storedMode = localStorage.getItem("mode");
+        const storedMode = Cookie.get("mode");
+
         if (storedMode === "light") {
             dispatch(setMode("light"));
         } else if (!storedMode) {
@@ -23,7 +25,7 @@ const ColorModeProvider = ({ children }: ColorModeProviderProps) => {
     }, []);
 
     useEffect(() => {
-        localStorage.setItem("mode", mode);
+        Cookie.set("mode", mode);
     }, [mode]);
 
     const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);

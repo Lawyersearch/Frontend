@@ -32,6 +32,7 @@ module.exports = (phase, { defaultConfig }) => {
     return {
         // Production
         ...commonConfig,
+        reactStrictMode: false,
         compress: true,
         env: {
             ...commonConfig.env,

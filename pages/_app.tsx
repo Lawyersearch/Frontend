@@ -8,7 +8,7 @@ import SnackbarController from "../ui/SnackbarController";
 import NavBar from "../components/NavBar";
 import createEmotionCache from "../utils/createEmotionCache";
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, PaletteMode } from "@mui/material";
 import ColorModeProvider from "../ui/themes/ColorModeProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import ruLocale from "date-fns/locale/ru";
@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 import FullpageLoader from "../ui/FullpageLoader";
 import { IncomingMessage } from "http";
 import { fetchSelf } from "../store/actions";
+import { setMode } from "../store/reducers/uiSlice";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -32,7 +33,7 @@ const MyApp = ({ Component, emotionCache = clientSideEmotionCache, ...rest }: My
     const [isLoaded, setIsLoaded] = useState(false);
 
     runInBrowser(() => {
-        document.body.style.backgroundColor = localStorage.getItem("mode") === "dark" ? "#1e1e1e" : "#f0f0f0";
+        document.body.style.backgroundColor = store.getState().ui.mode === "dark" ? "#1e1e1e" : "#f0f0f0";
     });
 
     useEffect(() => {
@@ -66,7 +67,9 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(store => async context => {
         }>;
     };
     const token = request.cookies?.token || Cookie.get("token");
+    const mode: PaletteMode = (request.cookies?.mode as PaletteMode | undefined) || "dark";
 
+    store.dispatch(setMode(mode));
     await store.dispatch(fetchSelf(token));
 
     return {

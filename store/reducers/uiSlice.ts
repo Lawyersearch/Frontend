@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Snack } from "../../types/snack";
 import { CategoryView } from "../../types/category";
 import { PaletteMode } from "@mui/material";
+import { HYDRATE } from "next-redux-wrapper";
+import { RootState } from "..";
 
 interface UiSlice {
     pushSnack?: (snack: Snack) => void;
@@ -37,6 +39,12 @@ export const uiSlice = createSlice({
         toggleMode: state => {
             state.mode = state.mode === "light" ? "dark" : "light";
         },
+    },
+    extraReducers: builder => {
+        builder.addCase(HYDRATE, (state, action: PayloadAction<RootState, typeof HYDRATE>) => {
+            state.mode = action.payload.ui.mode || state.mode;
+            state.categoryView = action.payload.ui.categoryView || state.categoryView;
+        });
     },
 });
 

@@ -5,20 +5,20 @@ import { User } from "../../types/user";
 import { fetchSelf } from "../actions";
 
 interface UserState {
-    self?: User;
+    self: User | null;
 }
 
-const initialState: UserState = {};
+const initialState: UserState = { self: null };
 
 export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        setSelf: (state, action: PayloadAction<User | undefined>) => {
+        setSelf: (state, action: PayloadAction<User | null>) => {
             state.self = action.payload;
         },
         removeSelf: state => {
-            delete state.self;
+            state.self = null;
         },
     },
     extraReducers: builder => {

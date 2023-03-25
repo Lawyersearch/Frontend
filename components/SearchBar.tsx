@@ -11,6 +11,7 @@ import {
     InputLabel,
     NativeSelect,
 } from "@mui/material";
+import _isString from "lodash/isString";
 import SearchIcon from "@mui/icons-material/Search";
 import { CategoryView } from "../types/category";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
@@ -41,9 +42,15 @@ const SearchBar = ({ switchCategory, searchQuery }: SearchBarProps) => {
     };
 
     const isEqualToValue = (option: CategoryView, value: { id: number; label: string }) => option.id === value.id;
-    const onAutocompleteChange = (_: any, option: CategoryView | null) => {
-        if (option) {
-            switchCategory(option);
+    const onAutocompleteChange = (_: any, option: string | CategoryView | null) => {
+        if (option === null) {
+            return;
+        }
+
+        const category = _isString(option) ? options?.find(opt => opt.label === option) : (option as CategoryView);
+
+        if (category) {
+            switchCategory(category);
         }
     };
 
@@ -73,6 +80,7 @@ const SearchBar = ({ switchCategory, searchQuery }: SearchBarProps) => {
                     renderInput={params => <StyledInputField {...params} label="Категория" />}
                     value={searchQuery as any}
                     options={options ?? []}
+                    freeSolo={true}
                     isOptionEqualToValue={isEqualToValue}
                     onChange={onAutocompleteChange}
                     renderOption={(props, option: CategoryView) => (
