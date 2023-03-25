@@ -32,10 +32,6 @@ const MyApp = ({ Component, emotionCache = clientSideEmotionCache, ...rest }: My
     const router = useRouter();
     const [isLoaded, setIsLoaded] = useState(false);
 
-    runInBrowser(() => {
-        document.body.style.backgroundColor = store.getState().ui.mode === "dark" ? "#1e1e1e" : "#f0f0f0";
-    });
-
     useEffect(() => {
         router.events.on("routeChangeStart", () => setIsLoaded(false));
         router.events.on("routeChangeComplete", () => setIsLoaded(true));

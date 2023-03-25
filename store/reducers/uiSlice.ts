@@ -42,7 +42,7 @@ export const uiSlice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(HYDRATE, (state, action: PayloadAction<RootState, typeof HYDRATE>) => {
-            state.mode = action.payload.ui.mode || state.mode;
+            state.mode = [action.payload.ui.mode, state.mode].includes("light") ? "light" : "dark";
             state.categoryView = action.payload.ui.categoryView || state.categoryView;
         });
     },
