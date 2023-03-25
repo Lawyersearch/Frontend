@@ -1,18 +1,18 @@
 import React from "react";
+import Cookie from "js-cookie";
 import { Button, Stack } from "@mui/material";
-import { useGetSelfQuery } from "../services/user";
 import NextLink from "../ui/NextLink";
-import { isUserPerformer } from "../utils/user";
+import { useAppSelector } from "../hooks/redux/useTypedRedux";
 
 const NavLinks = () => {
-    const { data: user, isSuccess: isLogin } = useGetSelfQuery(undefined);
+    const user = useAppSelector(store => store.user.self);
 
     const links = [
         { title: "Главная", to: "/", show: true },
         {
             title: "Моя страница",
             to: `/userProfile/${user?.id}`,
-            show: isLogin,
+            show: Boolean(user),
         },
         { title: "Доска заказов", to: "/orders", show: true },
         { title: "Поиск", to: "/search", show: true },

@@ -5,25 +5,22 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NavLinks from "./NavLinks";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
-import { useGetSelfQuery } from "../services/user";
 import AuthorizedDropdown from "./auth/AuthorizedDropdown";
 import AuthForm from "./auth/AuthForm";
-import { useAppDispatch } from "../hooks/redux/useTypedRedux";
+import { useAppDispatch, useAppSelector } from "../hooks/redux/useTypedRedux";
 import { toggleMode } from "../store/reducers/uiSlice";
 import { useBoolean } from "../hooks/useBoolean";
 import { useDropdownAuth } from "../hooks/useDropdownAuth";
 import Avatar from "../ui/Avatar";
-import { GetServerSideProps } from "next";
-import { querySelf } from "../utils/query";
 
 const NavBar = () => {
-    const { data: user, isSuccess } = useGetSelfQuery(undefined);
-    const [showModal, setShowModal, setHideModal, toggleModal] = useBoolean(false);
+    const user = useAppSelector(store => store.user.self);
     const dispatch = useAppDispatch();
+    const [showModal, setShowModal, setHideModal, toggleModal] = useBoolean(false);
     const theme = useTheme();
 
     useDropdownAuth(() => {
-        if (!isSuccess) {
+        if (!user) {
             setShowModal();
         }
     });
@@ -61,11 +58,7 @@ const NavBar = () => {
                     <ClickAwayListener onClickAway={setHideModal}>
                         <Box>
                             <IconButton size="large" edge="end" color="inherit" onClick={toggleModal}>
-                                {isSuccess && user ? (
-                                    <Avatar src={user.avatar} height={24} width={24} />
-                                ) : (
-                                    <AccountCircleIcon />
-                                )}
+                                {user ? <Avatar src={user.avatar} height={24} width={24} /> : <AccountCircleIcon />}
                             </IconButton>
                             <Box
                                 position="absolute"
@@ -82,7 +75,7 @@ const NavBar = () => {
                                     transition: "transform .25s ease-in-out",
                                 }}
                             >
-                                {isSuccess && user ? <AuthorizedDropdown onClick={setHideModal} /> : <AuthForm />}
+                                {user ? <AuthorizedDropdown onClick={setHideModal} /> : <AuthForm />}
                             </Box>
                         </Box>
                     </ClickAwayListener>

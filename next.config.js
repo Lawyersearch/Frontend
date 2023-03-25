@@ -24,6 +24,7 @@ module.exports = (phase, { defaultConfig }) => {
             env: {
                 ...commonConfig.env,
                 STATIC_REVALIDATE: 1,
+                REDUX_DEBUG: 1,
             },
         };
     }
@@ -35,6 +36,7 @@ module.exports = (phase, { defaultConfig }) => {
         env: {
             ...commonConfig.env,
             STATIC_REVALIDATE: 30,
+            REDUX_DEBUG: 0,
         },
     };
 };

@@ -1,10 +1,10 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { WorkExpirience } from "../types/user";
-import { authenticatedBaseQuery, getData } from "./utils";
+import { mkAuthenticatedBaseQuery, getData } from "./utils";
 
 export const workExperienceApi = createApi({
     reducerPath: "workExperienceApi",
-    baseQuery: authenticatedBaseQuery("workExpirience"),
+    baseQuery: mkAuthenticatedBaseQuery("workExpirience"),
     endpoints: builder => ({
         addWorkExperience: builder.mutation<WorkExpirience, Partial<WorkExpirience>>({
             query: (workExp: WorkExpirience) => ({

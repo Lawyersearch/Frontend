@@ -1,11 +1,13 @@
+import Cookie from "js-cookie";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { User } from "../types/user";
 import { WebResponse } from "../types/webResponseBody";
-import { authenticatedBaseQuery, getData } from "./utils";
+import { mkAuthenticatedBaseQuery, getData, mkExtractRehydrationInfo } from "./utils";
 
 export const userApi = createApi({
     reducerPath: "userApi",
-    baseQuery: authenticatedBaseQuery("user"),
+    baseQuery: mkAuthenticatedBaseQuery("user"),
+    extractRehydrationInfo: mkExtractRehydrationInfo("userApi"),
     tagTypes: ["User"],
     endpoints: builder => ({
         getUser: builder.query<User, string>({
@@ -21,13 +23,6 @@ export const userApi = createApi({
             }),
             transformResponse: getData<User[]>,
         }),
-        getSelf: builder.query<User, void>({
-            query: () => ({
-                url: "/myself",
-            }),
-            transformResponse: getData<User>,
-            providesTags: (result, error) => [{ type: "User", id: result?.id }],
-        }),
         uploadAvatar: builder.mutation<WebResponse<null>, FormData>({
             query: (data: FormData) => ({
                 url: "/uploadAvatar",
@@ -39,4 +34,8 @@ export const userApi = createApi({
     }),
 });
 
-export const { useGetUserQuery, useLazyGetSelfQuery, useGetSelfQuery, useLazyGetUsersByCategorIdQuery } = userApi;
+export const {
+    useGetUserQuery,
+    useLazyGetUsersByCategorIdQuery,
+    util: { getRunningQueriesThunk },
+} = userApi;

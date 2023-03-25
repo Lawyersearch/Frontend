@@ -1,8 +1,9 @@
 import "../scss/index.scss";
 import "../MuiClassNameSetup";
-import type { AppProps } from "next/app";
+import App, { AppProps } from "next/app";
 import { Provider } from "react-redux";
-import store from "../store";
+import Cookie from "js-cookie";
+import { wrapper } from "../store";
 import SnackbarController from "../ui/SnackbarController";
 import NavBar from "../components/NavBar";
 import createEmotionCache from "../utils/createEmotionCache";
@@ -16,6 +17,10 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { runInBrowser } from "../utils/ssr";
 import { useRouter } from "next/router";
 import FullpageLoader from "../ui/FullpageLoader";
+import { getRunningQueriesThunk, userApi } from "../services/user";
+import { IncomingMessage } from "http";
+import { setSelf } from "../store/reducers/userSlice";
+import { fetchSelf } from "../store/actions";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -39,20 +44,36 @@ const MyApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
 
     return (
         <CacheProvider value={emotionCache}>
-            <Provider store={store}>
-                <SnackbarController>
-                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
-                        {!isLoaded && <FullpageLoader />}
-                        <ColorModeProvider>
-                            <NavBar />
-                            <CssBaseline />
-                            <Component {...pageProps} />
-                        </ColorModeProvider>
-                    </LocalizationProvider>
-                </SnackbarController>
-            </Provider>
+            <SnackbarController>
+                <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
+                    {!isLoaded && <FullpageLoader />}
+                    <ColorModeProvider>
+                        <NavBar />
+                        <CssBaseline />
+                        <Component {...pageProps} />
+                    </ColorModeProvider>
+                </LocalizationProvider>
+            </SnackbarController>
         </CacheProvider>
     );
 };
 
-export default MyApp;
+MyApp.getInitialProps = wrapper.getInitialAppProps(store => async context => {
+    const request = context.ctx.req as IncomingMessage & {
+        cookies: Partial<{
+            [key: string]: string;
+        }>;
+    };
+    const token = request.cookies?.token || Cookie.get("token");
+
+    await store.dispatch(fetchSelf(token));
+
+    return {
+        pageProps: {
+            ...(await App.getInitialProps(context)).pageProps,
+            pathname: context.ctx.pathname,
+        },
+    };
+});
+
+export default wrapper.withRedux(MyApp);

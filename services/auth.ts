@@ -1,11 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { UserCredentials } from "../types/userCredentials";
 import { WebResponse } from "../types/webResponseBody";
-import { authenticatedBaseQuery } from "./utils";
+import { mkAuthenticatedBaseQuery } from "./utils";
 
 export const authApi = createApi({
     reducerPath: "authApi",
-    baseQuery: authenticatedBaseQuery("auth"),
+    baseQuery: mkAuthenticatedBaseQuery("auth"),
     endpoints: builder => ({
         loginFromCreds: builder.mutation<WebResponse<string>, UserCredentials>({
             query: (credentials: UserCredentials) => ({

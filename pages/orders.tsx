@@ -2,11 +2,14 @@ import _isEmpty from "lodash/isEmpty";
 import { Container, Grid, Stack, Typography } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
+import { connect } from "react-redux";
 import OrderTypes from "../components/order/types";
 import OrderCard from "../components/OrderCard";
 import { Order, OrderType } from "../types/order";
 import { queryPrivateOrders, queryPublicOrders, querySelf, queryUserOrders } from "../utils/query";
 import { isUserPerformer } from "../utils/user";
+import { wrapper } from "../store";
+import { fetchSelf } from "../store/actions";
 
 interface OrdersPageProps {
     orders: { [key in keyof typeof OrderType]: Order[] };
@@ -32,10 +35,9 @@ const OrdersPage = ({ orders, isAuthorized }: OrdersPageProps) => {
                             {orders[type].map(order => (
                                 <OrderCard key={order.id} {...order} />
                             ))}
-                        </Stack> 
+                        </Stack>
                     ) : (
-                        <Typography mt={10} textAlign="center" variant="h3"
-                        >
+                        <Typography mt={10} textAlign="center" variant="h3">
                             Здесь ничего нет
                         </Typography>
                     )}
@@ -45,10 +47,9 @@ const OrdersPage = ({ orders, isAuthorized }: OrdersPageProps) => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async context => {
-    const token = context.req.cookies["token"];
-    const self = await querySelf(token);
-
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async context => {
+    const { token } = context.req.cookies;
+    const { self } = store.getState().user;
     const [privateOrders = [], publicOrders = []] = await Promise.all([
         isUserPerformer(self?.role) ? queryPrivateOrders(token) : queryUserOrders(token),
         queryPublicOrders(),
@@ -63,6 +64,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
             isAuthorized: Boolean(self),
         },
     };
-};
+});
 
-export default OrdersPage;
+export default connect(state => state)(OrdersPage);

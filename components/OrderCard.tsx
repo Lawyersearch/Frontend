@@ -1,13 +1,14 @@
 import { Card, Stack, Box, Typography, Divider, Button } from "@mui/material";
 import fnsFormat from "date-fns/format";
-import { useGetSelfQuery } from "../services/user";
+import Cookie from "js-cookie";
+import { useAppSelector } from "../hooks/redux/useTypedRedux";
 import { Order } from "../types/order";
 import ProfileLink from "../ui/ProfileLink";
 import { isOrderOpen } from "../utils/order";
 import { isUserPerformer } from "../utils/user";
 
 const OrderCard = (order: Order) => {
-    const { data: user, isSuccess } = useGetSelfQuery(undefined);
+    const user = useAppSelector(store => store.user.self);
 
     const shouldShowRespond = isUserPerformer(user?.role) && isOrderOpen(order.orderStatus);
 

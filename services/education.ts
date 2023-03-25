@@ -1,10 +1,10 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { Education } from "../types/user";
-import { authenticatedBaseQuery, getData } from "./utils";
+import { mkAuthenticatedBaseQuery, getData } from "./utils";
 
 export const educationApi = createApi({
     reducerPath: "educationApi",
-    baseQuery: authenticatedBaseQuery("education"),
+    baseQuery: mkAuthenticatedBaseQuery("education"),
     endpoints: builder => ({
         addEducation: builder.mutation<Education, Partial<Education>>({
             query: (education: Partial<Education>) => ({

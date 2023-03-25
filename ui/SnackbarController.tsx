@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import Slide from "@mui/material/Slide";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { useAppDispatch } from "../hooks/redux/useTypedRedux";
@@ -13,7 +13,11 @@ const SnackbarHandler = ({ children }: SnackbarProps) => {
     const dispatch = useAppDispatch();
     const { enqueueSnackbar } = useSnackbar();
     const pushSnack = useCallback((snack: Snack) => enqueueSnackbar(snack.message, { variant: snack.variant }), []);
-    dispatch(setPushSnack(pushSnack));
+
+    useEffect(() => {
+        dispatch(setPushSnack(pushSnack));
+    }, []);
+
     return <>{children}</>;
 };
 

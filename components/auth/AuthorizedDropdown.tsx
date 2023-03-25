@@ -1,28 +1,30 @@
 import React from "react";
 import Cookie from "js-cookie";
 import { Button, Stack, Typography } from "@mui/material";
-import { useGetSelfQuery } from "../../services/user";
 import Avatar from "../../ui/Avatar";
 import NextLink from "../../ui/NextLink";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux/useTypedRedux";
+import { removeSelf } from "../../store/reducers/userSlice";
 
 interface AuthorizedDropdownProps {
     onClick?: () => void;
 }
 
 const AuthorizedDropdown = ({ onClick }: AuthorizedDropdownProps) => {
-    const { data: user, refetch } = useGetSelfQuery(undefined);
+    const user = useAppSelector(store => store.user.self);
+    const dispatch = useAppDispatch();
 
     const onClickAction = () => onClick && onClick();
 
     const logout = () => {
         Cookie.remove("token");
-        refetch();
+        dispatch(removeSelf());
         onClickAction();
     };
 
     return (
         <Stack alignItems="center" width="max-content">
-            <Avatar src={user!.avatar} height={70} width={70} />
+            <Avatar src={user?.avatar} height={70} width={70} />
             <Typography fontWeight="medium" fontSize={20} color="text.primary">
                 {user?.firstName}
             </Typography>
