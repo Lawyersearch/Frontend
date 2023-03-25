@@ -6,7 +6,7 @@ const PointerLink = styled.a({ "& *": { cursor: "pointer" } });
 
 const NextLink = ({ children, href, ...rest }: LinkProps & { children: React.ReactNode }) => (
     <Link href={href} {...rest}>
-        <PointerLink href={href.toString()} >{children}</PointerLink>
+        <PointerLink href={href.toString()}>{children}</PointerLink>
     </Link>
 );
 

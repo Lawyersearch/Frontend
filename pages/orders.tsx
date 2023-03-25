@@ -2,14 +2,12 @@ import _isEmpty from "lodash/isEmpty";
 import { Container, Grid, Stack, Typography } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
-import { connect } from "react-redux";
 import OrderTypes from "../components/order/types";
 import OrderCard from "../components/OrderCard";
 import { Order, OrderType } from "../types/order";
-import { queryPrivateOrders, queryPublicOrders, querySelf, queryUserOrders } from "../utils/query";
+import { queryPrivateOrders, queryPublicOrders, queryUserOrders } from "../utils/query";
 import { isUserPerformer } from "../utils/user";
 import { wrapper } from "../store";
-import { fetchSelf } from "../store/actions";
 
 interface OrdersPageProps {
     orders: { [key in keyof typeof OrderType]: Order[] };

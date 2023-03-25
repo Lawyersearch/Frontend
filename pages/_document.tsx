@@ -1,4 +1,3 @@
-import _get from "lodash/get";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 import createEmotionCache from "../utils/createEmotionCache";
@@ -12,12 +11,12 @@ export default class MyDocument extends Document<DocumentProps> {
         return (
             <Html lang="ru">
                 <Head>
-                    <title>Web</title>
+                    <title>LawyerSearch</title>
                     <link
                         rel="stylesheet"
                         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
                     />
-                    <meta name="description">Freelance lawyer search platform</meta>
+                    <meta name="description" content="Freelance lawyer search platform" />
                     {this.props.emotionStyleTags}
                 </Head>
                 <body>

@@ -2,7 +2,6 @@ const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 
 /** @type {import('next').NextConfig} */
 const commonConfig = {
-    reactStrictMode: true,
     /* redirects: async () => [
     {
       source: '/',
@@ -21,6 +20,7 @@ module.exports = (phase, { defaultConfig }) => {
         /** @type {import('next').NextConfig} */
         return {
             ...commonConfig,
+            reactStrictMode: true,
             env: {
                 ...commonConfig.env,
                 STATIC_REVALIDATE: 1,

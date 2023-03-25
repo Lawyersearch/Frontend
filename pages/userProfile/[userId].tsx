@@ -7,7 +7,7 @@ import UserExperience from "../../components/user/profileComponents/UserExperien
 import UserQualification from "../../components/user/profileComponents/UserQualification";
 import UserReviews from "../../components/user/profileComponents/UserReviews";
 import { experienceString } from "../../utils/wordsEndings";
-import { querySelf, queryUser } from "../../utils/query";
+import { queryUser } from "../../utils/query";
 import { wrapper } from "../../store";
 
 const primaryBorder = {

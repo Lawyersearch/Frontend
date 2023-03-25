@@ -1,5 +1,4 @@
 import React from "react";
-import Cookie from "js-cookie";
 import { Button, Stack } from "@mui/material";
 import NextLink from "../ui/NextLink";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";

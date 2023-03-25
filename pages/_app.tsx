@@ -8,7 +8,7 @@ import SnackbarController from "../ui/SnackbarController";
 import NavBar from "../components/NavBar";
 import createEmotionCache from "../utils/createEmotionCache";
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import { CircularProgress, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import ColorModeProvider from "../ui/themes/ColorModeProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import ruLocale from "date-fns/locale/ru";
@@ -17,9 +17,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { runInBrowser } from "../utils/ssr";
 import { useRouter } from "next/router";
 import FullpageLoader from "../ui/FullpageLoader";
-import { getRunningQueriesThunk, userApi } from "../services/user";
 import { IncomingMessage } from "http";
-import { setSelf } from "../store/reducers/userSlice";
 import { fetchSelf } from "../store/actions";
 
 const clientSideEmotionCache = createEmotionCache();

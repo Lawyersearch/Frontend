@@ -1,6 +1,5 @@
 import { Card, Stack, Box, Typography, Divider, Button } from "@mui/material";
 import fnsFormat from "date-fns/format";
-import Cookie from "js-cookie";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
 import { Order } from "../types/order";
 import ProfileLink from "../ui/ProfileLink";
