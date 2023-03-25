@@ -8,6 +8,7 @@ import UserQualification from "../../components/user/profileComponents/UserQuali
 import UserReviews from "../../components/user/profileComponents/UserReviews";
 import { experienceString } from "../../utils/wordsEndings";
 import { querySelf, queryUser } from "../../utils/query";
+import { wrapper } from "../../store";
 
 const primaryBorder = {
     border: 1,
@@ -57,21 +58,21 @@ const UserProfilePage = ({ user, isMyPage }: UserProfilePageProps) => (
     </Container>
 );
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async context => {
     if (!_isString(context?.params?.userId)) {
         return { notFound: true };
     }
 
-    const token = context.req.cookies["token"];
-    const [user, myself] = await Promise.all([queryUser(context.params!.userId as string), querySelf(token)]);
+    const user = await queryUser(context.params!.userId as string);
+    const { self } = store.getState().user;
 
     return {
         notFound: !user,
         props: {
             user,
-            isMyPage: user?.id === myself?.id,
+            isMyPage: user?.id === self?.id,
         },
     };
-};
+});
 
 export default UserProfilePage;

@@ -66,4 +66,4 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     };
 });
 
-export default connect(state => state)(OrdersPage);
+export default OrdersPage;

@@ -2,7 +2,6 @@ import _get from "lodash/get";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 import createEmotionCache from "../utils/createEmotionCache";
-import { querySelf } from "../utils/query";
 
 interface DocumentProps {
     emotionStyleTags: JSX.Element[];

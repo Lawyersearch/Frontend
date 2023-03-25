@@ -8,6 +8,7 @@ import { CategoryTree, CategoryView } from "../types/category";
 import { GetStaticProps } from "next";
 import { experienceString } from "../utils/wordsEndings";
 import { queryView } from "../utils/query";
+import { wrapper } from "../store";
 
 interface SearchPageProps {
     categories: CategoryTree[];
@@ -48,13 +49,13 @@ const SearchPage = ({ categories, view }: SearchPageProps) => {
     );
 };
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => async context => {
     const { view, categories } = await queryView();
 
     return {
         props: { categories, view },
         revalidate: +process.env.STATIC_REVALIDATE,
     };
-};
+});
 
 export default SearchPage;

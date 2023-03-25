@@ -7,6 +7,7 @@ import { CategoryView } from "../types/category";
 import SearchBar from "../components/SearchBar";
 import { useRouter } from "next/router";
 import NextLink from "../ui/NextLink";
+import { wrapper } from "../store";
 
 interface IndexPageProps {
     view: CategoryView[];
@@ -41,13 +42,13 @@ const IndexPage = ({ view }: IndexPageProps) => {
     );
 };
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => async context => {
     const { view } = await queryView();
 
     return {
         props: { view },
         revalidate: +process.env.STATIC_REVALIDATE,
     };
-};
+});
 
 export default IndexPage;

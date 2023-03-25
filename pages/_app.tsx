@@ -28,7 +28,8 @@ interface MyAppProps extends AppProps {
     emotionCache?: EmotionCache;
 }
 
-const MyApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps }: MyAppProps) => {
+const MyApp = ({ Component, emotionCache = clientSideEmotionCache, ...rest }: MyAppProps) => {
+    const { store, props } = wrapper.useWrappedStore(rest);
     const router = useRouter();
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -44,16 +45,18 @@ const MyApp = ({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
 
     return (
         <CacheProvider value={emotionCache}>
-            <SnackbarController>
-                <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
-                    {!isLoaded && <FullpageLoader />}
-                    <ColorModeProvider>
-                        <NavBar />
-                        <CssBaseline />
-                        <Component {...pageProps} />
-                    </ColorModeProvider>
-                </LocalizationProvider>
-            </SnackbarController>
+            <Provider store={store}>
+                <SnackbarController>
+                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ruLocale}>
+                        {!isLoaded && <FullpageLoader />}
+                        <ColorModeProvider>
+                            <NavBar />
+                            <CssBaseline />
+                            <Component {...props.pageProps} />
+                        </ColorModeProvider>
+                    </LocalizationProvider>
+                </SnackbarController>
+            </Provider>
         </CacheProvider>
     );
 };
@@ -76,4 +79,4 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(store => async context => {
     };
 });
 
-export default wrapper.withRedux(MyApp);
+export default MyApp;
