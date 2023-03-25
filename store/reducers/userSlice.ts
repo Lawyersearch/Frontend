@@ -23,7 +23,7 @@ export const userSlice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(HYDRATE, (state, action: PayloadAction<RootState, typeof HYDRATE>) => {
-            state.self = action.payload.user.self;
+            state.self ||= action.payload.user.self;
         });
         builder.addCase(fetchSelf.fulfilled, (state, action) => {
             state.self = action.payload;
