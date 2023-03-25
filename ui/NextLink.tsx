@@ -4,9 +4,9 @@ import React from "react";
 
 const PointerLink = styled.a({ "& *": { cursor: "pointer" } });
 
-const NextLink = ({ children, ...props }: LinkProps & { children: React.ReactNode }) => (
-    <Link {...props}>
-        <PointerLink>{children}</PointerLink>
+const NextLink = ({ children, href, ...rest }: LinkProps & { children: React.ReactNode }) => (
+    <Link href={href} {...rest}>
+        <PointerLink href={href.toString()} >{children}</PointerLink>
     </Link>
 );
 

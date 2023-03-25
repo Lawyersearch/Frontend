@@ -10,13 +10,14 @@ interface DocumentProps {
 export default class MyDocument extends Document<DocumentProps> {
     render() {
         return (
-            <Html>
+            <Html lang="ru">
                 <Head>
                     <title>Web</title>
                     <link
                         rel="stylesheet"
                         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
                     />
+                    <meta name="description">Freelance lawyer search platform</meta>
                     {this.props.emotionStyleTags}
                 </Head>
                 <body>
