@@ -8,7 +8,7 @@ import { Order, OrderType } from "../../types/order";
 
 interface OrderTypesProps {
     onTypeClick: (type: number) => void;
-    orders: { [key in keyof typeof OrderType]: Order[] };
+    orders: { [key in keyof typeof OrderType]: Order[] | null };
 }
 
 const OrderTypes = ({ onTypeClick, orders }: OrderTypesProps) => {
@@ -28,7 +28,7 @@ const OrderTypes = ({ onTypeClick, orders }: OrderTypesProps) => {
                                 <Icon />
                             </ListItemIcon>
                             <ListItemText primary={label} />
-                            <Chip label={orders[type].length} />
+                            <Chip label={orders[type]?.length || 0} />
                         </ListItemButton>
                     </ListItem>
                 ))}

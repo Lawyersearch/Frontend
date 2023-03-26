@@ -11,7 +11,7 @@ import { wrapper } from "../store";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
 
 interface OrdersPageProps {
-    orders: { [key in keyof typeof OrderType]: Order[] };
+    orders: { [key in keyof typeof OrderType]: Order[] | null };
 }
 
 const OrdersPage = ({ orders }: OrdersPageProps) => {
@@ -29,9 +29,9 @@ const OrdersPage = ({ orders }: OrdersPageProps) => {
                     </Grid>
                 )}
                 <Grid item xs={12} md={9 + Number(!isAuthorized) * 3}>
-                    {orders[type].length ? (
+                    {orders[type]?.length ? (
                         <Stack spacing={3}>
-                            {orders[type].map(order => (
+                            {orders[type]?.map(order => (
                                 <OrderCard key={order.id} {...order} />
                             ))}
                         </Stack>

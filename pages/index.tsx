@@ -8,6 +8,7 @@ import SearchBar from "../components/SearchBar";
 import { useRouter } from "next/router";
 import NextLink from "../ui/NextLink";
 import { wrapper } from "../store";
+import { setCategoryView } from "../store/reducers/uiSlice";
 
 interface IndexPageProps {
     view: CategoryView[];
@@ -44,6 +45,8 @@ const IndexPage = ({ view }: IndexPageProps) => {
 
 export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => async context => {
     const { view } = await queryView();
+
+    store.dispatch(setCategoryView(view));
 
     return {
         props: { view },
