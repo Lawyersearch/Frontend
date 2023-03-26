@@ -14,7 +14,6 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import ruLocale from "date-fns/locale/ru";
 import { useEffect, useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import { runInBrowser } from "../utils/ssr";
 import { useRouter } from "next/router";
 import FullpageLoader from "../ui/FullpageLoader";
 import { IncomingMessage } from "http";
@@ -62,8 +61,8 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(store => async context => {
             [key: string]: string;
         }>;
     };
-    const token = request.cookies?.token || Cookie.get("token");
-    const mode: PaletteMode = (request.cookies?.mode as PaletteMode | undefined) || "dark";
+    const token = request?.cookies?.token || Cookie.get("token");
+    const mode: PaletteMode = (request?.cookies?.mode as PaletteMode | undefined) || "dark";
 
     store.dispatch(setMode(mode));
     await store.dispatch(fetchSelf(token));

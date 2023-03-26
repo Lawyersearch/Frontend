@@ -31,7 +31,7 @@ export const TestingComponent = () => {
             <ProfileLink id="some-id" src="" userName="Вахтанг Вахтангович" />
             <Box my={20} />
             <Container>
-                <OrderCard {...testingOrder} />
+                <OrderCard order={testingOrder} />
             </Container>
             <Card></Card>
             <label htmlFor={id}>

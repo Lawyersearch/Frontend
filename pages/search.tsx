@@ -3,7 +3,7 @@ import { Stack, Container, Grid } from "@mui/material";
 import Categories from "../components/Categories";
 import NetHandler from "../ui/NetHandler";
 import UserCard from "../components/user/UserCard";
-import { useSearch } from "../hooks/useSearch";
+import useSearch from "../hooks/useSearch";
 import { CategoryTree, CategoryView } from "../types/category";
 import { GetStaticProps } from "next";
 import { experienceString } from "../utils/wordsEndings";
@@ -52,7 +52,7 @@ const SearchPage = ({ categories, view }: SearchPageProps) => {
 
 export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => async context => {
     const { view, categories } = await queryView();
-    console.log("setting cat view", view);
+
     store.dispatch(setCategoryView(view));
 
     return {

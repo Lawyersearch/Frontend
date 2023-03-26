@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { useLazyGetUsersByCategorIdQuery } from "../services/user";
 import { useRouter } from "next/router";
 
-export const useSearch = (view: CategoryView[]) => {
+const useSearch = (view: CategoryView[]) => {
     const router = useRouter();
     const searchQueryRef = useRef<{ id?: number; label: string }>({ label: "" });
     const categoryRef = useRef<{ selected: string; expanded: string[] }>({
@@ -63,3 +63,5 @@ export const useSearch = (view: CategoryView[]) => {
         switchCategory,
     };
 };
+
+export default useSearch;

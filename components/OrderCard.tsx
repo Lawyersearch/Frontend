@@ -1,15 +1,30 @@
 import { Card, Stack, Box, Typography, Divider, Button } from "@mui/material";
 import fnsFormat from "date-fns/format";
+import _identity from "lodash/identity";
+import useRespondOrder from "../hooks/order/useRespondOrder";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
+import { useChangeOrderStatusMutation } from "../services/order";
 import { Order } from "../types/order";
+import RespondOrderModal from "../ui/modal/RespondOrderModal";
 import ProfileLink from "../ui/ProfileLink";
-import { isOrderOpen } from "../utils/order";
-import { isUserPerformer } from "../utils/user";
+import { shouldShowCancell, shouldShowRespond } from "../utils/order";
 
-const OrderCard = (order: Order) => {
+interface OrderCardProps {
+    order: Order;
+    onOrderUpdate?: (order: Order) => void;
+    onOrderDelete?: (order: Order) => void;
+}
+
+const OrderCard = ({ order }: OrderCardProps) => {
     const user = useAppSelector(store => store.user.self);
 
-    const shouldShowRespond = isUserPerformer(user?.role) && isOrderOpen(order.orderStatus);
+    const { showRespondModal, closeRespondModal, onOrderRespond, confirmOrderRespond } = useRespondOrder(order);
+    const [changeStatus, { data: updatedStatusOrder, isSuccess: isChangeStatusSuccess }] =
+        useChangeOrderStatusMutation();
+
+    const showRespond = shouldShowRespond(user, order);
+    const showCancell = shouldShowCancell(user, order);
+    const showControls = [showRespond, showCancell].some(_identity);
 
     return (
         <Card sx={{ borderRadius: 4 }}>
@@ -21,24 +36,47 @@ const OrderCard = (order: Order) => {
                 <Box display="grid" gridTemplateColumns="auto 1fr" gap={2}>
                     <Typography fontWeight={550}>Автор</Typography>
                     <ProfileLink id={order.userId} userName={order.creatorName} src={order.avatar} />
-                    <Typography fontWeight={550}>Описание</Typography>
-                    <Typography>{order.description}</Typography>
-                    <Typography fontWeight={550}>Цена</Typography>
-                    <Typography fontWeight={600}>{order.price} ₽</Typography>
+                    {order.description && (
+                        <>
+                            <Typography fontWeight={550}>Описание</Typography>
+                            <Typography>{order.description}</Typography>
+                        </>
+                    )}
+                    {order.price && (
+                        <>
+                            <Typography fontWeight={550}>Цена</Typography>
+                            <Typography fontWeight={600}>{order.price} ₽</Typography>
+                        </>
+                    )}
                 </Box>
             </Stack>
-            <Divider />
-            <Stack
-                direction="row"
-                flexWrap="wrap"
-                alignItems="center"
-                justifyContent="end"
-                bgcolor="background.default"
-                px={3}
-                py={1}
-            >
-                <Button variant="contained">Откликнуться</Button>
-            </Stack>
+            {showControls && (
+                <>
+                    <Divider />
+                    <Stack
+                        direction="row"
+                        flexWrap="wrap"
+                        alignItems="center"
+                        justifyContent="end"
+                        bgcolor="background.default"
+                        px={3}
+                        py={1}
+                    >
+                        {showRespond && (
+                            <Button variant="contained" onClick={onOrderRespond}>
+                                Оставить отклик
+                            </Button>
+                        )}
+                        {showCancell && <Button variant="contained">Отменить заказ</Button>}
+                    </Stack>
+                </>
+            )}
+            <RespondOrderModal
+                startingPrice={order.price}
+                open={showRespondModal}
+                onClose={closeRespondModal}
+                respond={confirmOrderRespond}
+            />
         </Card>
     );
 };

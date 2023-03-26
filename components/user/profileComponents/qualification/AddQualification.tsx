@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import AddItem from "../generic/AddItem";
 import { useAddEducationMutation } from "../../../../services/education";
 import { Education } from "../../../../types/user";
-import { useBoolean } from "../../../../hooks/useBoolean";
+import useBoolean from "../../../../hooks/useBoolean";
 import QualificationForm from "./QualificationForm";
 
 interface AddQualificationProps {

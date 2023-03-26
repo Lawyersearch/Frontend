@@ -32,7 +32,7 @@ const OrdersPage = ({ orders }: OrdersPageProps) => {
                     {orders[type]?.length ? (
                         <Stack spacing={3}>
                             {orders[type]?.map(order => (
-                                <OrderCard key={order.id} {...order} />
+                                <OrderCard key={order.id} order={order} />
                             ))}
                         </Stack>
                     ) : (

@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import AddItem from "../generic/AddItem";
 import { useAddWorkExperienceMutation } from "../../../../services/workExperience";
 import { WorkExpirience } from "../../../../types/user";
-import { useBoolean } from "../../../../hooks/useBoolean";
+import useBoolean from "../../../../hooks/useBoolean";
 import ExperienceForm from "./ExperienceForm";
 
 interface AddWorkExperienceProps {

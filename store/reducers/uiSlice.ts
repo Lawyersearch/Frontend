@@ -5,14 +5,14 @@ import { PaletteMode } from "@mui/material";
 import { HYDRATE } from "next-redux-wrapper";
 import { RootState } from "..";
 
-interface UiSlice {
+interface UiState {
     pushSnack?: (snack: Snack) => void;
     categoryView: CategoryView[] | null;
     searchQuery?: string;
     mode: PaletteMode;
 }
 
-const initialState: UiSlice = {
+const initialState: UiState = {
     categoryView: null,
     mode: "dark",
 };

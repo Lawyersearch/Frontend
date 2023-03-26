@@ -8,3 +8,5 @@ export const isValidPassword = (password: string): boolean => {
 };
 
 export const isNotEmpty = (str?: string) => !!str;
+
+export const isNumberLike = (str?: string) => str && /^[1-9][0-9]*$/.test(str);

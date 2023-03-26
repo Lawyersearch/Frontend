@@ -6,3 +6,5 @@ export const mailNotRegistredText = (mail?: string) => `Почта ${mail} не 
 export const mailVerifySentText = (mail?: string) => `На почту ${mail} отправлено письмо с дальнейшей инструкцией`;
 export const mailVerifiedText = "Почта успешно подтверждена";
 export const notEmptyVerifyText = "Введите значение";
+export const invalidEmptyMessageTest = "Сообщение не может быть пустым";
+export const invalidPriceText = "Цена должна быть числом больше нуля";

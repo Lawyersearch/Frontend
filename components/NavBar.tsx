@@ -9,8 +9,8 @@ import AuthorizedDropdown from "./auth/AuthorizedDropdown";
 import AuthForm from "./auth/AuthForm";
 import { useAppDispatch, useAppSelector } from "../hooks/redux/useTypedRedux";
 import { toggleMode } from "../store/reducers/uiSlice";
-import { useBoolean } from "../hooks/useBoolean";
-import { useDropdownAuth } from "../hooks/useDropdownAuth";
+import useBoolean from "../hooks/useBoolean";
+import useDropdownAuth from "../hooks/useDropdownAuth";
 import Avatar from "../ui/Avatar";
 
 const NavBar = () => {

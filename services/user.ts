@@ -1,4 +1,3 @@
-import Cookie from "js-cookie";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { User } from "../types/user";
 import { WebResponse } from "../types/webResponseBody";
@@ -22,6 +21,7 @@ export const userApi = createApi({
                 url: `/search/id/${id}`,
             }),
             transformResponse: getData<User[]>,
+            providesTags: result => result?.map(user => ({ type: "User", id: user.id })) ?? [],
         }),
         uploadAvatar: builder.mutation<WebResponse<null>, FormData>({
             query: (data: FormData) => ({

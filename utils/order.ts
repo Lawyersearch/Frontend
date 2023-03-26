@@ -1,6 +1,15 @@
-export const isOrderOpen = (status: number) => status === 0;
-export const isOrderInWork = (status: number) => status === 1;
-export const isOrderCompleted = (status: number) => status === 2;
-export const isOrderClosed = (status: number) => status === 3;
-export const isOrderDismissed = (status: number) => status === 4;
-export const isOrderDisputed = (status: number) => status === 5;
+import { Order, OrderStatus } from "../types/order";
+import { User } from "../types/user";
+import { isUserClient, isUserPerformer } from "./user";
+
+export const isOrderOpen = (status: OrderStatus) => status === OrderStatus.OPEN;
+export const isOrderInWork = (status: OrderStatus) => status === OrderStatus.IN_WORK;
+export const isOrderCompleted = (status: OrderStatus) => status === OrderStatus.COMPLETED;
+export const isOrderClosed = (status: OrderStatus) => status === OrderStatus.CLOSED;
+export const isOrderDismissed = (status: OrderStatus) => status === OrderStatus.DISMISS;
+export const isOrderDisputed = (status: OrderStatus) => status === OrderStatus.DISPUT;
+
+export const shouldShowRespond = (user: User | null, order: Order) =>
+    isUserPerformer(user?.role) && isOrderOpen(order.orderStatus);
+export const shouldShowCancell = (user: User | null, order: Order) =>
+    isUserClient(user?.role) && isOrderOpen(order.orderStatus) && order.userId === user?.id;

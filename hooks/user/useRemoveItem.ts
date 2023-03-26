@@ -1,4 +1,4 @@
-import { useBoolean } from "../useBoolean";
+import useBoolean from "../useBoolean";
 import React, { useCallback, useEffect, useRef } from "react";
 import { UseMutation } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { MutationDefinition } from "@reduxjs/toolkit/query";

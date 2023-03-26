@@ -25,7 +25,9 @@ const ColorModeProvider = ({ children }: ColorModeProviderProps) => {
     }, []);
 
     useEffect(() => {
-        Cookie.set("mode", mode);
+        Cookie.set("mode", mode, {
+            expires: 365,
+        });
     }, [mode]);
 
     const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);

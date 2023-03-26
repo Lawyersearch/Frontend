@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, FormControl, Stack, CircularProgress } from "@mui/material";
 import ValidInput from "../../ui/ValidInput";
 import { isValidEmail, isValidPassword } from "../../utils/validation";
 import { invalidMailText, invalidPasswordText } from "../../ui/strings";
 import { useLoginFromCreds, useRegistration } from "../../hooks/redux/useAuth";
-import { useBoolean } from "../../hooks/useBoolean";
+import useBoolean from "../../hooks/useBoolean";
 import ForgetPasswordModal from "../../ui/modal/ForgetPasswordModal";
-import useEventListener from "../../hooks/useEventListener";
+import { useRouter } from "next/router";
+import useEnterPress from "../../hooks/useEnterPress";
 
 const AuthForm = () => {
+    const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [submited, setSubmited] = useState(false);
@@ -17,11 +19,19 @@ const AuthForm = () => {
         useLoginFromCreds();
     const [register, { isLoading: isRegLoading, isSuccess: isRegSuccess, isError: isRegError }] = useRegistration();
 
-    useEventListener("keypress", ev => {
-        if (ev.key === "Enter") {
-            submit(false);
+    useEnterPress(() => submit(false));
+
+    useEffect(() => {
+        if (isLoginError || isRegError) {
+            setSubmited(false);
         }
-    });
+    }, [isLoginError, isRegError]);
+
+    useEffect(() => {
+        if (isRegSuccess) {
+            router.push("/registerDone");
+        }
+    }, [isRegSuccess]);
 
     const submit = (isRegister: boolean) => {
         setSubmited(true);
@@ -35,13 +45,7 @@ const AuthForm = () => {
         }
     };
 
-    if ((isLoginError || isRegError) && submited) {
-        setSubmited(false);
-    }
-    if (isRegLoading || isRegSuccess) {
-        return <CircularProgress />;
-    }
-    if (isLoginLoading || isLoginSuccess) {
+    if (isRegLoading || isLoginLoading || isLoginSuccess) {
         return <CircularProgress />;
     }
 
@@ -59,7 +63,7 @@ const AuthForm = () => {
                         showError={submited}
                     />
                     <ValidInput
-                        label="Password"
+                        label="Пароль"
                         type="password"
                         value={password}
                         bindChange={setPassword}

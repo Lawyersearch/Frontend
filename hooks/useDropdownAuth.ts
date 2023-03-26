@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export const useDropdownAuth = (callback: () => void) => {
+const useDropdownAuth = (callback: () => void) => {
     const router = useRouter();
 
     useEffect(() => {
@@ -10,3 +10,5 @@ export const useDropdownAuth = (callback: () => void) => {
         }
     }, [router.query.auth]);
 };
+
+export default useDropdownAuth;
