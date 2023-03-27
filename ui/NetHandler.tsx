@@ -26,9 +26,11 @@ const NetHandler = ({ isLoading, isSuccess, children, error, h, w }: NetHandlerP
             />
         );
     }
+
     if (isSuccess || error === undefined) {
         return children;
     }
+
     return (
         <Box width={w} height={h} display="flex" justifyContent="center" alignItems="center">
             <Typography variant="h6" color="text.primary">

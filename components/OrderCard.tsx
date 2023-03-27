@@ -4,13 +4,13 @@ import _identity from "lodash/identity";
 import useRespondOrder from "../hooks/order/useRespondOrder";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
 import { useChangeOrderStatusMutation } from "../services/order";
-import { Order } from "../types/order";
+import { Order, PrivateOrder, PublicOrder } from "../types/order";
 import RespondOrderModal from "../ui/modal/RespondOrderModal";
 import ProfileLink from "../ui/ProfileLink";
 import { shouldShowCancell, shouldShowRespond } from "../utils/order";
 
 interface OrderCardProps {
-    order: Order;
+    order: Order | PrivateOrder | PublicOrder;
     onOrderUpdate?: (order: Order) => void;
     onOrderDelete?: (order: Order) => void;
 }
@@ -36,6 +36,12 @@ const OrderCard = ({ order }: OrderCardProps) => {
                 <Box display="grid" gridTemplateColumns="auto 1fr" gap={2}>
                     <Typography fontWeight={550}>Автор</Typography>
                     <ProfileLink id={order.userId} userName={order.creatorName} src={order.avatar} />
+                    {Boolean((order as PublicOrder).offerCount) && (
+                        <>
+                            <Typography fontWeight={550}>Количество откликов</Typography>
+                            <Typography>{(order as PublicOrder).offerCount}</Typography>
+                        </>
+                    )}
                     {order.description && (
                         <>
                             <Typography fontWeight={550}>Описание</Typography>

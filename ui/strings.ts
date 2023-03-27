@@ -8,3 +8,5 @@ export const mailVerifiedText = "Почта успешно подтвержде�
 export const notEmptyVerifyText = "Введите значение";
 export const invalidEmptyMessageTest = "Сообщение не может быть пустым";
 export const invalidPriceText = "Цена должна быть числом больше нуля";
+export const invalidLastNameText = "Фамилия не может быть пустой";
+export const invalidFirstNameText = "Имя не может быть пустым";

@@ -1,4 +1,6 @@
-export const isUserClient = (role?: number) => role === 0;
-export const isUserPerformer = (role?: number) => role === 1;
-export const isUserModerator = (role?: number) => role === 2;
-export const isUserAdmin = (role?: number) => role === 3;
+import { UserRole } from "../types/user";
+
+export const isUserClient = (role?: UserRole) => role === UserRole.CLIENT;
+export const isUserPerformer = (role?: UserRole) => role === UserRole.PERFORMER;
+export const isUserModerator = (role?: UserRole) => role === UserRole.MODERATOR;
+export const isUserAdmin = (role?: UserRole) => role === UserRole.ADMIN;

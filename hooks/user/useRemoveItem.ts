@@ -2,8 +2,11 @@ import useBoolean from "../useBoolean";
 import React, { useCallback, useEffect, useRef } from "react";
 import { UseMutation } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { MutationDefinition } from "@reduxjs/toolkit/query";
+import { mkAuthenticatedBaseQuery } from "../../services/utils";
 
-type rtkRemoveItemHook = UseMutation<MutationDefinition<string, any, never, void>>;
+type rtkRemoveItemHook = UseMutation<
+    MutationDefinition<string, ReturnType<typeof mkAuthenticatedBaseQuery>, string, any>
+>;
 
 const useRemoveItem = <T extends { id: string }>(
     hook: rtkRemoveItemHook,

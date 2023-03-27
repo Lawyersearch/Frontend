@@ -1,7 +1,10 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { User } from "../types/user";
+import { User, UserShort } from "../types/user";
 import { WebResponse } from "../types/webResponseBody";
 import { mkAuthenticatedBaseQuery, getData, mkExtractRehydrationInfo } from "./utils";
+
+export type UpdateUserGeneralRequest = Omit<UserShort, "id" | "avatar">;
+export type UpdateUserCategoriesResponse = Pick<User, "id" | "categories">;
 
 export const userApi = createApi({
     reducerPath: "userApi",
@@ -23,6 +26,22 @@ export const userApi = createApi({
             transformResponse: getData<User[]>,
             providesTags: result => result?.map(user => ({ type: "User", id: user.id })) ?? [],
         }),
+        updateUserGeneral: builder.mutation<User, UpdateUserGeneralRequest>({
+            query: (data: UpdateUserGeneralRequest) => ({
+                url: "/",
+                method: "PUT",
+                body: data,
+            }),
+            transformResponse: getData<User>,
+        }),
+        updateUserCategories: builder.mutation<UpdateUserCategoriesResponse, number[]>({
+            query: (categories: number[]) => ({
+                url: "/category",
+                method: "PUT",
+                body: { categories },
+            }),
+            transformResponse: getData<UpdateUserCategoriesResponse>,
+        }),
         uploadAvatar: builder.mutation<WebResponse<null>, FormData>({
             query: (data: FormData) => ({
                 url: "/uploadAvatar",
@@ -37,5 +56,7 @@ export const userApi = createApi({
 export const {
     useGetUserQuery,
     useLazyGetUsersByCategorIdQuery,
+    useUpdateUserGeneralMutation,
+    useUpdateUserCategoriesMutation,
     util: { getRunningQueriesThunk },
 } = userApi;

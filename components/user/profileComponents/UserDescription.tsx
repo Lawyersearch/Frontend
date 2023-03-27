@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Card, Chip, Divider, Rating, Stack, SxProps, Typography, Box } from "@mui/material";
+import { Button, Card, Chip, Divider, Rating, Stack, SxProps, Typography, Box, IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import MessageIcon from "@mui/icons-material/Message";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -8,10 +9,17 @@ import { feedBacksString } from "../../../utils/wordsEndings";
 import { Category } from "../../../types/category";
 import Avatar from "../../../ui/Avatar";
 import NextLink from "../../../ui/NextLink";
+import useUpdateGeneral from "../../../hooks/user/useUpdateGeneral";
+import { User } from "../../../types/user";
+import UpdateUserGeneralModal from "../../../ui/modal/UpdateUserGeneralModal";
+import useUpdateCategories from "../../../hooks/user/useUpdateCategories";
+import UpdateUserCategoriesModal from "../../../ui/modal/updateUserCategoriesModal";
 
 interface UserProfileProps {
     avatar: string;
-    userName: string;
+    lastName: string;
+    firstName: string;
+    middleName: string;
     isMyPage: boolean;
     tasks?: Category[];
     rating: number;
@@ -21,11 +29,15 @@ interface UserProfileProps {
     instagram?: string;
     phone?: string;
     email?: string;
+    categories: Category[];
+    onUserUpdate: (updatedSelf: Partial<User>) => void;
 }
 
 const UserDescription = ({
     avatar,
-    userName,
+    lastName,
+    firstName,
+    middleName,
     tasks,
     rating,
     isMyPage,
@@ -35,8 +47,15 @@ const UserDescription = ({
     instagram,
     phone,
     email,
+    categories,
+    onUserUpdate,
     ...rest
 }: UserProfileProps & SxProps) => {
+    const [showUpdateGeneral, openUpdateGeneral, closeUpdateGeneral, confirmUpdateGeneral] =
+        useUpdateGeneral(onUserUpdate);
+    const [showUpdateCategory, openUpdateCategory, closeUpdateCategory, confirmUpdateCategory] =
+        useUpdateCategories(onUserUpdate);
+
     return (
         <Card sx={rest}>
             <Stack flexDirection={{ xs: "column", md: "row" }} p={2}>
@@ -54,7 +73,7 @@ const UserDescription = ({
                                 size="large"
                             />
                             <Typography variant="body1" fontWeight={300}>
-                                ({Math.round(rating * 100) / 100} / 5.0)
+                                ({rating.toFixed(2)} / 5.0)
                             </Typography>
                         </Stack>
                         <Typography variant="body1" component="a" fontWeight={300} color="primary.main" href="#reviews">
@@ -64,12 +83,21 @@ const UserDescription = ({
                 </Stack>
                 <Stack spacing={1} justifyContent="space-between" ml={2} width="100%">
                     <Stack spacing={1}>
-                        <Typography variant="h4">{userName}</Typography>
+                        <Stack direction="row" justifyContent="space-between">
+                            <Typography variant="h4">
+                                {[lastName, firstName, middleName].filter(Boolean).join(" ") ?? "Аноним"}
+                            </Typography>
+                            {isMyPage && (
+                                <IconButton color="info" onClick={openUpdateGeneral}>
+                                    <EditIcon />
+                                </IconButton>
+                            )}
+                        </Stack>
                         <Typography variant="body1" fontWeight={300}>
                             Опыт: {experience}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {description}
+                            Описание: {description}
                         </Typography>
                     </Stack>
                     <Stack alignItems="flex-end" spacing={2} mr={{ xs: "16px !important", md: 0 }}>
@@ -105,7 +133,7 @@ const UserDescription = ({
                     </Stack>
                 </Stack>
             </Stack>
-            {(tasks?.length ?? 0) > 0 && (
+            {(tasks?.length || isMyPage) > 0 && (
                 <>
                     <Divider />
                     <Stack
@@ -120,9 +148,22 @@ const UserDescription = ({
                                 <Chip label={task.name} sx={{ m: 0.5, ":hover": { cursor: "pointer" } }} />
                             </NextLink>
                         ))}
+                        {isMyPage && <Chip key={0} label="Изменить" color="info" onClick={openUpdateCategory} />}
                     </Stack>
                 </>
             )}
+            <UpdateUserGeneralModal
+                userData={{ firstName, lastName, middleName, description }}
+                open={showUpdateGeneral}
+                onClose={closeUpdateGeneral}
+                confirm={confirmUpdateGeneral}
+            />
+            <UpdateUserCategoriesModal
+                pickedCategories={categories}
+                open={showUpdateCategory}
+                onClose={closeUpdateCategory}
+                confirm={confirmUpdateCategory}
+            />
         </Card>
     );
 };

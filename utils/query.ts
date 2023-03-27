@@ -1,5 +1,5 @@
 import { CategoryTree, CategoryView } from "../types/category";
-import { Order } from "../types/order";
+import { Order, PublicOrder, PrivateOrder } from "../types/order";
 import { User } from "../types/user";
 
 const query = async <T>(url: string, opts?: RequestInit) => {
@@ -45,11 +45,11 @@ export const queryView = async () => {
     return { view, categories };
 };
 
-export const queryPublicOrders = () => query<Order[]>("/order");
+export const queryPublicOrders = () => query<PublicOrder[]>("/order");
 
 export const queryPrivateOrders = (token?: string) => query<Order[]>("/order/performer", createAuthOpts(token));
 
-export const queryUserOrders = (token?: string) => query<Order[]>("/order/user", createAuthOpts(token));
+export const queryUserOrders = (token?: string) => query<PrivateOrder[]>("/order/user", createAuthOpts(token));
 
 export const queryUser = (userId: string) => query<User>(`/user/id/${userId}`);
 

@@ -7,6 +7,6 @@ export const isValidPassword = (password: string): boolean => {
     return password.length > 7 && !password.includes("123") && !password.includes("qwe");
 };
 
-export const isNotEmpty = (str?: string) => !!str;
+export const isNotEmpty = (str?: string) => str && str?.trim();
 
 export const isNumberLike = (str?: string) => str && /^[1-9][0-9]*$/.test(str);

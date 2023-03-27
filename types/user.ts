@@ -29,21 +29,31 @@ export interface WorkExpirience {
     duration: number;
 }
 
-export interface User {
+export enum UserRole {
+    CLIENT = 0,
+    PERFORMER = 1,
+    MODERATOR = 2,
+    ADMIN = 3,
+}
+
+export interface UserShort {
     id: string;
     firstName: string;
     middleName: string;
     lastName: string;
-    isChecked: boolean;
-    role: number;
-    registrationDate: string;
-    avatar: string;
     description: string;
+    avatar: string;
+}
+
+export interface User extends UserShort {
+    isChecked: boolean;
+    role: UserRole;
+    registrationDate: string;
     rating: number;
     phone?: string;
     instagram?: string;
     email?: string;
-    categories?: Category[];
+    categories: Category[];
     expirience: number;
     educations: Education[];
     workExpiriences: WorkExpirience[];
