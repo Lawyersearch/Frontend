@@ -1,29 +1,17 @@
-import { useCallback } from "react";
 import { useRespondOrderMutation } from "../../services/offer";
-import { pushSnack } from "../../store/reducers/uiSlice";
+import { Offer } from "../../types/offer";
 import { Order } from "../../types/order";
-import { useAppDispatch } from "../redux/useTypedRedux";
-import useBoolean from "../useBoolean";
+import useConfirmModal from "../useConfirmModal";
 
-const useRespondOrder = (order: Order) => {
-    const dispatch = useAppDispatch();
-    const [respondOrder, { data: newOffer, isSuccess: isRespondSuccess }] = useRespondOrderMutation();
-    const [showRespondModal, openRespondModal, closeRespondModal] = useBoolean(false);
+type ModalData = Pick<Offer, "message" | "price">;
+type MutationData = ModalData & { orderId: string };
 
-    const onOrderRespond = useCallback(() => {
-        openRespondModal();
-    }, [openRespondModal]);
-
-    const confirmOrderRespond = useCallback(
-        ({ message, price }: { message: string; price: number }) => {
-            respondOrder({ orderId: order.id, message, price });
-            closeRespondModal();
-            dispatch(pushSnack({ variant: "success", message: "Отклик успешно отправлен" }));
-        },
-        [respondOrder],
-    );
-
-    return { showRespondModal, closeRespondModal, onOrderRespond, confirmOrderRespond };
-};
+const useRespondOrder = ({ id: orderId }: Order, onResponse: (offer: Offer) => void) =>
+    useConfirmModal<ModalData, Offer, MutationData>({
+        onSuccessMessage: "Отклик успешно отправлен",
+        modalDataToMutation: modalData => ({ ...modalData, orderId }),
+        useMutation: useRespondOrderMutation,
+        onResponse,
+    });
 
 export default useRespondOrder;

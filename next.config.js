@@ -2,16 +2,19 @@ const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 
 /** @type {import('next').NextConfig} */
 const commonConfig = {
-    /* redirects: async () => [
-    {
-      source: '/',
-      destination: '/search',
-      permanent: true
-    }
-  ], */
     env: {
         PORT: "3000",
         BACK_SERVER_API: "https://api.lawyersearch.ru/api",
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "lawyersearch.ru",
+                port: "",
+                pathname: "/static/**",
+            },
+        ],
     },
 };
 
@@ -24,7 +27,6 @@ module.exports = (phase, { defaultConfig }) => {
             env: {
                 ...commonConfig.env,
                 STATIC_REVALIDATE: 1,
-                REDUX_DEBUG: 1,
             },
         };
     }
@@ -37,7 +39,6 @@ module.exports = (phase, { defaultConfig }) => {
         env: {
             ...commonConfig.env,
             STATIC_REVALIDATE: 30,
-            REDUX_DEBUG: 0,
         },
     };
 };

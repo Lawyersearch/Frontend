@@ -1,30 +1,61 @@
 import { Card, Stack, Box, Typography, Divider, Button } from "@mui/material";
 import fnsFormat from "date-fns/format";
 import _identity from "lodash/identity";
+import { useCallback, useEffect, useRef, useState } from "react";
+import useRecallOrderOffer from "../hooks/order/useRecallOrderOffer";
 import useRespondOrder from "../hooks/order/useRespondOrder";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
 import { useChangeOrderStatusMutation } from "../services/order";
+import { Offer } from "../types/offer";
 import { Order, PrivateOrder, PublicOrder } from "../types/order";
+import ConfirmModal from "../ui/modal/ConfirmModal";
 import RespondOrderModal from "../ui/modal/RespondOrderModal";
 import ProfileLink from "../ui/ProfileLink";
-import { shouldShowCancell, shouldShowRespond } from "../utils/order";
+import { shouldShowCancellOffer, shouldShowCancellOrder, shouldShowRespond } from "../utils/order";
 
 interface OrderCardProps {
     order: Order | PrivateOrder | PublicOrder;
-    onOrderUpdate?: (order: Order) => void;
-    onOrderDelete?: (order: Order) => void;
 }
 
-const OrderCard = ({ order }: OrderCardProps) => {
+const OrderCard = ({ order: orderProp }: OrderCardProps) => {
     const user = useAppSelector(store => store.user.self);
+    const [order, setOrder] = useState(orderProp);
+    const myOfferRef = useRef((order as PublicOrder).myOfferId!);
 
-    const { showRespondModal, closeRespondModal, onOrderRespond, confirmOrderRespond } = useRespondOrder(order);
+    useEffect(() => {
+        myOfferRef.current = (order as PublicOrder).myOfferId!;
+    }, [order]);
+
+    const onRespond = useCallback(
+        ({ id }: Offer) => {
+            setOrder(order => {
+                const newOfferCount = ((order as PublicOrder).offerCount ?? 0) + 1;
+                const newOrder: PublicOrder = { ...order, myOfferId: id, offerCount: newOfferCount };
+
+                return newOrder;
+            });
+        },
+        [setOrder],
+    );
+
+    const onRecall = useCallback(() => {
+        setOrder(order => {
+            const newOfferCount = ((order as PublicOrder).offerCount ?? 1) - 1;
+            const newOrder: PublicOrder = { ...order, myOfferId: null, offerCount: newOfferCount };
+
+            return newOrder;
+        });
+    }, [setOrder]);
+
+    const [showRespondModal, openRespondModal, closeRespondModal, respond] = useRespondOrder(order, onRespond);
+    const [showRecallModal, openRecallModal, closeRecallModal, recall] = useRecallOrderOffer(myOfferRef, onRecall);
     const [changeStatus, { data: updatedStatusOrder, isSuccess: isChangeStatusSuccess }] =
         useChangeOrderStatusMutation();
 
     const showRespond = shouldShowRespond(user, order);
-    const showCancell = shouldShowCancell(user, order);
-    const showControls = [showRespond, showCancell].some(_identity);
+    const showCancellOffer = shouldShowCancellOffer(user, order);
+    const showCancellOrder = shouldShowCancellOrder(user, order);
+    const showControls = [showRespond, showCancellOffer, showCancellOrder].some(_identity);
 
     return (
         <Card sx={{ borderRadius: 4 }}>
@@ -69,11 +100,20 @@ const OrderCard = ({ order }: OrderCardProps) => {
                         py={1}
                     >
                         {showRespond && (
-                            <Button variant="contained" onClick={onOrderRespond}>
+                            <Button variant="contained" onClick={openRespondModal}>
                                 Оставить отклик
                             </Button>
                         )}
-                        {showCancell && <Button variant="contained">Отменить заказ</Button>}
+                        {showCancellOrder && (
+                            <Button variant="contained" color="error">
+                                Отменить заказ
+                            </Button>
+                        )}
+                        {showCancellOffer && (
+                            <Button variant="contained" color="error" onClick={openRecallModal}>
+                                Отменить заявку
+                            </Button>
+                        )}
                     </Stack>
                 </>
             )}
@@ -81,7 +121,13 @@ const OrderCard = ({ order }: OrderCardProps) => {
                 startingPrice={order.price}
                 open={showRespondModal}
                 onClose={closeRespondModal}
-                respond={confirmOrderRespond}
+                respond={respond}
+            />
+            <ConfirmModal
+                show={showRecallModal}
+                setHide={closeRecallModal}
+                onConfirm={recall}
+                confirmString="Отменить отклик?"
             />
         </Card>
     );

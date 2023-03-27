@@ -7,7 +7,7 @@ export interface ConfirmModalProps {
     setHide: () => void;
     onConfirm: () => void;
     confirmString: string;
-    children: JSX.Element | JSX.Element[];
+    children?: JSX.Element | JSX.Element[];
 }
 
 const ConfirmModal = ({ show, setHide, onConfirm, confirmString, children }: ConfirmModalProps) => {

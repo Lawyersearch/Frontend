@@ -1,4 +1,5 @@
 import { RefObject, useEffect, useRef } from "react";
+import _isBoolean from "lodash/isBoolean";
 
 import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
 
@@ -6,6 +7,7 @@ import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
 function useEventListener<K extends keyof WindowEventMap>(
     eventName: K,
     handler: (event: WindowEventMap[K]) => void,
+    capture?: boolean,
 ): void;
 
 // eslint-disable-next-line no-redeclare
@@ -13,6 +15,7 @@ function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLEle
     eventName: K,
     handler: (event: HTMLElementEventMap[K]) => void,
     element: RefObject<T>,
+    capture?: boolean,
 ): void;
 
 // eslint-disable-next-line no-redeclare
@@ -23,7 +26,8 @@ function useEventListener<
 >(
     eventName: KW | KH,
     handler: (event: WindowEventMap[KW] | HTMLElementEventMap[KH] | Event) => void,
-    element?: RefObject<T>,
+    elementOrCapture?: RefObject<T> | boolean,
+    capture?: boolean,
 ) {
     const savedHandler = useRef(handler);
 
@@ -32,16 +36,17 @@ function useEventListener<
     }, [handler]);
 
     useEffect(() => {
-        const targetElement: T | Window = element?.current || window;
+        const targetElement: T | Window = (elementOrCapture as RefObject<T>)?.current || window;
         if (!(targetElement && targetElement.addEventListener)) {
             return;
         }
         const eventListener: typeof handler = event => savedHandler.current(event);
-        targetElement.addEventListener(eventName, eventListener);
+        capture = capture ?? (_isBoolean(elementOrCapture) ? Boolean(elementOrCapture) : undefined);
+        targetElement.addEventListener(eventName, eventListener, { capture });
         return () => {
             targetElement.removeEventListener(eventName, eventListener);
         };
-    }, [eventName, element]);
+    }, [eventName, elementOrCapture]);
 }
 
 export default useEventListener;

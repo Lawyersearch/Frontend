@@ -16,7 +16,7 @@ export interface Order {
     orderType: OrderType;
 }
 
-export type PublicOrder = Order & { offerCount: number };
+export type PublicOrder = Order & { myOfferId: string | null; offerCount: number };
 
 export type PrivateOrder = Order & { offers: Offer[] };
 

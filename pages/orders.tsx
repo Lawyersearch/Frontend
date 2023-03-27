@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     const { self } = store.getState().user;
     const [privateOrders = [], publicOrders = []] = await Promise.all([
         isUserPerformer(self?.role) ? queryPrivateOrders(token) : queryUserOrders(token),
-        queryPublicOrders(),
+        queryPublicOrders(token),
     ]);
 
     return {

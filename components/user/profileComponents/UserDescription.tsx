@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Chip, Divider, Rating, Stack, SxProps, Typography, Box, IconButton } from "@mui/material";
+import { Button, Card, Chip, Divider, Rating, Stack, SxProps, Typography, Box } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import MessageIcon from "@mui/icons-material/Message";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -87,11 +87,6 @@ const UserDescription = ({
                             <Typography variant="h4">
                                 {[lastName, firstName, middleName].filter(Boolean).join(" ") ?? "Аноним"}
                             </Typography>
-                            {isMyPage && (
-                                <IconButton color="info" onClick={openUpdateGeneral}>
-                                    <EditIcon />
-                                </IconButton>
-                            )}
                         </Stack>
                         <Typography variant="body1" fontWeight={300}>
                             Опыт: {experience}
@@ -127,9 +122,15 @@ const UserDescription = ({
                                 </a>
                             </Stack>
                         )}
-                        <Button variant="contained" endIcon={<MessageIcon />}>
-                            Написать
-                        </Button>
+                        {isMyPage ? (
+                            <Button variant="contained" color="info" onClick={openUpdateGeneral} endIcon={<EditIcon />}>
+                                Изменить
+                            </Button>
+                        ) : (
+                            <Button variant="contained" endIcon={<MessageIcon />}>
+                                Написать
+                            </Button>
+                        )}
                     </Stack>
                 </Stack>
             </Stack>

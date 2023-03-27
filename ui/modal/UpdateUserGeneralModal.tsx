@@ -22,6 +22,10 @@ const UpdateUserGeneralModal = ({ userData, open, onClose, confirm }: UpdateUser
     const [description, setDescription] = useState(userData.description ?? "");
 
     const submit = () => {
+        if (!open) {
+            return;
+        }
+
         setSubmited(true);
 
         if ([lastName, firstName].every(isNotEmpty)) {

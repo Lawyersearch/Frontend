@@ -45,7 +45,7 @@ export const queryView = async () => {
     return { view, categories };
 };
 
-export const queryPublicOrders = () => query<PublicOrder[]>("/order");
+export const queryPublicOrders = (token?: string) => query<PublicOrder[]>("/order", createAuthOpts(token));
 
 export const queryPrivateOrders = (token?: string) => query<Order[]>("/order/performer", createAuthOpts(token));
 

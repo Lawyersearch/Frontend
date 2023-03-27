@@ -39,7 +39,7 @@ const UpdateUserCategoriesModal = ({ pickedCategories, open, onClose, confirm }:
     );
 
     const submit = () => {
-        confirm(value.map(category => category.value));
+        open && confirm(value.map(category => category.value));
     };
 
     useEnterPress(submit);
@@ -52,9 +52,6 @@ const UpdateUserCategoriesModal = ({ pickedCategories, open, onClose, confirm }:
                 </Typography>
                 <FormControl fullWidth>
                     <Stack spacing={2} width={{ xs: "min(80vw, 100%)", md: "min(80vw, 1100px)" }}>
-                        <Button variant="outlined" onClick={submit}>
-                            Сохранить
-                        </Button>
                         <Autocomplete
                             multiple
                             value={value}
@@ -67,6 +64,9 @@ const UpdateUserCategoriesModal = ({ pickedCategories, open, onClose, confirm }:
                             renderOption={renderOption}
                             renderInput={params => <TextField {...params} label="Категори" />}
                         />
+                        <Button variant="outlined" onClick={submit}>
+                            Сохранить
+                        </Button>
                     </Stack>
                 </FormControl>
             </>
