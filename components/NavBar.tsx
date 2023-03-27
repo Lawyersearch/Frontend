@@ -34,7 +34,7 @@ const NavBar = () => {
             <Toolbar>
                 <Stack direction="row" alignItems="center">
                     <Typography variant="h6" component="h1" display={{ xs: "none", sm: "block" }} mr={2}>
-                        StartUp
+                        LawyerSearch
                     </Typography>
                     <NavLinks />
                 </Stack>
