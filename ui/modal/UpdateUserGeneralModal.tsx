@@ -60,7 +60,7 @@ const UpdateUserGeneralModal = ({ userData, open, onClose, confirm }: UpdateUser
                             showError={submited}
                         />
                         <ValidInput label="Отчество" value={middleName} bindChange={setMiddleName} />
-                        <ValidInput label="Описание" value={middleName} bindChange={setDescription} multiline />
+                        <ValidInput label="Описание" value={description} bindChange={setDescription} multiline />
                         <Button variant="outlined" onClick={submit}>
                             Сохранить
                         </Button>
