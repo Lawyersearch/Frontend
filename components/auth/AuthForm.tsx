@@ -4,10 +4,10 @@ import ValidInput from "../../ui/components/ValidInput";
 import { isValidEmail, isValidPassword } from "../../utils/validation";
 import { invalidMailText, invalidPasswordText } from "../../ui/strings";
 import { useLoginFromCreds, useRegistration } from "../../hooks/redux/useAuth";
-import useBoolean from "../../hooks/useBoolean";
+import useBoolean from "../../hooks/utils/useBoolean";
 import ForgetPasswordModal from "../../ui/modal/auth/ForgetPassword";
 import { useRouter } from "next/router";
-import useEnterPress from "../../hooks/useEnterPress";
+import useEnterPress from "../../hooks/utils/useEnterPress";
 
 const AuthForm = () => {
     const router = useRouter();

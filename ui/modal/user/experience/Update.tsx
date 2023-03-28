@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { Typography } from "@mui/material";
 import { WorkExpirience } from "../../../../types/user";
-import useBoolean from "../../../../hooks/useBoolean";
+import useBoolean from "../../../../hooks/utils/useBoolean";
 import { useUpdateWorkExperienceMutation } from "../../../../services/workExperience";
 import ExperienceForm from "../../../../components/user/profileComponents/experience/ExperienceForm";
 import GenericModal from "../../Generic";

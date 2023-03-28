@@ -4,7 +4,7 @@ import { useCallback, useEffect } from "react";
 import { mkAuthenticatedBaseQuery } from "../services/utils";
 import { pushSnack } from "../store/reducers/uiSlice";
 import { useAppDispatch } from "./redux/useTypedRedux";
-import useBoolean from "./useBoolean";
+import useBoolean from "./utils/useBoolean";
 
 interface UseConfirmModalArgs<ModalData, MutationResult, MutationData> {
     onSuccessMessage?: string;

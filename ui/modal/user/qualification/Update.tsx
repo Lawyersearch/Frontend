@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import { useUpdateEducationMutation } from "../../../../services/education";
 import { Education } from "../../../../types/user";
 import QualificationForm from "../../../../components/user/profileComponents/qualification/QualificationForm";
-import useBoolean from "../../../../hooks/useBoolean";
+import useBoolean from "../../../../hooks/utils/useBoolean";
 import GenericModal from "../../Generic";
 
 export type UpdateQualificationRef =

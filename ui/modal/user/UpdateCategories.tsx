@@ -2,7 +2,7 @@ import { Typography, FormControl, Stack, Button, Autocomplete, Checkbox, TextFie
 import React, { HTMLAttributes, useCallback, useMemo, useState } from "react";
 import _last from "lodash/last";
 import { useAppSelector } from "../../../hooks/redux/useTypedRedux";
-import useEnterPress from "../../../hooks/useEnterPress";
+import useEnterPress from "../../../hooks/utils/useEnterPress";
 import { Category } from "../../../types/category";
 import GenericModal from "../Generic";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";

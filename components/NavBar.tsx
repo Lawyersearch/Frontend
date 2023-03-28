@@ -9,7 +9,7 @@ import AuthorizedDropdown from "./auth/AuthorizedDropdown";
 import AuthForm from "./auth/AuthForm";
 import { useAppDispatch, useAppSelector } from "../hooks/redux/useTypedRedux";
 import { toggleMode } from "../store/reducers/uiSlice";
-import useBoolean from "../hooks/useBoolean";
+import useBoolean from "../hooks/utils/useBoolean";
 import useDropdownAuth from "../hooks/useDropdownAuth";
 import Avatar from "../ui/components/Avatar";
 

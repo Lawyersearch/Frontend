@@ -1,7 +1,7 @@
 import { Typography, FormControl, Stack, Button, InputAdornment } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import React, { useState } from "react";
-import useEnterPress from "../../../hooks/useEnterPress";
+import useEnterPress from "../../../hooks/utils/useEnterPress";
 import { isNotEmpty, isNumberLike } from "../../../utils/validation";
 import { invalidEmptyMessageTest, invalidPriceText } from "../../strings";
 import ValidInput from "../../components/ValidInput";

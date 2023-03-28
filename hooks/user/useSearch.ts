@@ -1,7 +1,7 @@
-import { CategoryView } from "../types/category";
-import { useAppDispatch } from "./redux/useTypedRedux";
+import { CategoryView } from "../../types/category";
+import { useAppDispatch } from "../redux/useTypedRedux";
 import { useCallback, useEffect, useRef } from "react";
-import { useLazyGetUsersByCategorIdQuery } from "../services/user";
+import { useLazyGetUsersByCategorIdQuery } from "../../services/user";
 import { useRouter } from "next/router";
 
 const useSearch = (view: CategoryView[]) => {

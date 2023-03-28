@@ -1,7 +1,7 @@
 import { Stack, Typography, Chip } from "@mui/material";
 import { GetStaticProps } from "next/types";
 import { useCallback } from "react";
-import useSearch from "../hooks/useSearch";
+import useSearch from "../hooks/user/useSearch";
 import { queryView } from "../utils/query";
 import { CategoryView } from "../types/category";
 import SearchBar from "../components/SearchBar";

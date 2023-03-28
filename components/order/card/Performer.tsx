@@ -64,15 +64,15 @@ const PerformerOrderCard = ({ order: orderProp }: PerformerOrderCardProps) => {
     const showControls = [showRespond, showCancellOffer].some(Boolean);
 
     return (
-        <GenericOrderCard order={order} showControls={showControls}>
-            {showCancellOffer && (
-                <Button variant="contained" color="error" startIcon={<ClearIcon />} onClick={openRecallModal}>
-                    Отменить заявку
-                </Button>
-            )}
+        <GenericOrderCard order={order} showControls={showControls} sx={!order.myOffer ? {opacity: 0.4} : {}}>
             {showEditOffer && (
                 <Button variant="contained" startIcon={<EditIcon />} color="info" onClick={openEditModal}>
                     Изменить отклик
+                </Button>
+            )}
+            {showCancellOffer && (
+                <Button variant="contained" color="error" startIcon={<ClearIcon />} onClick={openRecallModal}>
+                    Отменить заявку
                 </Button>
             )}
             {showRespond && (

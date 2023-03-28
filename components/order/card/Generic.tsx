@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Stack, Box, Typography, Divider } from "@mui/material";
+import { Card, Stack, Box, Typography, Divider, SxProps } from "@mui/material";
 import fnsFormat from "date-fns/format";
 import _identity from "lodash/identity";
 import { Order } from "../../../types/order";
@@ -9,10 +9,11 @@ interface GenericOrderCardProps {
     order: Order;
     showControls?: boolean;
     children: React.ReactNode | React.ReactNode[];
+    sx?: SxProps
 }
 
-const GenericOrderCard = ({ order, showControls = false, children }: GenericOrderCardProps) => (
-    <Card sx={{ borderRadius: 4 }}>
+const GenericOrderCard = ({ order, showControls = false, children, sx, ...rest }: GenericOrderCardProps) => (
+    <Card sx={{borderRadius: 4, ...sx }} {...rest}>
         <Stack p={2} spacing={3}>
             <Stack direction="row" justifyContent="space-between">
                 <Typography variant="h3">{order.title}</Typography>
@@ -23,7 +24,7 @@ const GenericOrderCard = ({ order, showControls = false, children }: GenericOrde
                 <ProfileLink id={order.userId} userName={order.creatorName} src={order.avatar} />
                 {Boolean(order.offerCount) && (
                     <>
-                        <Typography fontWeight={550}>Количество откликов</Typography>
+                        <Typography fontWeight={550}>Отклики</Typography>
                         <Typography>{order.offerCount}</Typography>
                     </>
                 )}
@@ -51,7 +52,7 @@ const GenericOrderCard = ({ order, showControls = false, children }: GenericOrde
                     alignItems="center"
                     justifyContent="end"
                     bgcolor="background.default"
-                    px={3}
+                    px={1}
                     py={1}
                 >
                     {children}

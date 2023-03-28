@@ -1,6 +1,6 @@
 import { Typography, FormControl, Stack, Button } from "@mui/material";
 import React, { useState } from "react";
-import useEnterPress from "../../../hooks/useEnterPress";
+import useEnterPress from "../../../hooks/utils/useEnterPress";
 import { UpdateUserGeneralRequest } from "../../../services/user";
 import { isNotEmpty } from "../../../utils/validation";
 import { invalidFirstNameText, invalidLastNameText } from "../../strings";

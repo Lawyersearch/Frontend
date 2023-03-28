@@ -3,7 +3,7 @@ import { Stack, Container, Grid } from "@mui/material";
 import Categories from "../components/user/Categories";
 import NetHandler from "../ui/components/NetHandler";
 import UserCard from "../components/user/UserCard";
-import useSearch from "../hooks/useSearch";
+import useSearch from "../hooks/user/useSearch";
 import { CategoryTree, CategoryView } from "../types/category";
 import { GetStaticProps } from "next";
 import { experienceString } from "../utils/wordsEndings";
