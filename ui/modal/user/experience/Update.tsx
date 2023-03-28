@@ -3,8 +3,8 @@ import { Typography } from "@mui/material";
 import { WorkExpirience } from "../../../../types/user";
 import useBoolean from "../../../../hooks/useBoolean";
 import { useUpdateWorkExperienceMutation } from "../../../../services/workExperience";
-import ExperienceForm from "./ExperienceForm";
-import GenericModal from "../../../../ui/modal/GenericModal";
+import ExperienceForm from "../../../../components/user/profileComponents/experience/ExperienceForm";
+import GenericModal from "../../Generic";
 
 export type UpdateQualificationRef =
     | {

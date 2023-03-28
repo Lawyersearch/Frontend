@@ -1,8 +1,8 @@
 import { Middleware, MiddlewareAPI, PayloadAction } from "@reduxjs/toolkit";
 import Cookie from "js-cookie";
-import { pushSnack } from "../store/reducers/uiSlice";
+import { pushSnack } from "../../store/reducers/uiSlice";
 import _get from "lodash/get";
-import { RTKResponse } from "../types/RTKResponse";
+import { RTKResponse } from "../../types/RTKResponse";
 
 const rtkQueryHandler: Middleware =
     (api: MiddlewareAPI) => next => (action: PayloadAction<RTKResponse<any> & { status: number }>) => {

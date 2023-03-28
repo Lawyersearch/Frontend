@@ -2,33 +2,33 @@ import _isEmpty from "lodash/isEmpty";
 import { Chip, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import PublicIcon from "@mui/icons-material/Public";
-import CollapsedList from "../CollapsedList";
+import CollapsedList from "../../ui/components/CollapsedList";
 import { useState } from "react";
-import { Order, OrderType } from "../../types/order";
+import { Order } from "../../types/order";
 
-interface OrderTypesProps {
+interface OrderTypesListProps {
     onTypeClick: (type: number) => void;
-    orders: { [key in keyof typeof OrderType]: Order[] | null };
+    orders: [myOrders: Order[], allOrders: Order[]];
 }
 
-const OrderTypes = ({ onTypeClick, orders }: OrderTypesProps) => {
+const OrderTypesList = ({ onTypeClick, orders }: OrderTypesListProps) => {
     const [expanded, setExpanded] = useState(false);
     const types = [
-        { type: OrderType.PRIVATE, label: "Мои заказы", Icon: PersonIcon },
-        { type: OrderType.PUBLIC, label: "Все заказы", Icon: PublicIcon },
+        { label: "Мои заказы", Icon: PersonIcon },
+        { label: "Все заказы", Icon: PublicIcon },
     ];
 
     return (
         <CollapsedList title="Заказы" expanded={expanded} onToggle={() => setExpanded(!expanded)}>
             <List>
-                {types.map(({ type, label, Icon }) => (
-                    <ListItem key={type}>
-                        <ListItemButton disabled={_isEmpty(orders[type])} onClick={() => onTypeClick(type)}>
+                {types.map(({ label, Icon }, index) => (
+                    <ListItem key={index}>
+                        <ListItemButton disabled={_isEmpty(orders[index])} onClick={() => onTypeClick(index)}>
                             <ListItemIcon>
                                 <Icon />
                             </ListItemIcon>
                             <ListItemText primary={label} />
-                            <Chip label={orders[type]?.length || 0} />
+                            <Chip label={orders[index]?.length || 0} />
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -37,4 +37,4 @@ const OrderTypes = ({ onTypeClick, orders }: OrderTypesProps) => {
     );
 };
 
-export default OrderTypes;
+export default OrderTypesList;

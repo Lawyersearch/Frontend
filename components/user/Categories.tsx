@@ -4,8 +4,8 @@ import TreeItem, { TreeItemProps, treeItemClasses } from "@mui/lab/TreeItem";
 import { Box, styled, SvgIconProps, Typography } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { CategoryTree } from "../types/category";
-import CollapsedList from "./CollapsedList";
+import { CategoryTree } from "../../types/category";
+import CollapsedList from "../../ui/components/CollapsedList";
 
 type StyledTreeItemProps = TreeItemProps & {
     bgColor?: string;

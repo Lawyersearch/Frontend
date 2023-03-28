@@ -2,8 +2,8 @@ import React, { useRef, useState } from "react";
 import { Box, IconButton, Stack, SxProps } from "@mui/material";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import useElementSize from "../hooks/useElementSize";
-import useBoolean from "../hooks/useBoolean";
+import useElementSize from "../../hooks/useElementSize";
+import useBoolean from "../../hooks/useBoolean";
 
 interface GalleryProps {
     children: JSX.Element | JSX.Element[];

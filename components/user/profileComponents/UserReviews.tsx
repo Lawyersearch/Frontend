@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, Rating, Stack, SxProps, Typography } from "@mui/material";
-import Gallery from "../../../ui/Gallery";
+import Gallery from "../../../ui/components/Gallery";
 import { Review } from "../../../types/user";
-import Avatar from "../../../ui/Avatar";
+import Avatar from "../../../ui/components/Avatar";
 
 interface UserReviewsProps {
     reviews: Review[];

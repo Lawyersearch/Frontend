@@ -6,7 +6,7 @@ import { queryView } from "../utils/query";
 import { CategoryView } from "../types/category";
 import SearchBar from "../components/SearchBar";
 import { useRouter } from "next/router";
-import NextLink from "../ui/NextLink";
+import NextLink from "../ui/components/NextLink";
 import { wrapper } from "../store";
 import { setCategoryView } from "../store/reducers/uiSlice";
 

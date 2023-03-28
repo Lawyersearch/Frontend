@@ -2,23 +2,21 @@ import _isEmpty from "lodash/isEmpty";
 import { Container, Grid, Stack, Typography } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
-import OrderTypes from "../components/order/types";
-import OrderCard from "../components/OrderCard";
-import { Order, OrderType } from "../types/order";
+import OrderTypes from "../components/order/TypesList";
+import OrderCard from "../components/order/card";
+import { Order } from "../types/order";
 import { queryPrivateOrders, queryPublicOrders, queryUserOrders } from "../utils/query";
 import { isUserPerformer } from "../utils/user";
 import { wrapper } from "../store";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
 
 interface OrdersPageProps {
-    orders: { [key in keyof typeof OrderType]: Order[] | null };
+    orders: [myOrders: Order[], allOrders: Order[]];
 }
 
 const OrdersPage = ({ orders }: OrdersPageProps) => {
     const isAuthorized = useAppSelector(state => Boolean(state.user.self));
-    const [type, setType] = useState<number>(
-        _isEmpty(orders[OrderType.PRIVATE]) ? OrderType.PUBLIC : OrderType.PRIVATE,
-    );
+    const [type, setType] = useState<number>(orders.findIndex(order => !_isEmpty(order)));
 
     return (
         <Container>
@@ -49,18 +47,13 @@ const OrdersPage = ({ orders }: OrdersPageProps) => {
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async context => {
     const { token } = context.req.cookies;
     const { self } = store.getState().user;
-    const [privateOrders = [], publicOrders = []] = await Promise.all([
+    const orders = await Promise.all([
         isUserPerformer(self?.role) ? queryPrivateOrders(token) : queryUserOrders(token),
         queryPublicOrders(token),
-    ]);
+    ]).then(orderLists => orderLists.map(orderList => orderList ?? []));
 
     return {
-        props: {
-            orders: {
-                [OrderType.PRIVATE]: privateOrders,
-                [OrderType.PUBLIC]: publicOrders,
-            },
-        },
+        props: { orders },
     };
 });
 

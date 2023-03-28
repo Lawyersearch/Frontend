@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button, FormControl, Stack, CircularProgress } from "@mui/material";
-import ValidInput from "../../ui/ValidInput";
+import ValidInput from "../../ui/components/ValidInput";
 import { isValidEmail, isValidPassword } from "../../utils/validation";
 import { invalidMailText, invalidPasswordText } from "../../ui/strings";
 import { useLoginFromCreds, useRegistration } from "../../hooks/redux/useAuth";
 import useBoolean from "../../hooks/useBoolean";
-import ForgetPasswordModal from "../../ui/modal/ForgetPasswordModal";
+import ForgetPasswordModal from "../../ui/modal/auth/ForgetPassword";
 import { useRouter } from "next/router";
 import useEnterPress from "../../hooks/useEnterPress";
 
@@ -34,6 +34,10 @@ const AuthForm = () => {
     }, [isRegSuccess]);
 
     const submit = (isRegister: boolean) => {
+        if (!showModal) {
+            return;
+        }
+
         setSubmited(true);
         setPassword("");
         if (isValidEmail(email) && isValidPassword(password)) {

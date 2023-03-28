@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Loading from "../../ui/Loading";
+import Loading from "../../ui/components/Loading";
 import { useLoginFromVerification } from "../../hooks/redux/useAuth";
 import { useRouter } from "next/router";
 

@@ -1,11 +1,11 @@
 import { Typography, FormControl, Stack, Button } from "@mui/material";
 import React, { useState } from "react";
-import useEnterPress from "../../hooks/useEnterPress";
-import { UpdateUserGeneralRequest } from "../../services/user";
-import { isNotEmpty } from "../../utils/validation";
-import { invalidFirstNameText, invalidLastNameText } from "../strings";
-import ValidInput from "../ValidInput";
-import GenericModal from "./GenericModal";
+import useEnterPress from "../../../hooks/useEnterPress";
+import { UpdateUserGeneralRequest } from "../../../services/user";
+import { isNotEmpty } from "../../../utils/validation";
+import { invalidFirstNameText, invalidLastNameText } from "../../strings";
+import ValidInput from "../../components/ValidInput";
+import GenericModal from "../Generic";
 
 interface UpdateUserGeneralModalProps {
     userData: Partial<UpdateUserGeneralRequest>;

@@ -2,9 +2,9 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef } from "react
 import { Typography } from "@mui/material";
 import { useUpdateEducationMutation } from "../../../../services/education";
 import { Education } from "../../../../types/user";
-import QualificationForm from "./QualificationForm";
+import QualificationForm from "../../../../components/user/profileComponents/qualification/QualificationForm";
 import useBoolean from "../../../../hooks/useBoolean";
-import GenericModal from "../../../../ui/modal/GenericModal";
+import GenericModal from "../../Generic";
 
 export type UpdateQualificationRef =
     | {

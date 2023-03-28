@@ -3,8 +3,8 @@ import { Box, Card, Chip, Divider, Rating, Stack, SxProps, Typography, Button } 
 import MessageIcon from "@mui/icons-material/Message";
 import { feedBacksString } from "../../utils/wordsEndings";
 import { Category } from "../../types/category";
-import Avatar from "../../ui/Avatar";
-import NextLink from "../../ui/NextLink";
+import Avatar from "../../ui/components/Avatar";
+import NextLink from "../../ui/components/NextLink";
 
 interface UserProfileProps {
     id: string;

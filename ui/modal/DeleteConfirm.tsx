@@ -1,8 +1,9 @@
 import { Button, Stack, Typography } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 import React from "react";
-import GenericModal from "./GenericModal";
+import GenericModal from "./Generic";
 
-export interface ConfirmModalProps {
+export interface DeleteConfirmModalProps {
     show: boolean;
     setHide: () => void;
     onConfirm: () => void;
@@ -10,7 +11,7 @@ export interface ConfirmModalProps {
     children?: JSX.Element | JSX.Element[];
 }
 
-const ConfirmModal = ({ show, setHide, onConfirm, confirmString, children }: ConfirmModalProps) => {
+const DeleteConfirmModal = ({ show, setHide, onConfirm, confirmString, children }: DeleteConfirmModalProps) => {
     const onConfirmClick = () => {
         onConfirm();
         setHide();
@@ -24,7 +25,7 @@ const ConfirmModal = ({ show, setHide, onConfirm, confirmString, children }: Con
                 </Typography>
                 <Typography variant="h5">{confirmString} </Typography>
                 {children}
-                <Button variant="contained" color="error" onClick={onConfirmClick} fullWidth>
+                <Button fullWidth startIcon={<ClearIcon />} variant="contained" color="error" onClick={onConfirmClick}>
                     Удалить
                 </Button>
             </Stack>
@@ -32,4 +33,4 @@ const ConfirmModal = ({ show, setHide, onConfirm, confirmString, children }: Con
     );
 };
 
-export default ConfirmModal;
+export default DeleteConfirmModal;

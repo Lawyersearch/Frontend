@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/redux/useTypedRedux";
 import { toggleMode } from "../store/reducers/uiSlice";
 import useBoolean from "../hooks/useBoolean";
 import useDropdownAuth from "../hooks/useDropdownAuth";
-import Avatar from "../ui/Avatar";
+import Avatar from "../ui/components/Avatar";
 
 const NavBar = () => {
     const user = useAppSelector(store => store.user.self);

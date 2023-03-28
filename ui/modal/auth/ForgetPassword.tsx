@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Button, FormControl, Stack, SxProps, Typography } from "@mui/material";
-import ValidInput from "../ValidInput";
-import { isValidEmail } from "../../utils/validation";
-import { invalidMailText } from "../strings";
-import { useForgetPassword } from "../../hooks/redux/useAuth";
-import Loading from "../Loading";
+import RestoreIcon from "@mui/icons-material/Restore";
+import ValidInput from "../../components/ValidInput";
+import { isValidEmail } from "../../../utils/validation";
+import { invalidMailText } from "../../strings";
+import { useForgetPassword } from "../../../hooks/redux/useAuth";
+import Loading from "../../components/Loading";
 import { useRouter } from "next/router";
-import GenericModal from "./GenericModal";
+import GenericModal from "../Generic";
 
 interface ForgetPasswordProps {
     show: boolean;
@@ -52,7 +53,7 @@ const ForgetPasswordModal = ({ show, onClose, ...rest }: ForgetPasswordProps & S
                             invalidText={invalidMailText}
                             showError={submited}
                         />
-                        <Button variant="outlined" onClick={submit}>
+                        <Button variant="outlined" onClick={submit} startIcon={<RestoreIcon />}>
                             Восстановить пароль
                         </Button>
                     </Stack>

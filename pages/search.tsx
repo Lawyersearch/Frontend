@@ -1,7 +1,7 @@
 import SearchBar from "../components/SearchBar";
 import { Stack, Container, Grid } from "@mui/material";
-import Categories from "../components/Categories";
-import NetHandler from "../ui/NetHandler";
+import Categories from "../components/user/Categories";
+import NetHandler from "../ui/components/NetHandler";
 import UserCard from "../components/user/UserCard";
 import useSearch from "../hooks/useSearch";
 import { CategoryTree, CategoryView } from "../types/category";

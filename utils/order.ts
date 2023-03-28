@@ -1,4 +1,4 @@
-import { Order, OrderStatus, PublicOrder } from "../types/order";
+import { Order, OrderStatus, PerformerOrder } from "../types/order";
 import { User } from "../types/user";
 import { isUserClient, isUserPerformer } from "./user";
 
@@ -10,8 +10,10 @@ export const isOrderDismissed = (status: OrderStatus) => status === OrderStatus.
 export const isOrderDisputed = (status: OrderStatus) => status === OrderStatus.DISPUT;
 
 export const shouldShowRespond = (user: User | null, order: Order) =>
-    isUserPerformer(user?.role) && isOrderOpen(order.orderStatus) && !(order as PublicOrder).myOfferId;
+    isUserPerformer(user?.role) && isOrderOpen(order.orderStatus) && !(order as PerformerOrder).myOffer;
 export const shouldShowCancellOffer = (user: User | null, order: Order) =>
-    isUserPerformer(user?.role) && isOrderOpen(order.orderStatus) && (order as PublicOrder).myOfferId;
+    isUserPerformer(user?.role) && isOrderOpen(order.orderStatus) && (order as PerformerOrder).myOffer;
+export const shouldShowEditOffer = (user: User | null, order: Order) =>
+    isUserPerformer(user?.role) && isOrderOpen(order.orderStatus) && (order as PerformerOrder).myOffer;
 export const shouldShowCancellOrder = (user: User | null, order: Order) =>
     isUserClient(user?.role) && isOrderOpen(order.orderStatus) && order.userId === user?.id;

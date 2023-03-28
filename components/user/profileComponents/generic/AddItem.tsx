@@ -1,7 +1,7 @@
 import { IconButton, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import React from "react";
-import GenericModal from "../../../../ui/modal/GenericModal";
+import GenericModal from "../../../../ui/modal/Generic";
 
 interface AddCardProps {
     show: boolean;

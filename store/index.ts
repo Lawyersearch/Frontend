@@ -3,7 +3,7 @@ import { createWrapper } from "next-redux-wrapper";
 import counterReducer from "./reducers/counterSlice";
 import userReducer from "./reducers/userSlice";
 import uiReducer from "./reducers/uiSlice";
-import networkingMiddleware from "../ui/networkingMiddleware";
+import networkingMiddleware from "../ui/components/networkingMiddleware";
 import { authApi } from "../services/auth";
 import { userApi } from "../services/user";
 import { educationApi } from "../services/education";
@@ -25,6 +25,7 @@ export const makeStore = () =>
             [orderApi.reducerPath]: orderApi.reducer,
             [offerApi.reducerPath]: offerApi.reducer,
         },
+        devTools: process.env.NODE_ENV === "development",
         middleware: getDefaultMiddleware =>
             getDefaultMiddleware({
                 serializableCheck: {

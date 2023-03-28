@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Card, SxProps, Typography } from "@mui/material";
 import { WorkExpirience } from "../../../types/user";
-import Gallery from "../../../ui/Gallery";
+import Gallery from "../../../ui/components/Gallery";
 import AddWorkExperience from "./experience/AddWorkExperience";
-import DeleteExperienceModal from "../../../ui/modal/DeleteExperienceModal";
+import DeleteExperienceModal from "../../../ui/modal/user/experience/Delete";
 import Experience from "./experience/Experience";
 import useRemoveWorkExp from "../../../hooks/user/useRemoveWorkExp";
 import useUpdateWorkExp from "../../../hooks/user/useUpdateWorkExp";
-import UpdateWorkExp from "./experience/UpdateWorkExp";
+import UpdateWorkExp from "../../../ui/modal/user/experience/Update";
 
 interface UserExperienceProps {
     isMyPage: boolean;

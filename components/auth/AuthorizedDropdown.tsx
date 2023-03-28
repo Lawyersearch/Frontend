@@ -1,8 +1,8 @@
 import React from "react";
 import Cookie from "js-cookie";
 import { Button, Stack, Typography } from "@mui/material";
-import Avatar from "../../ui/Avatar";
-import NextLink from "../../ui/NextLink";
+import Avatar from "../../ui/components/Avatar";
+import NextLink from "../../ui/components/NextLink";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux/useTypedRedux";
 import { removeSelf } from "../../store/reducers/userSlice";
 

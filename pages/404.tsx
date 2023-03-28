@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import NextLink from "../ui/NextLink";
+import NextLink from "../ui/components/NextLink";
 
 const NotFoundPage = () => {
     return (

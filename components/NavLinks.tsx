@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Stack } from "@mui/material";
-import NextLink from "../ui/NextLink";
+import NextLink from "../ui/components/NextLink";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
 
 const NavLinks = () => {

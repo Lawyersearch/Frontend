@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { RTKError } from "../types/RTKResponse";
+import { RTKError } from "../../types/RTKResponse";
 
 interface NetHandlerProps {
     isLoading: boolean;

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button, FormControl, Stack } from "@mui/material";
-import ValidInput from "../../../../ui/ValidInput";
+import SaveIcon from "@mui/icons-material/Save";
+import AddIcon from "@mui/icons-material/Add";
+import ValidInput from "../../../../ui/components/ValidInput";
 import { isNotEmpty } from "../../../../utils/validation";
 import { notEmptyVerifyText } from "../../../../ui/strings";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -21,6 +23,8 @@ const ItemForm = ({ initial, onSubmit, topTitle, middleTitle }: ItemFormProps) =
     const [startYear, setStartYear] = useState<Date | null>(initial?.startYear ? new Date(initial.startYear) : null);
     const [endYear, setEndYear] = useState<Date | null>(initial?.endYear ? new Date(initial.endYear) : null);
     const [submited, setSubmited] = useState(false);
+
+    const buttonText = initial ? "Сохранить" : "Добавить";
 
     const submit = () => {
         if (
@@ -89,8 +93,12 @@ const ItemForm = ({ initial, onSubmit, topTitle, middleTitle }: ItemFormProps) =
                         renderInput={renderDateInput}
                     />
                 </Stack>
-                <Button variant="contained" onClick={submit}>
-                    {initial ? "Сохранить" : "Добавить"}
+                <Button
+                    variant="contained"
+                    startIcon={buttonText === "Добавить" ? <AddIcon /> : <SaveIcon />}
+                    onClick={submit}
+                >
+                    {buttonText}
                 </Button>
             </Stack>
         </FormControl>

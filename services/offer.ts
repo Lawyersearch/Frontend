@@ -27,10 +27,11 @@ export const offerApi = createApi({
                 method: "DELETE",
             }),
         }),
-        updateRespond: builder.mutation<Offer, string>({
-            query: (offerId: string) => ({
-                url: `/offerId/${offerId}`,
+        updateRespond: builder.mutation<Offer, Offer>({
+            query: ({ id, ...rest }: Offer) => ({
+                url: `/offerId/${id}`,
                 method: "PUT",
+                body: rest,
             }),
             transformResponse: getData<Offer>,
         }),

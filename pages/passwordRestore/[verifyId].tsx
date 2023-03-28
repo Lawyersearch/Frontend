@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { Button, FormControl } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import Loading from "../../ui/Loading";
+import Loading from "../../ui/components/Loading";
 import { useRestorePassword } from "../../hooks/redux/useAuth";
 import { isValidPassword } from "../../utils/validation";
 import { invalidPasswordText, notMatchingPasswordText } from "../../ui/strings";

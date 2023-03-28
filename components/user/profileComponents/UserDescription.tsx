@@ -7,13 +7,13 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import { feedBacksString } from "../../../utils/wordsEndings";
 import { Category } from "../../../types/category";
-import Avatar from "../../../ui/Avatar";
-import NextLink from "../../../ui/NextLink";
+import Avatar from "../../../ui/components/Avatar";
+import NextLink from "../../../ui/components/NextLink";
 import useUpdateGeneral from "../../../hooks/user/useUpdateGeneral";
 import { User } from "../../../types/user";
-import UpdateUserGeneralModal from "../../../ui/modal/UpdateUserGeneralModal";
+import UpdateUserGeneralModal from "../../../ui/modal/user/UpdateGeneral";
 import useUpdateCategories from "../../../hooks/user/useUpdateCategories";
-import UpdateUserCategoriesModal from "../../../ui/modal/updateUserCategoriesModal";
+import UpdateUserCategoriesModal from "../../../ui/modal/user/UpdateCategories";
 
 interface UserProfileProps {
     avatar: string;

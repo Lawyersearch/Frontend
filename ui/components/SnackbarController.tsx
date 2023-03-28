@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from "react";
 import Slide from "@mui/material/Slide";
 import { SnackbarProvider, useSnackbar } from "notistack";
-import { useAppDispatch } from "../hooks/redux/useTypedRedux";
-import { setPushSnack } from "../store/reducers/uiSlice";
-import { Snack } from "../types/snack";
+import { useAppDispatch } from "../../hooks/redux/useTypedRedux";
+import { setPushSnack } from "../../store/reducers/uiSlice";
+import { Snack } from "../../types/snack";
 
 interface SnackbarProps {
     children: JSX.Element | JSX.Element[];

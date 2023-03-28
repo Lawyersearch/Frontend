@@ -7,6 +7,7 @@ export interface Order {
     userId: string;
     performerId?: string;
     offerId?: string;
+    offerCount: number;
     price?: number;
     description: string;
     title: string;
@@ -16,9 +17,9 @@ export interface Order {
     orderType: OrderType;
 }
 
-export type PublicOrder = Order & { myOfferId: string | null; offerCount: number };
+export type PerformerOrder = Order & { myOffer: Offer | null };
 
-export type PrivateOrder = Order & { offers: Offer[] };
+export type ClientOrder = Order & { offers: Offer[] };
 
 export enum OrderType {
     PRIVATE = 0,
