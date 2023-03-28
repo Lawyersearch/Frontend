@@ -1,10 +1,10 @@
 import _isEmpty from "lodash/isEmpty";
 import { Container, Grid, Stack, Typography } from "@mui/material";
 import { GetServerSideProps } from "next";
-import { useState } from "react";
-import OrderTypes from "../components/order/TypesList";
+import { useCallback, useState } from "react";
+import OrderTypesList from "../components/order/TypesList";
 import OrderCard from "../components/order/card";
-import { Order } from "../types/order";
+import { Order, OrderStatus, OrderType } from "../types/order";
 import { queryPrivateOrders, queryPublicOrders, queryUserOrders } from "../utils/query";
 import { isUserPerformer } from "../utils/user";
 import { wrapper } from "../store";
@@ -16,21 +16,28 @@ interface OrdersPageProps {
 
 const OrdersPage = ({ orders }: OrdersPageProps) => {
     const isAuthorized = useAppSelector(state => Boolean(state.user.self));
-    const [type, setType] = useState<number>(orders.findIndex(order => !_isEmpty(order)));
+    const [type, setType] = useState<OrderType>(orders.findIndex(order => !_isEmpty(order)));
+    const [status, setStatus] = useState<OrderStatus>(orders.findIndex(order => !_isEmpty(order)));
+
+    const getFilteredOrders = useCallback(() => {
+        return type === OrderType.PRIVATE
+            ? orders[type].filter(({ orderStatus }) => orderStatus === status) ?? []
+            : orders[type] ?? [];
+    }, [type, status]);
 
     return (
         <Container>
             <Grid container spacing={{ xs: 2, md: 3 }}>
                 {isAuthorized && (
                     <Grid item xs={12} md={3}>
-                        <OrderTypes onTypeClick={setType} orders={orders} />
+                        <OrderTypesList onTypeClick={setType} onStatusClick={setStatus} orders={orders} />
                     </Grid>
                 )}
                 <Grid item xs={12} md={9 + Number(!isAuthorized) * 3}>
                     {orders[type]?.length ? (
                         <Stack spacing={3}>
-                            {orders[type]?.map(order => (
-                                <OrderCard key={order.id} order={order} />
+                            {getFilteredOrders().map(order => (
+                                <OrderCard key={order.id} order={order} orderType={type} />
                             ))}
                         </Stack>
                     ) : (

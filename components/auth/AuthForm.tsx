@@ -34,10 +34,6 @@ const AuthForm = () => {
     }, [isRegSuccess]);
 
     const submit = (isRegister: boolean) => {
-        if (!showModal) {
-            return;
-        }
-
         setSubmited(true);
         setPassword("");
         if (isValidEmail(email) && isValidPassword(password)) {

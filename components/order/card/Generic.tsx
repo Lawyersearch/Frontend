@@ -9,11 +9,11 @@ interface GenericOrderCardProps {
     order: Order;
     showControls?: boolean;
     children: React.ReactNode | React.ReactNode[];
-    sx?: SxProps
+    sx?: SxProps;
 }
 
-const GenericOrderCard = ({ order, showControls = false, children, sx, ...rest }: GenericOrderCardProps) => (
-    <Card sx={{borderRadius: 4, ...sx }} {...rest}>
+const GenericOrderCard = ({ order, showControls = false, sx, children, ...rest }: GenericOrderCardProps) => (
+    <Card sx={{ borderRadius: 4, ...sx }} {...rest}>
         <Stack p={2} spacing={3}>
             <Stack direction="row" justifyContent="space-between">
                 <Typography variant="h3">{order.title}</Typography>
@@ -52,8 +52,7 @@ const GenericOrderCard = ({ order, showControls = false, children, sx, ...rest }
                     alignItems="center"
                     justifyContent="end"
                     bgcolor="background.default"
-                    px={1}
-                    py={1}
+                    p={1}
                 >
                     {children}
                 </Stack>

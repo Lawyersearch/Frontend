@@ -1,4 +1,4 @@
-import { Order, OrderStatus, PerformerOrder } from "../types/order";
+import { Order, OrderStatus, OrderType, PerformerOrder } from "../types/order";
 import { User } from "../types/user";
 import { isUserClient, isUserPerformer } from "./user";
 
@@ -8,6 +8,9 @@ export const isOrderCompleted = (status: OrderStatus) => status === OrderStatus.
 export const isOrderClosed = (status: OrderStatus) => status === OrderStatus.CLOSED;
 export const isOrderDismissed = (status: OrderStatus) => status === OrderStatus.DISMISS;
 export const isOrderDisputed = (status: OrderStatus) => status === OrderStatus.DISPUT;
+
+export const isOrderPrivate = (order: OrderType) => order === OrderType.PRIVATE;
+export const isOrderPublic = (order: OrderType) => order === OrderType.PUBLIC;
 
 export const shouldShowRespond = (user: User | null, order: Order) =>
     isUserPerformer(user?.role) && isOrderOpen(order.orderStatus) && !(order as PerformerOrder).myOffer;

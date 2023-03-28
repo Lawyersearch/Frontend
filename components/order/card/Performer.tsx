@@ -3,11 +3,11 @@ import { Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
 import CommentIcon from "@mui/icons-material/Comment";
-import { PerformerOrder } from "../../../types/order";
+import { OrderType, PerformerOrder } from "../../../types/order";
 import GenericOrderCard from "./Generic";
 import { useAppSelector } from "../../../hooks/redux/useTypedRedux";
 import { Offer } from "../../../types/offer";
-import { shouldShowRespond, shouldShowCancellOffer, shouldShowEditOffer } from "../../../utils/order";
+import { shouldShowRespond, shouldShowCancellOffer, shouldShowEditOffer, isOrderPrivate } from "../../../utils/order";
 import DeleteConfirmModal from "../../../ui/modal/DeleteConfirm";
 import RespondOrderModal from "../../../ui/modal/order/Respond";
 import useRecallOffer from "../../../hooks/offer/useRecallOffer";
@@ -17,9 +17,10 @@ import EditOfferModal from "../../../ui/modal/offer/Edit";
 
 interface PerformerOrderCardProps {
     order: PerformerOrder;
+    orderType: OrderType;
 }
 
-const PerformerOrderCard = ({ order: orderProp }: PerformerOrderCardProps) => {
+const PerformerOrderCard = ({ order: orderProp, orderType }: PerformerOrderCardProps) => {
     const user = useAppSelector(store => store.user.self);
     const [order, setOrder] = useState(orderProp);
     const myOfferRef = useRef(order.myOffer);
@@ -64,7 +65,11 @@ const PerformerOrderCard = ({ order: orderProp }: PerformerOrderCardProps) => {
     const showControls = [showRespond, showCancellOffer].some(Boolean);
 
     return (
-        <GenericOrderCard order={order} showControls={showControls} sx={!order.myOffer ? {opacity: 0.4} : {}}>
+        <GenericOrderCard
+            order={order}
+            showControls={showControls}
+            sx={isOrderPrivate(order.orderType) && !order.myOffer ? { opacity: 0.4 } : {}}
+        >
             {showEditOffer && (
                 <Button variant="contained" startIcon={<EditIcon />} color="info" onClick={openEditModal}>
                     Изменить отклик

@@ -1,8 +1,9 @@
-import { ClientOrder } from "../../../types/order";
+import { ClientOrder, OrderType } from "../../../types/order";
 import GenericOrderCard from "./Generic";
 
 interface ClientOrderCardProps {
     order: ClientOrder;
+    orderType: OrderType;
 }
 
 const ClientOrderCard = ({ order }: ClientOrderCardProps) => {
