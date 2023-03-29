@@ -1,4 +1,5 @@
 import { Typography, FormControl, Stack, Button, Autocomplete, Checkbox, TextField } from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
 import React, { HTMLAttributes, useCallback, useMemo, useState } from "react";
 import _last from "lodash/last";
 import { useAppSelector } from "../../../hooks/redux/useTypedRedux";
@@ -38,9 +39,7 @@ const UpdateUserCategoriesModal = ({ pickedCategories, open, onClose, confirm }:
         [],
     );
 
-    const submit = () => {
-        open && confirm(value.map(category => category.value));
-    };
+    const submit = () => open && confirm(value.map(category => category.value));
 
     useEnterPress(submit);
 
@@ -64,7 +63,7 @@ const UpdateUserCategoriesModal = ({ pickedCategories, open, onClose, confirm }:
                             renderOption={renderOption}
                             renderInput={params => <TextField {...params} label="Категори" />}
                         />
-                        <Button variant="outlined" onClick={submit}>
+                        <Button variant="outlined" onClick={submit} startIcon={<SaveIcon />}>
                             Сохранить
                         </Button>
                     </Stack>

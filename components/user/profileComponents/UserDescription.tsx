@@ -85,7 +85,7 @@ const UserDescription = ({
                     <Stack spacing={1}>
                         <Stack direction="row" justifyContent="space-between">
                             <Typography variant="h4">
-                                {[lastName, firstName, middleName].filter(Boolean).join(" ") ?? "Аноним"}
+                                {[lastName, firstName, middleName].filter(Boolean).join(" ") || "Аноним"}
                             </Typography>
                         </Stack>
                         <Typography variant="body1" fontWeight={300}>

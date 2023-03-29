@@ -38,7 +38,7 @@ const OrderTypesList = ({ onTypeClick, onStatusClick, orders }: OrderTypesListPr
                 { label: "Закрытые", Icon: CloseIcon },
                 { label: "Отклоненные", Icon: DoDisturbIcon },
                 { label: "Спорные", Icon: FlagIcon },
-            ].map((item, ind) => ({ ...item, count: getPrivateOrdersStatusCount(ind) })),
+            ].map((item, ind) => Object.assign(item, { count: getPrivateOrdersStatusCount(ind) })),
         [],
     );
 
@@ -69,7 +69,7 @@ const OrderTypesList = ({ onTypeClick, onStatusClick, orders }: OrderTypesListPr
                         {statuses
                             .filter(({ count }) => count)
                             .map(({ label, Icon, count }, index) => (
-                                <ListItemButton sx={{ pl: 4 }} onClick={() => onStatusClick(index)}>
+                                <ListItemButton key={index} sx={{ pl: 4 }} onClick={() => onStatusClick(index)}>
                                     <ListItemIcon>
                                         <Icon />
                                     </ListItemIcon>

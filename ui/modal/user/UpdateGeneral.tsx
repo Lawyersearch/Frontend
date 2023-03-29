@@ -1,4 +1,5 @@
 import { Typography, FormControl, Stack, Button } from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
 import React, { useState } from "react";
 import useEnterPress from "../../../hooks/utils/useEnterPress";
 import { UpdateUserGeneralRequest } from "../../../services/user";
@@ -61,7 +62,7 @@ const UpdateUserGeneralModal = ({ userData, open, onClose, confirm }: UpdateUser
                         />
                         <ValidInput label="Отчество" value={middleName} bindChange={setMiddleName} />
                         <ValidInput label="Описание" value={description} bindChange={setDescription} multiline />
-                        <Button variant="outlined" onClick={submit}>
+                        <Button variant="outlined" onClick={submit} startIcon={<SaveIcon />}>
                             Сохранить
                         </Button>
                     </Stack>

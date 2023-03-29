@@ -1,12 +1,11 @@
-import { MutableRefObject } from "react";
 import { useRemoveRespondMutation } from "../../services/offer";
-import { Offer } from "../../types/offer";
+import { MyOffer } from "../../types/offer";
 import useConfirmModal from "../useConfirmModal";
 
-const useRecallOffer = (myOfferRef: MutableRefObject<Offer | null>, onResponse: () => void) =>
+const useRecallOffer = (myOffer: MyOffer | null, onResponse: () => void) =>
     useConfirmModal<void, void, string>({
         onSuccessMessage: "Отклик успешно отозван",
-        modalDataToMutation: () => myOfferRef.current?.id!,
+        modalDataToMutation: () => myOffer?.id!,
         useMutation: useRemoveRespondMutation,
         onResponse,
     });

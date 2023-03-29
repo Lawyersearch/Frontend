@@ -6,10 +6,10 @@ import { isNotEmpty, isNumberLike } from "../../../utils/validation";
 import { invalidEmptyMessageTest, invalidPriceText } from "../../strings";
 import ValidInput from "../../components/ValidInput";
 import GenericModal from "../Generic";
-import { Offer } from "../../../types/offer";
+import { MyOffer, Offer } from "../../../types/offer";
 
 interface EditOfferModalProps {
-    offer: Offer | null;
+    offer: Offer | MyOffer | null;
     open: boolean;
     onClose: () => void;
     edit: ({ message, price }: { message: string; price: number }) => void;

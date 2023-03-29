@@ -5,6 +5,8 @@ export interface Offer {
     price: number;
     message: string;
     rating: number;
-    avatar: number;
+    avatar: string;
     creatorName: string;
 }
+
+export type MyOffer = Omit<Offer, "creatorName" | "avatar">;

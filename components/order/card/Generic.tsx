@@ -1,18 +1,16 @@
 import React from "react";
-import { Card, Stack, Box, Typography, Divider, SxProps } from "@mui/material";
+import { Card, Stack, Box, Typography, SxProps } from "@mui/material";
 import fnsFormat from "date-fns/format";
-import _identity from "lodash/identity";
 import { Order } from "../../../types/order";
 import ProfileLink from "../../../ui/components/ProfileLink";
 
 interface GenericOrderCardProps {
     order: Order;
-    showControls?: boolean;
-    children: React.ReactNode | React.ReactNode[];
+    children?: React.ReactNode | React.ReactNode[];
     sx?: SxProps;
 }
 
-const GenericOrderCard = ({ order, showControls = false, sx, children, ...rest }: GenericOrderCardProps) => (
+const GenericOrderCard = ({ order, sx, children, ...rest }: GenericOrderCardProps) => (
     <Card sx={{ borderRadius: 4, ...sx }} {...rest}>
         <Stack p={2} spacing={3}>
             <Stack direction="row" justifyContent="space-between">
@@ -20,7 +18,7 @@ const GenericOrderCard = ({ order, showControls = false, sx, children, ...rest }
                 <Typography>{fnsFormat(new Date(order.createdDate), "dd.MM.yyyy")}</Typography>
             </Stack>
             <Box display="grid" gridTemplateColumns="auto 1fr" gap={2}>
-                <Typography fontWeight={550}>Автор</Typography>
+                <Typography fontWeight={550}>Заказчик</Typography>
                 <ProfileLink id={order.userId} userName={order.creatorName} src={order.avatar} />
                 {Boolean(order.offerCount) && (
                     <>
@@ -28,13 +26,13 @@ const GenericOrderCard = ({ order, showControls = false, sx, children, ...rest }
                         <Typography>{order.offerCount}</Typography>
                     </>
                 )}
-                {order.description && (
+                {Boolean(order.description) && (
                     <>
                         <Typography fontWeight={550}>Описание</Typography>
                         <Typography>{order.description}</Typography>
                     </>
                 )}
-                {order.price && (
+                {Boolean(order.price) && (
                     <>
                         <Typography fontWeight={550}>Цена</Typography>
                         <Typography fontWeight={600}>{order.price} ₽</Typography>
@@ -42,22 +40,7 @@ const GenericOrderCard = ({ order, showControls = false, sx, children, ...rest }
                 )}
             </Box>
         </Stack>
-        {showControls && (
-            <>
-                <Divider />
-                <Stack
-                    spacing={2}
-                    direction="row"
-                    flexWrap="wrap"
-                    alignItems="center"
-                    justifyContent="end"
-                    bgcolor="background.default"
-                    p={1}
-                >
-                    {children}
-                </Stack>
-            </>
-        )}
+        {children}
     </Card>
 );
 

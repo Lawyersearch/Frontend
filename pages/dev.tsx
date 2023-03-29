@@ -1,5 +1,5 @@
 import { useId, useRef } from "react";
-import { Box, Button, Container, Typography, Card } from "@mui/material";
+import { Box, Button, Typography, Card } from "@mui/material";
 
 import ProfileLink from "../ui/components/ProfileLink";
 

@@ -1,19 +1,14 @@
 import React, { useCallback, useRef, useState } from "react";
-import { Button } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import ClearIcon from "@mui/icons-material/Clear";
+import { Button, Divider, Stack } from "@mui/material";
 import CommentIcon from "@mui/icons-material/Comment";
 import { OrderType, PerformerOrder } from "../../../types/order";
 import GenericOrderCard from "./Generic";
 import { useAppSelector } from "../../../hooks/redux/useTypedRedux";
-import { Offer } from "../../../types/offer";
-import { shouldShowRespond, shouldShowCancellOffer, shouldShowEditOffer, isOrderPrivate } from "../../../utils/order";
-import DeleteConfirmModal from "../../../ui/modal/DeleteConfirm";
+import { MyOffer } from "../../../types/offer";
+import { shouldShowRespond, isOrderPrivate } from "../../../utils/order";
 import RespondOrderModal from "../../../ui/modal/order/Respond";
-import useRecallOffer from "../../../hooks/offer/useRecallOffer";
 import useRespondOrder from "../../../hooks/order/useRespondOrder";
-import useEditOffer from "../../../hooks/offer/useEditOffer";
-import EditOfferModal from "../../../ui/modal/offer/Edit";
+import PerformerOfferCard from "../../offer/Performer";
 
 interface PerformerOrderCardProps {
     order: PerformerOrder;
@@ -36,14 +31,14 @@ const PerformerOrderCard = ({ order: orderProp, orderType }: PerformerOrderCardP
     }, [setOrder]);
 
     const onEdit = useCallback(
-        (newOffer: Offer) => {
+        (newOffer: MyOffer) => {
             setOrder(order => ({ ...order, myOffer: newOffer }));
         },
         [setOrder],
     );
 
     const onRespond = useCallback(
-        (myOffer: Offer) => {
+        (myOffer: MyOffer) => {
             setOrder(order => {
                 myOfferRef.current = myOffer;
                 const newOfferCount = (order.offerCount ?? 0) + 1;
@@ -55,48 +50,32 @@ const PerformerOrderCard = ({ order: orderProp, orderType }: PerformerOrderCardP
         [setOrder],
     );
 
-    const [showRecallModal, openRecallModal, closeRecallModal, recall] = useRecallOffer(myOfferRef, onRecall);
-    const [showEditModal, openEditModal, closeEditModal, edit] = useEditOffer(myOfferRef, onEdit);
     const [showRespondModal, openRespondModal, closeRespondModal, respond] = useRespondOrder(order, onRespond);
 
-    const showCancellOffer = shouldShowCancellOffer(user, order);
-    const showEditOffer = shouldShowEditOffer(user, order);
-    const showRespond = shouldShowRespond(user, order);
-    const showControls = [showRespond, showCancellOffer].some(Boolean);
-
     return (
-        <GenericOrderCard
-            order={order}
-            showControls={showControls}
-            sx={isOrderPrivate(order.orderType) && !order.myOffer ? { opacity: 0.4 } : {}}
-        >
-            {showEditOffer && (
-                <Button variant="contained" startIcon={<EditIcon />} color="info" onClick={openEditModal}>
-                    Изменить отклик
-                </Button>
-            )}
-            {showCancellOffer && (
-                <Button variant="contained" color="error" startIcon={<ClearIcon />} onClick={openRecallModal}>
-                    Отменить заявку
-                </Button>
-            )}
-            {showRespond && (
-                <Button variant="contained" startIcon={<CommentIcon />} onClick={openRespondModal}>
-                    Оставить отклик
-                </Button>
+        <GenericOrderCard order={order} sx={isOrderPrivate(orderType) && !order.myOffer ? { opacity: 0.4 } : {}}>
+            {order.myOffer ? (
+                <>
+                    <Divider>Мой отклик</Divider>
+                    <PerformerOfferCard offer={order.myOffer} onEdit={onEdit} onRecall={onRecall} />
+                </>
+            ) : (
+                <>
+                    <Divider />
+                    <Stack spacing={2} direction="row" flexWrap="wrap" alignItems="center" justifyContent="end" p={1}>
+                        {shouldShowRespond(user, order) && (
+                            <Button variant="contained" startIcon={<CommentIcon />} onClick={openRespondModal}>
+                                Оставить отклик
+                            </Button>
+                        )}
+                    </Stack>
+                </>
             )}
             <RespondOrderModal
                 startingPrice={order.price}
                 open={showRespondModal}
                 onClose={closeRespondModal}
                 respond={respond}
-            />
-            <EditOfferModal offer={order.myOffer} open={showEditModal} onClose={closeEditModal} edit={edit} />
-            <DeleteConfirmModal
-                show={showRecallModal}
-                setHide={closeRecallModal}
-                onConfirm={recall}
-                confirmString="Отменить отклик?"
             />
         </GenericOrderCard>
     );

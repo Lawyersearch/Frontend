@@ -1,4 +1,7 @@
-import { UserRole } from "../types/user";
+import { User, UserRole } from "../types/user";
+
+export const mkCreatorName = (user?: User | null) =>
+    (user && [user.lastName, user.firstName].filter(Boolean).join(" ")) || "Аноним";
 
 export const isUserClient = (role?: UserRole) => role === UserRole.CLIENT;
 export const isUserPerformer = (role?: UserRole) => role === UserRole.PERFORMER;

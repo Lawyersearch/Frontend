@@ -1,4 +1,4 @@
-import { Offer } from "./offer";
+import { MyOffer, Offer } from "./offer";
 
 export interface Order {
     id: string;
@@ -17,7 +17,7 @@ export interface Order {
     orderType: OrderType;
 }
 
-export type PerformerOrder = Order & { myOffer: Offer | null };
+export type PerformerOrder = Order & { myOffer: MyOffer | null };
 
 export type ClientOrder = Order & { offers: Offer[] };
 

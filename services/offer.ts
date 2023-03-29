@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { Offer } from "../types/offer";
+import { MyOffer, Offer } from "../types/offer";
 import { getData, mkAuthenticatedBaseQuery } from "./utils";
 
 export const offerApi = createApi({
@@ -27,8 +27,8 @@ export const offerApi = createApi({
                 method: "DELETE",
             }),
         }),
-        updateRespond: builder.mutation<Offer, Offer>({
-            query: ({ id, ...rest }: Offer) => ({
+        updateRespond: builder.mutation<MyOffer, MyOffer>({
+            query: ({ id, ...rest }: MyOffer) => ({
                 url: `/offerId/${id}`,
                 method: "PUT",
                 body: rest,
