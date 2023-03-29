@@ -17,10 +17,10 @@ interface OrdersPageProps {
 const OrdersPage = ({ orders }: OrdersPageProps) => {
     const isAuthorized = useAppSelector(state => Boolean(state.user.self));
     const [type, setType] = useState<OrderType>(orders.findIndex(order => !_isEmpty(order)));
-    const [status, setStatus] = useState<OrderStatus>(orders.findIndex(order => !_isEmpty(order)));
+    const [status, setStatus] = useState<OrderStatus | null>(orders.findIndex(order => !_isEmpty(order)));
 
     const getFilteredOrders = useCallback(() => {
-        return type === OrderType.PRIVATE
+        return type === OrderType.PRIVATE && status !== null
             ? orders[type].filter(({ orderStatus }) => orderStatus === status) ?? []
             : orders[type] ?? [];
     }, [type, status]);
