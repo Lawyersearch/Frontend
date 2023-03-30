@@ -1,5 +1,9 @@
 const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+    enabled: process.env.ANALYZE === "true",
+});
+
 /** @type {import('next').NextConfig} */
 const commonConfig = {
     env: {
@@ -31,7 +35,7 @@ module.exports = (phase, { defaultConfig }) => {
         };
     }
     /** @type {import('next').NextConfig} */
-    return {
+    return withBundleAnalyzer({
         // Production
         ...commonConfig,
         reactStrictMode: false,
@@ -40,5 +44,5 @@ module.exports = (phase, { defaultConfig }) => {
             ...commonConfig.env,
             STATIC_REVALIDATE: 30,
         },
-    };
+    });
 };
