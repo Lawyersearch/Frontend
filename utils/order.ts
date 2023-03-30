@@ -1,4 +1,4 @@
-import { Order, OrderStatus, OrderType, PerformerOrder } from "../types/order";
+import { ClientOrder, Order, OrderStatus, OrderType, PerformerOrder } from "../types/order";
 import { User } from "../types/user";
 import { isUserClient, isUserPerformer } from "./user";
 
@@ -14,9 +14,22 @@ export const isOrderPublic = (order: OrderType) => order === OrderType.PUBLIC;
 
 export const shouldShowRespond = (user: User | null, order: Order) =>
     isUserPerformer(user?.role) && isOrderOpen(order.orderStatus) && !(order as PerformerOrder).myOffer;
+
 export const shouldShowCancellOffer = (user: User | null, order: Order) =>
     isUserPerformer(user?.role) && isOrderOpen(order.orderStatus) && (order as PerformerOrder).myOffer;
 export const shouldShowEditOffer = (user: User | null, order: Order) =>
     isUserPerformer(user?.role) && isOrderOpen(order.orderStatus) && (order as PerformerOrder).myOffer;
-export const shouldShowCancellOrder = (user: User | null, order: Order) =>
+
+export const shouldShowOffers = (user: User | null, order: ClientOrder) =>
+    isUserClient(user?.role) && isOrderOpen(order.orderStatus) && order.userId === user?.id && order.offers?.length;
+export const shouldShowEditOrder = (user: User | null, order: ClientOrder) =>
+    isUserClient(user?.role) && isOrderOpen(order.orderStatus) && order.userId === user?.id && !order.offers?.length;
+
+export const shouldShowMarkCompleted = (user: User | null, order: PerformerOrder) =>
+    isUserPerformer(user?.role) && isOrderInWork(order.orderStatus) && order.performerId === user?.id;
+export const shouldShowMarkClosed = (user: User | null, order: ClientOrder) =>
+    isUserClient(user?.role) && isOrderCompleted(order.orderStatus) && order.userId === user?.id;
+export const shouldShowMarkDismiss = (user: User | null, order: ClientOrder) =>
     isUserClient(user?.role) && isOrderOpen(order.orderStatus) && order.userId === user?.id;
+export const shouldShowMarkDisput = (user: User | null, order: ClientOrder) =>
+    isUserClient(user?.role) && isOrderCompleted(order.orderStatus) && order.userId === user?.id;

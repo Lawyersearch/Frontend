@@ -7,7 +7,7 @@ export interface Order {
     userId: string;
     performerId?: string;
     offerId?: string;
-    offerCount: number;
+    offerCount?: number;
     price?: number;
     description: string;
     title: string;
@@ -17,7 +17,7 @@ export interface Order {
     orderType: OrderType;
 }
 
-export type PerformerOrder = Order & { myOffer: MyOffer | null };
+export type PerformerOrder = Order & { offerCount: number; myOffer: MyOffer | null };
 
 export type ClientOrder = Order & { offers: Offer[] };
 

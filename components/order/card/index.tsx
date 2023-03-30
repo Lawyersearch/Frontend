@@ -1,10 +1,10 @@
 import { useAppSelector } from "../../../hooks/redux/useTypedRedux";
-import { Order, PerformerOrder, ClientOrder, OrderType } from "../../../types/order";
+import { PerformerOrder, ClientOrder, OrderType } from "../../../types/order";
 import { isUserPerformer } from "../../../utils/user";
 import ClientOrderCard from "./Client";
 import PerformerOrderCard from "./Performer";
 
-interface OrderCardProps<T extends Order = Order> {
+interface OrderCardProps<T = PerformerOrder | ClientOrder> {
     order: T;
     orderType: OrderType;
 }

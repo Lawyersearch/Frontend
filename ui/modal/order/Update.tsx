@@ -1,24 +1,27 @@
-import { Typography, FormControl, Stack, Button, InputAdornment } from "@mui/material";
+import { useState } from "react";
+import { Typography, FormControl, Stack, InputAdornment, Button } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
-import React, { useState } from "react";
 import useEnterPress from "../../../hooks/utils/useEnterPress";
+import { Order } from "../../../types/order";
 import { isNotEmpty, isNumberLike } from "../../../utils/validation";
-import { invalidEmptyMessageTest, invalidPriceText } from "../../strings";
 import ValidInput from "../../components/ValidInput";
+import { invalidEmptyText, invalidPriceText } from "../../strings";
 import GenericModal from "../Generic";
-import { MyOffer, Offer } from "../../../types/offer";
 
-interface EditOfferModalProps {
-    offer: Offer | MyOffer | null;
+type OrderData = Pick<Order, "price" | "description" | "title">;
+
+interface UpdateOrderModalProps {
+    order: OrderData;
     open: boolean;
     onClose: () => void;
-    edit: ({ message, price }: { message: string; price: number }) => void;
+    update: (orderData: OrderData) => void;
 }
 
-const EditOfferModal = ({ offer, open, onClose, edit }: EditOfferModalProps) => {
+const UpdateOrderModal = ({ order, open, onClose, update }: UpdateOrderModalProps) => {
     const [submited, setSubmited] = useState(false);
-    const [message, setMessage] = useState(offer?.message ?? "");
-    const [price, setPrice] = useState(offer?.price ? String(offer.price) : "");
+    const [title, setTitle] = useState(order.title);
+    const [description, setDescription] = useState(order.description);
+    const [price, setPrice] = useState(String(order.price));
 
     const submit = () => {
         if (!open) {
@@ -27,8 +30,8 @@ const EditOfferModal = ({ offer, open, onClose, edit }: EditOfferModalProps) => 
 
         setSubmited(true);
 
-        if (isNotEmpty(message) && isNumberLike(price)) {
-            edit({ message, price: +price });
+        if (isNotEmpty(title) && isNotEmpty(description) && isNumberLike(price)) {
+            update({ title, description, price: +price });
         }
     };
 
@@ -38,17 +41,25 @@ const EditOfferModal = ({ offer, open, onClose, edit }: EditOfferModalProps) => 
         <GenericModal open={open} onClose={onClose}>
             <>
                 <Typography variant="h5" component="h2" gutterBottom>
-                    Изменение отклика
+                    Изменение заказа
                 </Typography>
                 <FormControl fullWidth sx={{ width: 600 }}>
                     <Stack spacing={2}>
                         <ValidInput
-                            label="Сообщение"
-                            value={message}
-                            multiline
-                            bindChange={setMessage}
+                            label="Заголовок"
+                            value={title}
+                            bindChange={setTitle}
                             valid={isNotEmpty}
-                            invalidText={invalidEmptyMessageTest}
+                            invalidText={invalidEmptyText}
+                            showError={submited}
+                        />
+                        <ValidInput
+                            label="Описание"
+                            value={description}
+                            multiline
+                            bindChange={setDescription}
+                            valid={isNotEmpty}
+                            invalidText={invalidEmptyText}
                             showError={submited}
                         />
                         <ValidInput
@@ -70,4 +81,4 @@ const EditOfferModal = ({ offer, open, onClose, edit }: EditOfferModalProps) => 
     );
 };
 
-export default EditOfferModal;
+export default UpdateOrderModal;

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import useEnterPress from "../../../hooks/utils/useEnterPress";
 import { UpdateUserGeneralRequest } from "../../../services/user";
 import { isNotEmpty } from "../../../utils/validation";
-import { invalidFirstNameText, invalidLastNameText } from "../../strings";
+import { invalidEmptyText } from "../../strings";
 import ValidInput from "../../components/ValidInput";
 import GenericModal from "../Generic";
 
@@ -49,7 +49,7 @@ const UpdateUserGeneralModal = ({ userData, open, onClose, confirm }: UpdateUser
                             value={lastName}
                             bindChange={setLastName}
                             valid={isNotEmpty}
-                            invalidText={invalidLastNameText}
+                            invalidText={invalidEmptyText}
                             showError={submited}
                         />
                         <ValidInput
@@ -57,7 +57,7 @@ const UpdateUserGeneralModal = ({ userData, open, onClose, confirm }: UpdateUser
                             value={firstName}
                             bindChange={setFirstName}
                             valid={isNotEmpty}
-                            invalidText={invalidFirstNameText}
+                            invalidText={invalidEmptyText}
                             showError={submited}
                         />
                         <ValidInput label="Отчество" value={middleName} bindChange={setMiddleName} />

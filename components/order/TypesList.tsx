@@ -10,12 +10,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 import FlagIcon from "@mui/icons-material/Flag";
 import CollapsedList from "../../ui/components/CollapsedList";
-import { Order, OrderType, OrderStatus } from "../../types/order";
+import { Order, OrderType, OrderStatus, ClientOrder, PerformerOrder } from "../../types/order";
 
 interface OrderTypesListProps {
     onTypeClick: (type: OrderType) => void;
     onStatusClick: (type: OrderStatus | null) => void;
-    orders: [myOrders: Order[], allOrders: Order[]];
+    orders: { [key in OrderType]: ClientOrder[] | PerformerOrder[] }; // eslint-disable-line no-unused-vars
 }
 
 const OrderTypesList = ({ onTypeClick, onStatusClick, orders }: OrderTypesListProps) => {
@@ -24,7 +24,10 @@ const OrderTypesList = ({ onTypeClick, onStatusClick, orders }: OrderTypesListPr
 
     const getPrivateOrdersStatusCount = useCallback(
         (status: OrderStatus) => {
-            return orders[OrderType.PRIVATE].reduce((acc, { orderStatus }) => acc + +(orderStatus === status), 0);
+            return (orders[OrderType.PRIVATE] as Order[]).reduce(
+                (acc, { orderStatus }) => acc + +(orderStatus === status),
+                0,
+            );
         },
         [orders],
     );

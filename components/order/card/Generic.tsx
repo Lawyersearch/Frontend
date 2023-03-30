@@ -1,11 +1,11 @@
 import React from "react";
 import { Card, Stack, Box, Typography, SxProps } from "@mui/material";
 import fnsFormat from "date-fns/format";
-import { Order } from "../../../types/order";
+import { ClientOrder, Order } from "../../../types/order";
 import ProfileLink from "../../../ui/components/ProfileLink";
 
 interface GenericOrderCardProps {
-    order: Order;
+    order: Order | ClientOrder;
     children?: React.ReactNode | React.ReactNode[];
     sx?: SxProps;
 }

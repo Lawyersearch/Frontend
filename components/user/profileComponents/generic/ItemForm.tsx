@@ -4,7 +4,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
 import ValidInput from "../../../../ui/components/ValidInput";
 import { isNotEmpty } from "../../../../utils/validation";
-import { notEmptyVerifyText } from "../../../../ui/strings";
+import { invalidEmptyText } from "../../../../ui/strings";
 import { DatePicker } from "@mui/x-date-pickers";
 import renderDateInput from "../../../../utils/renderDateInput";
 import { isBefore } from "date-fns";
@@ -56,7 +56,7 @@ const ItemForm = ({ initial, onSubmit, topTitle, middleTitle }: ItemFormProps) =
                     bindChange={setTop}
                     valid={isNotEmpty}
                     showError={submited}
-                    invalidText={notEmptyVerifyText}
+                    invalidText={invalidEmptyText}
                 />
                 <ValidInput
                     variant="standard"
@@ -65,7 +65,7 @@ const ItemForm = ({ initial, onSubmit, topTitle, middleTitle }: ItemFormProps) =
                     bindChange={setMiddle}
                     valid={isNotEmpty}
                     showError={submited}
-                    invalidText={notEmptyVerifyText}
+                    invalidText={invalidEmptyText}
                 />
                 <Stack
                     direction={{ xs: "column", sm: "row" }}

@@ -1,7 +1,8 @@
 import { User, UserRole } from "../types/user";
+import { emptyUserText } from "../ui/strings";
 
 export const mkCreatorName = (user?: User | null) =>
-    (user && [user.lastName, user.firstName].filter(Boolean).join(" ")) || "Аноним";
+    (user && [user.lastName, user.firstName].filter(Boolean).join(" ")) || emptyUserText;
 
 export const isUserClient = (role?: UserRole) => role === UserRole.CLIENT;
 export const isUserPerformer = (role?: UserRole) => role === UserRole.PERFORMER;

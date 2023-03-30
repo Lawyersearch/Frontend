@@ -5,6 +5,7 @@ import Avatar from "../../ui/components/Avatar";
 import NextLink from "../../ui/components/NextLink";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux/useTypedRedux";
 import { removeSelf } from "../../store/reducers/userSlice";
+import { emptyUserText } from "../../ui/strings";
 
 interface AuthorizedDropdownProps {
     onClick?: () => void;
@@ -25,7 +26,7 @@ const AuthorizedDropdown = ({ onClick }: AuthorizedDropdownProps) => {
         <Stack alignItems="center" width="max-content">
             <Avatar src={user?.avatar} height={70} width={70} />
             <Typography fontWeight="medium" fontSize={20} color="text.primary">
-                {user?.firstName || "Аноним"}
+                {user?.firstName || emptyUserText}
             </Typography>
             <Typography fontSize={16} color="text.secondary" gutterBottom>
                 {user?.email}

@@ -1,4 +1,5 @@
 import { Box, Button, Stack } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
 import useChooseOrderPerformer from "../../hooks/order/useChooseOrderPerformer";
 import { Offer } from "../../types/offer";
 import { Order } from "../../types/order";
@@ -25,7 +26,7 @@ const ClientOfferCard = ({ offer, onPick }: ClientOfferCardProps) => {
                     pb={2}
                     mt={-5}
                 >
-                    <Button variant="contained" onClick={openChooseModal}>
+                    <Button variant="contained" startIcon={<CheckIcon />} onClick={openChooseModal}>
                         Принять отклик
                     </Button>
                 </Stack>

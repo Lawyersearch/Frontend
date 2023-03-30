@@ -1,4 +1,5 @@
 import { Chip, Stack, Typography } from "@mui/material";
+import { emptyUserText } from "../strings";
 import Avatar from "./Avatar";
 import NextLink from "./NextLink";
 
@@ -22,7 +23,7 @@ const ProfileLink = ({ userName, src, id }: ProfileLinkProps) => {
                                 ":hover": { textDecoration: "underline" },
                             }}
                         >
-                            {userName}
+                            {userName?.trim?.() ? userName : emptyUserText}
                         </Typography>
                     </Stack>
                 }

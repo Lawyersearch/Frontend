@@ -5,8 +5,6 @@ export const passwordChangedText = "Пароль успешно обновлен
 export const mailNotRegistredText = (mail?: string) => `Почта ${mail} не зарегистрирована`;
 export const mailVerifySentText = (mail?: string) => `На почту ${mail} отправлено письмо с дальнейшей инструкцией`;
 export const mailVerifiedText = "Почта успешно подтверждена";
-export const notEmptyVerifyText = "Введите значение";
-export const invalidEmptyMessageTest = "Сообщение не может быть пустым";
+export const invalidEmptyText = "Это поле не может быть пустым";
 export const invalidPriceText = "Цена должна быть числом больше нуля";
-export const invalidLastNameText = "Фамилия не может быть пустой";
-export const invalidFirstNameText = "Имя не может быть пустым";
+export const emptyUserText = "Аноним";

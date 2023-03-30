@@ -1,10 +1,6 @@
-import React, { useState } from "react";
-import { Typography, FormControl, Stack, Button, InputAdornment, Box, Card, IconButton } from "@mui/material";
-import CommentIcon from "@mui/icons-material/Comment";
+import React from "react";
+import { Typography, Stack, Button, Card, IconButton } from "@mui/material";
 import useEnterPress from "../../../hooks/utils/useEnterPress";
-import { isNotEmpty, isNumberLike } from "../../../utils/validation";
-import { invalidEmptyMessageTest, invalidPriceText } from "../../strings";
-import ValidInput from "../../components/ValidInput";
 import GenericModal from "../Generic";
 import { Offer } from "../../../types/offer";
 import GenericOfferCard from "../../../components/offer/Generic";
@@ -34,7 +30,6 @@ const ChoosePerformerModal = ({ offer, open, onClose, choose }: ChoosePerformerM
                         <ClearIcon />
                     </IconButton>
                 </Stack>
-
                 <Typography gutterBottom>Вы точно хотите выбрать это предложение?</Typography>
                 <Card sx={{ p: 2, borderRadius: 4 }}>
                     <GenericOfferCard offer={offer} />

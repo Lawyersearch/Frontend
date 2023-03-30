@@ -1,5 +1,6 @@
 import { MutationDefinition } from "@reduxjs/toolkit/dist/query/react";
 import { UseMutation } from "@reduxjs/toolkit/dist/query/react/buildHooks";
+import { useSnackbar } from "notistack";
 import { useCallback, useEffect } from "react";
 import { mkAuthenticatedBaseQuery } from "../services/utils";
 import { pushSnack } from "../store/reducers/uiSlice";
@@ -26,13 +27,13 @@ const useConfirmModal = <ModalData, MutationResult = void, MutationData = ModalD
     () => void,
     (data: ModalData) => void,
 ] => {
-    const dispatch = useAppDispatch();
+    const { enqueueSnackbar } = useSnackbar();
     const [trigger, { data: responseData, isSuccess }] = useMutation();
     const [showConfirmModal, openConfirmModal, closeConfirmModal] = useBoolean(false);
 
     useEffect(() => {
         if (isSuccess) {
-            onSuccessMessage && dispatch(pushSnack({ variant: "success", message: onSuccessMessage }));
+            onSuccessMessage && enqueueSnackbar(onSuccessMessage, { variant: "success" });
             onResponse && onResponse(responseData!);
         }
     }, [isSuccess]);

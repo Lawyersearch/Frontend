@@ -8,7 +8,7 @@ import GenericOfferCard from "./Generic";
 import useEditOffer from "../../hooks/offer/useEditOffer";
 import useRecallOffer from "../../hooks/offer/useRecallOffer";
 import DeleteConfirmModal from "../../ui/modal/DeleteConfirm";
-import EditOfferModal from "../../ui/modal/offer/Edit";
+import UpdateOfferModal from "../../ui/modal/offer/Update";
 
 interface PerformerOfferCardProps {
     offer: MyOffer;
@@ -34,7 +34,7 @@ const PerformerOfferCard = ({ offer, onRecall, onEdit }: PerformerOfferCardProps
                 </IconButton>
             </Stack>
             <GenericOfferCard offer={completeOffer} />
-            <EditOfferModal offer={offer} open={showEditModal} onClose={closeEditModal} edit={edit} />
+            <UpdateOfferModal offer={offer} open={showEditModal} onClose={closeEditModal} edit={edit} />
             <DeleteConfirmModal
                 show={showRecallModal}
                 setHide={closeRecallModal}

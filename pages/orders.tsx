@@ -4,25 +4,27 @@ import { GetServerSideProps } from "next";
 import { useCallback, useState } from "react";
 import OrderTypesList from "../components/order/TypesList";
 import OrderCard from "../components/order/card";
-import { Order, OrderStatus, OrderType } from "../types/order";
+import { ClientOrder, OrderStatus, OrderType, PerformerOrder } from "../types/order";
 import { queryPrivateOrders, queryPublicOrders, queryUserOrders } from "../utils/query";
 import { isUserPerformer } from "../utils/user";
 import { wrapper } from "../store";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
 
 interface OrdersPageProps {
-    orders: [myOrders: Order[], allOrders: Order[]];
+    orders: { [key in OrderType]: ClientOrder[] | PerformerOrder[] }; // eslint-disable-line no-unused-vars
 }
 
 const OrdersPage = ({ orders }: OrdersPageProps) => {
     const isAuthorized = useAppSelector(state => Boolean(state.user.self));
-    const [type, setType] = useState<OrderType>(orders.findIndex(order => !_isEmpty(order)));
-    const [status, setStatus] = useState<OrderStatus | null>(orders.findIndex(order => !_isEmpty(order)));
+    const [type, setType] = useState<OrderType>(
+        _isEmpty(orders[OrderType.PRIVATE]) ? OrderType.PUBLIC : OrderType.PRIVATE,
+    );
+    const [status, setStatus] = useState<OrderStatus | null>(null);
 
     const getFilteredOrders = useCallback(() => {
         return type === OrderType.PRIVATE && status !== null
-            ? orders[type].filter(({ orderStatus }) => orderStatus === status) ?? []
-            : orders[type] ?? [];
+            ? (orders[type] as PerformerOrder[]).filter(({ orderStatus }) => orderStatus === status)
+            : orders[type];
     }, [type, status]);
 
     return (
@@ -54,10 +56,14 @@ const OrdersPage = ({ orders }: OrdersPageProps) => {
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async context => {
     const { token } = context.req.cookies;
     const { self } = store.getState().user;
-    const orders = await Promise.all([
+    const [privateOrders = [], publicOrders = []] = await Promise.all([
         isUserPerformer(self?.role) ? queryPrivateOrders(token) : queryUserOrders(token),
         queryPublicOrders(token),
-    ]).then(orderLists => orderLists.map(orderList => orderList ?? []));
+    ]);
+    const orders = {
+        [OrderType.PRIVATE]: privateOrders,
+        [OrderType.PUBLIC]: publicOrders,
+    };
 
     return {
         props: { orders },

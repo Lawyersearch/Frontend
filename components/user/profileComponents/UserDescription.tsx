@@ -14,6 +14,7 @@ import { User } from "../../../types/user";
 import UpdateUserGeneralModal from "../../../ui/modal/user/UpdateGeneral";
 import useUpdateCategories from "../../../hooks/user/useUpdateCategories";
 import UpdateUserCategoriesModal from "../../../ui/modal/user/UpdateCategories";
+import { emptyUserText } from "../../../ui/strings";
 
 interface UserProfileProps {
     avatar: string;
@@ -85,7 +86,7 @@ const UserDescription = ({
                     <Stack spacing={1}>
                         <Stack direction="row" justifyContent="space-between">
                             <Typography variant="h4">
-                                {[lastName, firstName, middleName].filter(Boolean).join(" ") || "Аноним"}
+                                {[lastName, firstName, middleName].filter(Boolean).join(" ") || emptyUserText}
                             </Typography>
                         </Stack>
                         <Typography variant="body1" fontWeight={300}>
