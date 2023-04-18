@@ -1,26 +1,11 @@
-import { useId, useRef } from "react";
-import { Box, Button, Typography, Card } from "@mui/material";
+import { Stack, Container } from "@mui/material";
 
-import ProfileLink from "../ui/components/ProfileLink";
+import Message from "../components/message/message";
+
+const date = new Date(2014, 8, 4, 6, 4, 2);
 
 export const TestingComponent = () => {
-    const fileRef = useRef<HTMLInputElement>(null);
-
-    const id = useId();
-
-    return (
-        <>
-            <ProfileLink id="some-id" src="" userName="Вахтанг Вахтангович" />
-            <Box my={20} />
-            <Card></Card>
-            <label htmlFor={id}>
-                <Button variant="outlined" sx={{ textTransform: "none" }} component="div">
-                    <Typography>Тут какой то текст</Typography>
-                </Button>
-                <input id={id} type="file" accept=".png,.jpg,.jpeg" hidden ref={fileRef} />
-            </label>
-        </>
-    );
+    return <Container></Container>;
 };
 
 export default TestingComponent;

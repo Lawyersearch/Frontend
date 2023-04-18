@@ -1,4 +1,5 @@
 import { CategoryTree, CategoryView } from "../types/category";
+import { Dialog } from "../types/message";
 import { Order, PerformerOrder, ClientOrder } from "../types/order";
 import { User } from "../types/user";
 
@@ -55,3 +56,5 @@ export const queryUserOrders = (token?: string) => query<ClientOrder[]>("/order/
 export const queryUser = (userId: string) => query<User>(`/user/id/${userId}`);
 
 export const querySelf = async (token?: string) => query<User>("/user/myself", createAuthOpts(token));
+
+export const queryDialogs = async (token?: string) => query<Dialog[]>("/message", createAuthOpts(token));

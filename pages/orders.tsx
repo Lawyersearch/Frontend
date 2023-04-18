@@ -56,13 +56,13 @@ const OrdersPage = ({ orders }: OrdersPageProps) => {
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async context => {
     const { token } = context.req.cookies;
     const { self } = store.getState().user;
-    const [privateOrders = [], publicOrders = []] = await Promise.all([
+    const [privateOrders, publicOrders] = await Promise.all([
         isUserPerformer(self?.role) ? queryPrivateOrders(token) : queryUserOrders(token),
         queryPublicOrders(token),
     ]);
     const orders = {
-        [OrderType.PRIVATE]: privateOrders,
-        [OrderType.PUBLIC]: publicOrders,
+        [OrderType.PRIVATE]: privateOrders ?? [],
+        [OrderType.PUBLIC]: publicOrders ?? [],
     };
 
     return {

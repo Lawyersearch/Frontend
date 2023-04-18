@@ -16,6 +16,12 @@ interface UpdateUserGeneralModalProps {
     confirm: (data: number[]) => void;
 }
 
+interface Option {
+    label: string;
+    value: number;
+    parent?: string;
+}
+
 const UpdateUserCategoriesModal = ({ pickedCategories, open, onClose, confirm }: UpdateUserGeneralModalProps) => {
     const allCategories = useAppSelector(state => state.ui.categoryView ?? []);
     const options = useMemo(
@@ -56,9 +62,9 @@ const UpdateUserCategoriesModal = ({ pickedCategories, open, onClose, confirm }:
                             value={value}
                             onChange={(_, newValue) => setValue(newValue)}
                             options={options}
-                            groupBy={(option: any) => option.parent ?? ""}
+                            groupBy={(option: Option) => option.parent ?? ""}
                             disableCloseOnSelect
-                            getOptionLabel={option => option.label}
+                            getOptionLabel={(option: Option) => option.label}
                             isOptionEqualToValue={(option, { value }) => option.value === value}
                             renderOption={renderOption}
                             renderInput={params => <TextField {...params} label="Категори" />}
