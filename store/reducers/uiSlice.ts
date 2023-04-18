@@ -1,3 +1,4 @@
+import Cookie from "js-cookie";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Snack } from "../../types/snack";
 import { CategoryView } from "../../types/category";
@@ -42,7 +43,11 @@ export const uiSlice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(HYDRATE, (state, action: PayloadAction<RootState, typeof HYDRATE>) => {
-            state.mode = [action.payload.ui.mode, state.mode].includes("light") ? "light" : "dark";
+            const modeFromCookie = Cookie.get("mode") as PaletteMode;
+            const modeFromHydration = [action.payload.ui.mode, state.mode].includes("light")
+                ? "light"
+                : "dark";
+            state.mode = modeFromCookie ?? modeFromHydration;
             state.categoryView = action.payload.ui.categoryView || state.categoryView;
         });
     },
