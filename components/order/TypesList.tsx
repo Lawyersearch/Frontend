@@ -24,10 +24,13 @@ const OrderTypesList = ({ onTypeClick, onStatusClick, orders }: OrderTypesListPr
 
     const getPrivateOrdersStatusCount = useCallback(
         (status: OrderStatus) => {
-            return (orders[OrderType.PRIVATE] as Order[]).reduce(
+            console.log('status now is: ', status);
+            const res = (orders[OrderType.PRIVATE] as Order[]).reduce(
                 (acc, { orderStatus }) => acc + +(orderStatus === status),
                 0,
             );
+            console.log('status counted: ', res);
+            return res;
         },
         [orders],
     );
@@ -35,14 +38,14 @@ const OrderTypesList = ({ onTypeClick, onStatusClick, orders }: OrderTypesListPr
     const statuses = useMemo(
         () =>
             [
-                { label: "Открытые", Icon: PendingIcon },
-                { label: "В работе", Icon: BusinessCenterIcon },
-                { label: "Завершенные", Icon: CheckIcon },
-                { label: "Закрытые", Icon: CloseIcon },
-                { label: "Отклоненные", Icon: DoDisturbIcon },
-                { label: "Спорные", Icon: FlagIcon },
-            ].map((item, ind) => Object.assign(item, { count: getPrivateOrdersStatusCount(ind) })),
-        [],
+                { label: "Открытые", Icon: PendingIcon, status: OrderStatus.OPEN },
+                { label: "В работе", Icon: BusinessCenterIcon, status: OrderStatus.IN_WORK },
+                { label: "Завершенные", Icon: CheckIcon, status: OrderStatus.COMPLETED },
+                { label: "Закрытые", Icon: CloseIcon, status: OrderStatus.CLOSED },
+                { label: "Отклоненные", Icon: DoDisturbIcon, status: OrderStatus.DISMISS },
+                { label: "Спорные", Icon: FlagIcon, status: OrderStatus.DISPUT },
+            ].map((item) => Object.assign(item, { count: getPrivateOrdersStatusCount(item.status) })),
+        [getPrivateOrdersStatusCount],
     );
 
     const personalParentClickHandler = useCallback(() => {
@@ -71,8 +74,8 @@ const OrderTypesList = ({ onTypeClick, onStatusClick, orders }: OrderTypesListPr
                     <List>
                         {statuses
                             .filter(({ count }) => count)
-                            .map(({ label, Icon, count }, index) => (
-                                <ListItemButton key={index} sx={{ pl: 4 }} onClick={() => onStatusClick(index)}>
+                            .map(({ label, Icon, status, count }, index) => (
+                                <ListItemButton key={index} sx={{ pl: 4 }} onClick={() => onStatusClick(status)}>
                                     <ListItemIcon>
                                         <Icon />
                                     </ListItemIcon>
