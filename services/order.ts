@@ -3,11 +3,17 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { ClientOrder, Order, OrderStatus } from "../types/order";
 import { getData, mkAuthenticatedBaseQuery } from "./utils";
 
-type OrderPost = Pick<Order, "performerId" | "price" | "description" | "title" | "categoryId">;
+export type OrderPost = Pick<Order, "performerId" | "price" | "description" | "title" | "categoryId">;
+
+enum OrderStatusRequest {
+    COMPLETE = 3,
+    DISMISS = 4,
+    DISPUT = 5
+};
 
 const mkChangeOrderStatusMutation = (
     builder: EndpointBuilder<ReturnType<typeof mkAuthenticatedBaseQuery>, string, "orderApi">,
-    orderStatus: OrderStatus,
+    orderStatus: OrderStatusRequest,
 ) =>
     builder.mutation<Order, string>({
         query: (orderId: string) => ({
@@ -22,13 +28,13 @@ export const orderApi = createApi({
     reducerPath: "orderApi",
     baseQuery: mkAuthenticatedBaseQuery("order"),
     endpoints: builder => ({
-        createOrder: builder.mutation<Order, OrderPost>({
+        createOrder: builder.mutation<ClientOrder, OrderPost>({
             query: (order: OrderPost) => ({
                 url: "/",
                 method: "POST",
                 body: order as unknown as typeof builder,
             }),
-            transformResponse: getData<Order>,
+            transformResponse: getData<ClientOrder>,
         }),
         updateOrder: builder.mutation<ClientOrder, ClientOrder>({
             query: (order: ClientOrder) => ({
@@ -40,10 +46,10 @@ export const orderApi = createApi({
             transformResponse: getData<ClientOrder>,
         }),
 
-        markOrderCompleted: mkChangeOrderStatusMutation(builder, OrderStatus.COMPLETED),
-        markOrderClosed: mkChangeOrderStatusMutation(builder, OrderStatus.CLOSED),
-        markOrderDismiss: mkChangeOrderStatusMutation(builder, OrderStatus.DISMISS),
-        markOrderDisput: mkChangeOrderStatusMutation(builder, OrderStatus.DISPUT),
+        markOrderCompleted: mkChangeOrderStatusMutation(builder, OrderStatusRequest.COMPLETE),
+        markOrderClosed: mkChangeOrderStatusMutation(builder, OrderStatusRequest.COMPLETE),
+        markOrderDismiss: mkChangeOrderStatusMutation(builder, OrderStatusRequest.DISMISS),
+        markOrderDisput: mkChangeOrderStatusMutation(builder, OrderStatusRequest.DISPUT),
 
         acceptOrder: builder.mutation<Order, string>({
             query: (orderId: string) => ({
