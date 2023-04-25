@@ -21,9 +21,9 @@ export const shouldShowEditOffer = (user: User | null, order: Order) =>
     isUserPerformer(user?.role) && isOrderOpen(order.orderStatus) && (order as PerformerOrder).myOffer;
 
 export const shouldShowOffers = (user: User | null, order: ClientOrder) =>
-    isUserClient(user?.role) && isOrderOpen(order.orderStatus) && order.userId === user?.id && order.offers?.length;
+    isUserClient(user?.role) && isOrderOpen(order.orderStatus) && order.userId === user?.id && Boolean(order.offers?.length);
 export const shouldShowEditOrder = (user: User | null, order: ClientOrder) =>
-    isUserClient(user?.role) && isOrderOpen(order.orderStatus) && order.userId === user?.id && !order.offers?.length;
+    isUserClient(user?.role) && isOrderOpen(order.orderStatus) && order.userId === user?.id && Boolean(!order.offers?.length);
 
 export const shouldShowMarkCompleted = (user: User | null, order: PerformerOrder) =>
     isUserPerformer(user?.role) && isOrderInWork(order.orderStatus) && order.performerId === user?.id;
