@@ -30,7 +30,7 @@ const mkChangeStatusModal =
                         </IconButton>
                     </Stack>
                     <Typography gutterBottom>
-                        Вы точно хотите сменить статс заказа на <Typography fontWeight={600}>"{newStatus}"</Typography>?
+                        Вы точно хотите сменить статс заказа на <Typography component="span" fontWeight={600}>"{newStatus}"</Typography>?
                     </Typography>
                     <Button variant="outlined" startIcon={<CheckIcon />} onClick={submit}>
                         Подтвердить

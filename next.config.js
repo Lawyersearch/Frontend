@@ -6,6 +6,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 /** @type {import('next').NextConfig} */
 const commonConfig = {
+    reactStrictMode: false,
     env: {
         PORT: "3000",
         BACK_SERVER_API: "https://api.lawyersearch.ru/api",
@@ -27,7 +28,6 @@ module.exports = (phase, { defaultConfig }) => {
         /** @type {import('next').NextConfig} */
         return {
             ...commonConfig,
-            reactStrictMode: true,
             env: {
                 ...commonConfig.env,
                 STATIC_REVALIDATE: 1,
@@ -38,7 +38,6 @@ module.exports = (phase, { defaultConfig }) => {
     return withBundleAnalyzer({
         // Production
         ...commonConfig,
-        reactStrictMode: false,
         compress: true,
         env: {
             ...commonConfig.env,
