@@ -43,11 +43,11 @@ export interface UserShort {
     lastName: string;
     description: string;
     avatar: string;
+    role: UserRole;
 }
 
 export interface User extends UserShort {
     isChecked: boolean;
-    role: UserRole;
     registrationDate: string;
     rating: number;
     phone?: string;

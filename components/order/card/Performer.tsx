@@ -72,7 +72,7 @@ const PerformerOrderCard = ({ order: orderProp, orderType }: PerformerOrderCardP
             {Boolean(order.myOffer) && (
                 <>
                     <Divider>Мой отклик</Divider>
-                    <PerformerOfferCard offer={order.myOffer!} onEdit={onEdit} onRecall={onRecall} />
+                    <PerformerOfferCard order={order} onEdit={onEdit} onRecall={onRecall} />
                 </>
             )}
             {showControls && (

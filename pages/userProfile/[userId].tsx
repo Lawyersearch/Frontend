@@ -49,6 +49,7 @@ const UserProfilePage = ({ user: userProp, isMyPage }: UserProfilePageProps) => 
                         experience={experienceString(user.expirience)}
                         feedBacks={user?.reviewsTo?.length}
                         rating={user?.rating!}
+                        role={user?.role}
                         tasks={user?.categories!}
                         avatar={user?.avatar!}
                         lastName={user?.lastName}

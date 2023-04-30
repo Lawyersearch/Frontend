@@ -24,13 +24,10 @@ const OrderTypesList = ({ onTypeClick, onStatusClick, orders }: OrderTypesListPr
 
     const getPrivateOrdersStatusCount = useCallback(
         (status: OrderStatus) => {
-            console.log('status now is: ', status);
-            const res = (orders[OrderType.PRIVATE] as Order[]).reduce(
+            return (orders[OrderType.PRIVATE] as Order[]).reduce(
                 (acc, { orderStatus }) => acc + +(orderStatus === status),
                 0,
             );
-            console.log('status counted: ', res);
-            return res;
         },
         [orders],
     );
@@ -44,7 +41,7 @@ const OrderTypesList = ({ onTypeClick, onStatusClick, orders }: OrderTypesListPr
                 { label: "Закрытые", Icon: CloseIcon, status: OrderStatus.CLOSED },
                 { label: "Отклоненные", Icon: DoDisturbIcon, status: OrderStatus.DISMISS },
                 { label: "Спорные", Icon: FlagIcon, status: OrderStatus.DISPUT },
-            ].map((item) => Object.assign(item, { count: getPrivateOrdersStatusCount(item.status) })),
+            ].map(item => Object.assign(item, { count: getPrivateOrdersStatusCount(item.status) })),
         [getPrivateOrdersStatusCount],
     );
 

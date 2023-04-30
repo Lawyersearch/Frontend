@@ -39,14 +39,13 @@ export const uiSlice = createSlice({
         },
         toggleMode: state => {
             state.mode = state.mode === "light" ? "dark" : "light";
+            Cookie.set("mode", state.mode);
         },
     },
     extraReducers: builder => {
         builder.addCase(HYDRATE, (state, action: PayloadAction<RootState, typeof HYDRATE>) => {
             const modeFromCookie = Cookie.get("mode") as PaletteMode;
-            const modeFromHydration = [action.payload.ui.mode, state.mode].includes("light")
-                ? "light"
-                : "dark";
+            const modeFromHydration = [action.payload.ui.mode, state.mode].includes("light") ? "light" : "dark";
             state.mode = modeFromCookie ?? modeFromHydration;
             state.categoryView = action.payload.ui.categoryView || state.categoryView;
         });

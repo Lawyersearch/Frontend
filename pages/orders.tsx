@@ -27,25 +27,28 @@ const OrdersPage = ({ orders: ordersProp }: OrdersPageProps) => {
     const getFilteredOrders = useCallback(() => {
         return type === OrderType.PRIVATE && status !== null
             ? (orders[type] as PerformerOrder[]).filter(({ orderStatus }) => orderStatus === status)
-            : (orders[type] as PerformerOrder[]).filter(({orderStatus}) => orderStatus !== OrderStatus.CLOSED);
+            : (orders[type] as PerformerOrder[]).filter(({ orderStatus }) => orderStatus !== OrderStatus.CLOSED);
     }, [type, status]);
 
     const shouldShowAddOrderButton = isUserClient(user?.role);
 
-    const addNewOrder = useCallback((order: ClientOrder) => {
-        setOrders(orders => {
-            const privateOrders = orders[OrderType.PRIVATE] as ClientOrder[];
-            const publicOrders = orders[OrderType.PUBLIC] as ClientOrder[];
+    const addNewOrder = useCallback(
+        (order: ClientOrder) => {
+            setOrders(orders => {
+                const privateOrders = orders[OrderType.PRIVATE] as ClientOrder[];
+                const publicOrders = orders[OrderType.PUBLIC] as ClientOrder[];
 
-            privateOrders.unshift(order);
-            publicOrders.unshift(order);
+                privateOrders.unshift(order);
+                publicOrders.unshift(order);
 
-            return {
-                [OrderType.PRIVATE]: privateOrders,
-                [OrderType.PUBLIC]: publicOrders
-            };
-        });
-    }, [setOrders]);
+                return {
+                    [OrderType.PRIVATE]: privateOrders,
+                    [OrderType.PUBLIC]: publicOrders,
+                };
+            });
+        },
+        [setOrders],
+    );
 
     const [showCreateModal, openCreateModal, closeCreateModal, create] = useCreateOrder(addNewOrder);
 
@@ -58,15 +61,11 @@ const OrdersPage = ({ orders: ordersProp }: OrdersPageProps) => {
                     </Grid>
                 )}
                 <Grid item xs={12} md={9 + Number(!user) * 3}>
-                    {shouldShowAddOrderButton && <Button
-                            onClick={openCreateModal}
-                            fullWidth={true}
-                            variant="contained"
-                            sx={{my: 2}}
-                        >
+                    {shouldShowAddOrderButton && (
+                        <Button onClick={openCreateModal} fullWidth={true} variant="contained" sx={{ my: 2 }}>
                             Новый заказ
                         </Button>
-                    }
+                    )}
                     {orders[type]?.length ? (
                         <Stack spacing={3}>
                             {getFilteredOrders().map(order => (

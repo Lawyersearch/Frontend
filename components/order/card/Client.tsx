@@ -1,4 +1,4 @@
-import { Button, Divider, Stack } from "@mui/material";
+import { Box, Button, Divider, Stack } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
@@ -98,7 +98,10 @@ const ClientOrderCard = ({ order: orderProp }: ClientOrderCardProps) => {
                 <>
                     <Divider>Отклики</Divider>
                     {order.offers.map(offer => (
-                        <ClientOfferCard key={offer.id} offer={offer} onPick={() => {}} />
+                        <Box key={offer.id} mt={1}>
+                            <ClientOfferCard offer={offer} onPick={() => {}} />
+                            <Divider />
+                        </Box>
                     ))}
                 </>
             )}

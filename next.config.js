@@ -16,7 +16,6 @@ const commonConfig = {
             {
                 protocol: "https",
                 hostname: "lawyersearch.ru",
-                port: "",
                 pathname: "/static/**",
             },
         ],

@@ -8,8 +8,8 @@ export type OrderPost = Pick<Order, "performerId" | "price" | "description" | "t
 enum OrderStatusRequest {
     COMPLETE = 3,
     DISMISS = 4,
-    DISPUT = 5
-};
+    DISPUT = 5,
+}
 
 const mkChangeOrderStatusMutation = (
     builder: EndpointBuilder<ReturnType<typeof mkAuthenticatedBaseQuery>, string, "orderApi">,

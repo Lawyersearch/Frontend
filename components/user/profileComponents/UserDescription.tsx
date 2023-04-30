@@ -1,4 +1,5 @@
 import React from "react";
+import { isEmpty } from "lodash";
 import { Button, Card, Chip, Divider, Rating, Stack, SxProps, Typography, Box } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import MessageIcon from "@mui/icons-material/Message";
@@ -10,11 +11,12 @@ import { Category } from "../../../types/category";
 import Avatar from "../../../ui/components/Avatar";
 import NextLink from "../../../ui/components/NextLink";
 import useUpdateGeneral from "../../../hooks/user/useUpdateGeneral";
-import { User } from "../../../types/user";
+import { User, UserRole } from "../../../types/user";
 import UpdateUserGeneralModal from "../../../ui/modal/user/UpdateGeneral";
 import useUpdateCategories from "../../../hooks/user/useUpdateCategories";
 import UpdateUserCategoriesModal from "../../../ui/modal/user/UpdateCategories";
 import { emptyUserText } from "../../../ui/strings";
+import { isUserPerformer } from "../../../utils/user";
 
 interface UserProfileProps {
     avatar: string;
@@ -24,6 +26,7 @@ interface UserProfileProps {
     isMyPage: boolean;
     tasks?: Category[];
     rating: number;
+    role?: UserRole;
     feedBacks?: number;
     description?: string;
     experience: string;
@@ -41,6 +44,7 @@ const UserDescription = ({
     middleName,
     tasks,
     rating,
+    role,
     isMyPage,
     feedBacks,
     description,
@@ -56,6 +60,7 @@ const UserDescription = ({
         useUpdateGeneral(onUserUpdate);
     const [showUpdateCategory, openUpdateCategory, closeUpdateCategory, confirmUpdateCategory] =
         useUpdateCategories(onUserUpdate);
+    const showCategories = (isUserPerformer(role) && !isEmpty(tasks)) || isMyPage;
 
     return (
         <Card sx={rest}>
@@ -135,7 +140,7 @@ const UserDescription = ({
                     </Stack>
                 </Stack>
             </Stack>
-            {(tasks?.length || isMyPage) > 0 && (
+            {showCategories && (
                 <>
                     <Divider />
                     <Stack
@@ -155,7 +160,7 @@ const UserDescription = ({
                 </>
             )}
             <UpdateUserGeneralModal
-                userData={{ firstName, lastName, middleName, description }}
+                userData={{ firstName, lastName, middleName, description, role }}
                 open={showUpdateGeneral}
                 onClose={closeUpdateGeneral}
                 confirm={confirmUpdateGeneral}
