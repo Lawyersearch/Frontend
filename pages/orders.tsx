@@ -1,7 +1,8 @@
-import _isEmpty from "lodash/isEmpty";
+import { useCallback, useEffect, useState } from "react";
+import Cookie from "js-cookie";
+import { isEmpty } from "lodash";
 import { Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { GetServerSideProps } from "next";
-import { useCallback, useEffect, useState } from "react";
 import OrderTypesList from "../components/order/TypesList";
 import OrderCard from "../components/order/card";
 import { ClientOrder, OrderStatus, OrderType, PerformerOrder } from "../types/order";
@@ -11,7 +12,6 @@ import { wrapper } from "../store";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
 import CreateOrderModal from "../ui/modal/order/Create";
 import useCreateOrder from "../hooks/order/UseCreateOrder";
-import Cookie from "js-cookie";
 
 interface OrdersPageProps {
     orders: { [key in OrderType]: ClientOrder[] | PerformerOrder[] }; // eslint-disable-line no-unused-vars
@@ -21,7 +21,7 @@ const OrdersPage = ({ orders: ordersProp }: OrdersPageProps) => {
     const [orders, setOrders] = useState(ordersProp);
     const user = useAppSelector(state => state.user.self);
     const [type, setType] = useState<OrderType>(
-        _isEmpty(orders[OrderType.PRIVATE]) ? OrderType.PUBLIC : OrderType.PRIVATE,
+        isEmpty(orders[OrderType.PRIVATE]) ? OrderType.PUBLIC : OrderType.PRIVATE,
     );
     const [status, setStatus] = useState<OrderStatus | null>(null);
 
