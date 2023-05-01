@@ -13,6 +13,7 @@ const NavLinks = () => {
             to: `/userProfile/${user?.id}`,
             show: Boolean(user),
         },
+        { title: "Сообщения", to: "/messages", show: Boolean(user) },
         { title: "Доска заказов", to: "/orders", show: true },
         { title: "Поиск", to: "/search", show: true },
     ];

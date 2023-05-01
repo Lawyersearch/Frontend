@@ -1,16 +1,17 @@
 import _isEmpty from "lodash/isEmpty";
 import { Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { GetServerSideProps } from "next";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import OrderTypesList from "../components/order/TypesList";
 import OrderCard from "../components/order/card";
 import { ClientOrder, OrderStatus, OrderType, PerformerOrder } from "../types/order";
-import { queryPrivateOrders, queryPublicOrders, queryUserOrders } from "../utils/query";
-import { isUserClient, isUserPerformer } from "../utils/user";
+import { queryOrders, queryPrivateOrders } from "../utils/query";
+import { isUserClient } from "../utils/user";
 import { wrapper } from "../store";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
 import CreateOrderModal from "../ui/modal/order/Create";
 import useCreateOrder from "../hooks/order/UseCreateOrder";
+import Cookie from "js-cookie";
 
 interface OrdersPageProps {
     orders: { [key in OrderType]: ClientOrder[] | PerformerOrder[] }; // eslint-disable-line no-unused-vars
@@ -23,6 +24,13 @@ const OrdersPage = ({ orders: ordersProp }: OrdersPageProps) => {
         _isEmpty(orders[OrderType.PRIVATE]) ? OrderType.PUBLIC : OrderType.PRIVATE,
     );
     const [status, setStatus] = useState<OrderStatus | null>(null);
+
+    useEffect(() => {
+        setType(OrderType.PUBLIC);
+        queryPrivateOrders(user?.role, Cookie.get("token")).then(privateOrders => {
+            setOrders(orders => ({ ...orders, [OrderType.PRIVATE]: privateOrders }));
+        });
+    }, [user, setType, setOrders]);
 
     const getFilteredOrders = useCallback(() => {
         return type === OrderType.PRIVATE && status !== null
@@ -87,14 +95,7 @@ const OrdersPage = ({ orders: ordersProp }: OrdersPageProps) => {
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(store => async context => {
     const { token } = context.req.cookies;
     const { self } = store.getState().user;
-    const [privateOrders, publicOrders] = await Promise.all([
-        isUserPerformer(self?.role) ? queryPrivateOrders(token) : queryUserOrders(token),
-        queryPublicOrders(token),
-    ]);
-    const orders = {
-        [OrderType.PRIVATE]: privateOrders ?? [],
-        [OrderType.PUBLIC]: publicOrders ?? [],
-    };
+    const orders = await queryOrders(self?.role, token);
 
     return {
         props: { orders },
