@@ -7,7 +7,7 @@ export const educationApi = createApi({
     baseQuery: mkAuthenticatedBaseQuery("education"),
     endpoints: builder => ({
         addEducation: builder.mutation<Education, Partial<Education>>({
-            query: (education: Partial<Education>) => ({
+            query: education => ({
                 url: "/",
                 method: "POST",
                 body: education,
@@ -15,13 +15,13 @@ export const educationApi = createApi({
             transformResponse: getData<Education>,
         }),
         removeEducation: builder.mutation<void, string>({
-            query: (educationId: string) => ({
+            query: educationId => ({
                 url: `/${educationId}`,
                 method: "DELETE",
             }),
         }),
         updateEducation: builder.mutation<Education, Partial<Education>>({
-            query: (education: Partial<Education>) => ({
+            query: education => ({
                 url: `/${education.id}`,
                 method: "PUT",
                 body: education,

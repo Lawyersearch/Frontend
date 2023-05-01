@@ -8,14 +8,14 @@ export const authApi = createApi({
     baseQuery: mkAuthenticatedBaseQuery("auth"),
     endpoints: builder => ({
         loginFromCreds: builder.mutation<WebResponse<string>, UserCredentials>({
-            query: (credentials: UserCredentials) => ({
+            query: credentials => ({
                 url: "/login",
                 method: "POST",
                 body: credentials,
             }),
         }),
         loginFromVerification: builder.mutation<WebResponse<string>, string>({
-            query: (token: string) => ({
+            query: token => ({
                 url: "/mailverify",
                 method: "POST",
                 body: token,
@@ -25,21 +25,21 @@ export const authApi = createApi({
             }),
         }),
         register: builder.mutation<WebResponse<null>, UserCredentials>({
-            query: (credentials: UserCredentials) => ({
+            query: credentials => ({
                 url: "/registration",
                 method: "POST",
                 body: credentials,
             }),
         }),
         restore: builder.mutation<WebResponse<string>, UserCredentials>({
-            query: (restoreCredentials: UserCredentials) => ({
+            query: restoreCredentials => ({
                 url: "/restore",
                 method: "POST",
                 body: restoreCredentials,
             }),
         }),
         forgetPassword: builder.mutation<WebResponse<null>, UserCredentials>({
-            query: (userCredentials: UserCredentials) => ({
+            query: userCredentials => ({
                 url: "/forget",
                 method: "POST",
                 body: userCredentials,

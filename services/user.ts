@@ -13,21 +13,21 @@ export const userApi = createApi({
     tagTypes: ["User"],
     endpoints: builder => ({
         getUser: builder.query<User, string>({
-            query: (userId: string) => ({
+            query: userId => ({
                 url: `/id/${userId}`,
             }),
             transformResponse: getData<User>,
             providesTags: (result, error, userId) => [{ type: "User", id: userId }],
         }),
         getUsersByCategorId: builder.query<User[], number>({
-            query: (id: number) => ({
+            query: id => ({
                 url: `/search/id/${id}`,
             }),
             transformResponse: getData<User[]>,
             providesTags: result => result?.map(user => ({ type: "User", id: user.id })) ?? [],
         }),
         updateUserGeneral: builder.mutation<User, UpdateUserGeneralRequest>({
-            query: (data: UpdateUserGeneralRequest) => ({
+            query: data => ({
                 url: "/",
                 method: "PUT",
                 body: data,
@@ -35,7 +35,7 @@ export const userApi = createApi({
             transformResponse: getData<User>,
         }),
         updateUserCategories: builder.mutation<UpdateUserCategoriesResponse, number[]>({
-            query: (categories: number[]) => ({
+            query: categories => ({
                 url: "/category",
                 method: "PUT",
                 body: { categories },
@@ -43,7 +43,7 @@ export const userApi = createApi({
             transformResponse: getData<UpdateUserCategoriesResponse>,
         }),
         uploadAvatar: builder.mutation<WebResponse<null>, FormData>({
-            query: (data: FormData) => ({
+            query: data => ({
                 url: "/uploadAvatar",
                 method: "POST",
                 credentials: "include",

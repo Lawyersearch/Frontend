@@ -2,14 +2,16 @@ export interface MessageResponse {
     id: string;
     senderId: string;
     text: string;
-    dateTime: string;
+    dateTime?: string;
 }
 
-export interface MessageExtended extends MessageResponse {
+export type MessageExtended = MessageResponse & { status?: "pending" | "error" };
+
+/*export interface MessageExtended extends MessageResponse {
     senderName: string;
     myId: string;
     avatar: string;
-}
+}*/
 
 export interface Dialog {
     id: string;
@@ -18,6 +20,6 @@ export interface Dialog {
     createdDate: string;
     orderId: string;
     isClosed: boolean;
-    senderName: string;
+    memberName: string;
     avatar: string;
 }

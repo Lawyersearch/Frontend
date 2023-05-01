@@ -12,19 +12,10 @@ interface NetHandlerProps {
 }
 
 const NetHandler = ({ isLoading, isSuccess, children, error, h, w }: NetHandlerProps) => {
+    const sxLoading = (h && w && { mt: `calc(${h} / 2 - 20px)`, ml: `calc(${w} / 2 - 20px)` }) || undefined;
+
     if (isLoading) {
-        return (
-            <CircularProgress
-                sx={
-                    (h &&
-                        w && {
-                            mt: `calc(${h} / 2 - 20px)`,
-                            ml: `calc(${w} / 2 - 20px)`,
-                        }) ||
-                    undefined
-                }
-            />
-        );
+        return <CircularProgress sx={sxLoading} />;
     }
 
     if (isSuccess || error === undefined) {

@@ -4,7 +4,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { useAppSelector } from "../../hooks/redux/useTypedRedux";
 import { PerformerOrder } from "../../types/order";
 import { MyOffer, Offer } from "../../types/offer";
-import { mkCreatorName } from "../../utils/user";
+import { mkUserName } from "../../utils/user";
 import GenericOfferCard from "./Generic";
 import useEditOffer from "../../hooks/offer/useEditOffer";
 import useRecallOffer from "../../hooks/offer/useRecallOffer";
@@ -21,7 +21,11 @@ interface PerformerOfferCardProps {
 const PerformerOfferCard = ({ order, onRecall, onEdit }: PerformerOfferCardProps) => {
     const self = useAppSelector(store => store.user.self);
     const myOffer = order.myOffer;
-    const completeOffer: Offer = { ...myOffer!, avatar: self?.avatar!, creatorName: mkCreatorName(self) };
+    const completeOffer: Offer = {
+        ...myOffer!,
+        avatar: self?.avatar!,
+        creatorName: mkUserName(self, { middleName: false }),
+    };
 
     const [showRecallModal, openRecallModal, closeRecallModal, recall] = useRecallOffer(myOffer, onRecall);
     const [showEditModal, openEditModal, closeEditModal, edit] = useEditOffer(myOffer, onEdit);

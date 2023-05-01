@@ -14,7 +14,7 @@ const DialogCard = ({ dialog, onDialogClick }: DialogProps) => (
         sx={{
             p: 1,
             borderBottom: "1px solid black",
-            ":hover": { bgcolor: "#aaa8" },
+            ":hover": { bgcolor: "#aaa8", cursor: "pointer" },
             transition: ".25s background-color ease-out",
         }}
     >
@@ -23,8 +23,8 @@ const DialogCard = ({ dialog, onDialogClick }: DialogProps) => (
                 <Avatar src={dialog.avatar} height={70} width={70} />
             </NextLink>
             <Stack justifyContent="space-around">
-                <Typography fontWeight={600}>{dialog.senderName}</Typography>
-                <Typography>{dialog.senderName}</Typography>
+                <Typography fontWeight={600}>{dialog.memberName}</Typography>
+                <Typography>{dialog.memberName}</Typography>
             </Stack>
         </Stack>
     </Card>

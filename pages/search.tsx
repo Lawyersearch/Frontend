@@ -10,6 +10,7 @@ import { experienceString } from "../utils/wordsEndings";
 import { queryView } from "../utils/query";
 import { wrapper } from "../store";
 import { setCategoryView } from "../store/reducers/uiSlice";
+import { mkUserName } from "../utils/user";
 
 interface SearchPageProps {
     categories: CategoryTree[];
@@ -34,7 +35,7 @@ const SearchPage = ({ categories, view }: SearchPageProps) => {
                                     id={user.id}
                                     key={user.id}
                                     avatar={user.avatar}
-                                    userName={`${user.lastName} ${user.firstName} ${user.middleName}`}
+                                    userName={mkUserName(user)}
                                     tasks={user.categories!}
                                     rating={user.rating}
                                     feedBacks={user.reviewCount}

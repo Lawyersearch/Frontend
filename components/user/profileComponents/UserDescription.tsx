@@ -15,8 +15,7 @@ import { User, UserRole } from "../../../types/user";
 import UpdateUserGeneralModal from "../../../ui/modal/user/UpdateGeneral";
 import useUpdateCategories from "../../../hooks/user/useUpdateCategories";
 import UpdateUserCategoriesModal from "../../../ui/modal/user/UpdateCategories";
-import { emptyUserText } from "../../../ui/strings";
-import { isUserPerformer } from "../../../utils/user";
+import { isUserPerformer, mkUserName } from "../../../utils/user";
 
 interface UserProfileProps {
     avatar: string;
@@ -90,9 +89,7 @@ const UserDescription = ({
                 <Stack spacing={1} justifyContent="space-between" ml={2} width="100%">
                     <Stack spacing={1}>
                         <Stack direction="row" justifyContent="space-between">
-                            <Typography variant="h4">
-                                {[lastName, firstName, middleName].filter(Boolean).join(" ") || emptyUserText}
-                            </Typography>
+                            <Typography variant="h4">{mkUserName({ lastName, firstName, middleName })}</Typography>
                         </Stack>
                         <Typography variant="body1" fontWeight={300}>
                             Опыт: {experience}

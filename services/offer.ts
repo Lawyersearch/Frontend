@@ -7,7 +7,7 @@ export const offerApi = createApi({
     baseQuery: mkAuthenticatedBaseQuery("offer"),
     endpoints: builder => ({
         getResponds: builder.query<Offer[], string>({
-            query: (orderId: string) => ({
+            query: orderId => ({
                 url: `orderId/${orderId}`,
                 method: "GET",
             }),
@@ -22,13 +22,13 @@ export const offerApi = createApi({
             transformResponse: getData<Offer>,
         }),
         removeRespond: builder.mutation<void, string>({
-            query: (offerId: string) => ({
+            query: offerId => ({
                 url: `/offerId/${offerId}`,
                 method: "DELETE",
             }),
         }),
         updateRespond: builder.mutation<MyOffer, MyOffer>({
-            query: ({ id, ...rest }: MyOffer) => ({
+            query: ({ id, ...rest }) => ({
                 url: `/offerId/${id}`,
                 method: "PUT",
                 body: rest,

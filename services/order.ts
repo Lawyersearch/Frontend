@@ -16,7 +16,7 @@ const mkChangeOrderStatusMutation = (
     orderStatus: OrderStatusRequest,
 ) =>
     builder.mutation<Order, string>({
-        query: (orderId: string) => ({
+        query: orderId => ({
             url: `/changeStatus/${orderId}`,
             method: "POST",
             params: { orderStatus },
@@ -29,7 +29,7 @@ export const orderApi = createApi({
     baseQuery: mkAuthenticatedBaseQuery("order"),
     endpoints: builder => ({
         createOrder: builder.mutation<ClientOrder, OrderPost>({
-            query: (order: OrderPost) => ({
+            query: order => ({
                 url: "/",
                 method: "POST",
                 body: order as unknown as typeof builder,
@@ -37,7 +37,7 @@ export const orderApi = createApi({
             transformResponse: getData<ClientOrder>,
         }),
         updateOrder: builder.mutation<ClientOrder, ClientOrder>({
-            query: (order: ClientOrder) => ({
+            query: order => ({
                 url: "/",
                 method: "PUT",
                 body: order,
@@ -52,14 +52,14 @@ export const orderApi = createApi({
         markOrderDisput: mkChangeOrderStatusMutation(builder, OrderStatusRequest.DISPUT),
 
         acceptOrder: builder.mutation<Order, string>({
-            query: (orderId: string) => ({
+            query: orderId => ({
                 url: `/accept/${orderId}`,
                 method: "POST",
             }),
             transformResponse: getData<Order>,
         }),
         chooseOrderPerformer: builder.mutation<Order, { orderId: string; offerId: string }>({
-            query: ({ orderId, offerId }: { orderId: string; offerId: string }) => ({
+            query: ({ orderId, offerId }) => ({
                 url: `/choose/${orderId}`,
                 method: "POST",
                 params: { offerId },

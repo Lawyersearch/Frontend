@@ -10,6 +10,7 @@ import { educationApi } from "../services/education";
 import { workExperienceApi } from "../services/workExperience";
 import { orderApi } from "../services/order";
 import { offerApi } from "../services/offer";
+import { messageApi } from "../services/messages";
 
 export const makeStore = () =>
     configureStore({
@@ -24,6 +25,7 @@ export const makeStore = () =>
             [workExperienceApi.reducerPath]: workExperienceApi.reducer,
             [orderApi.reducerPath]: orderApi.reducer,
             [offerApi.reducerPath]: offerApi.reducer,
+            [messageApi.reducerPath]: messageApi.reducer,
         },
         devTools: process.env.NODE_ENV === "development",
         middleware: getDefaultMiddleware =>
@@ -39,7 +41,8 @@ export const makeStore = () =>
                 .concat(educationApi.middleware)
                 .concat(workExperienceApi.middleware)
                 .concat(orderApi.middleware)
-                .concat(offerApi.middleware),
+                .concat(offerApi.middleware)
+                .concat(messageApi.middleware),
     });
 
 export type AppStore = ReturnType<typeof makeStore>;

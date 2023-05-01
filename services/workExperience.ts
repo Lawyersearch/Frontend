@@ -7,7 +7,7 @@ export const workExperienceApi = createApi({
     baseQuery: mkAuthenticatedBaseQuery("workExpirience"),
     endpoints: builder => ({
         addWorkExperience: builder.mutation<WorkExpirience, Partial<WorkExpirience>>({
-            query: (workExp: WorkExpirience) => ({
+            query: workExp => ({
                 url: "/",
                 method: "POST",
                 body: workExp,
@@ -15,13 +15,13 @@ export const workExperienceApi = createApi({
             transformResponse: getData<WorkExpirience>,
         }),
         removeWorkExperience: builder.mutation<void, string>({
-            query: (workExpId: string) => ({
+            query: workExpId => ({
                 url: `/${workExpId}`,
                 method: "DELETE",
             }),
         }),
         updateWorkExperience: builder.mutation<WorkExpirience, Partial<WorkExpirience>>({
-            query: (workExp: WorkExpirience) => ({
+            query: workExp => ({
                 url: `/${workExp.id}`,
                 method: "PUT",
                 body: workExp,
