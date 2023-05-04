@@ -1,4 +1,4 @@
-import { User, UserRole } from "../types/user";
+import { UserRole } from "../types/user";
 import { emptyUserText } from "../ui/strings";
 
 type NameComponentsKey = "lastName" | "firstName" | "middleName";

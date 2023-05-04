@@ -7,6 +7,7 @@ import Avatar from "../../ui/components/Avatar";
 import NextLink from "../../ui/components/NextLink";
 import { User } from "../../types/user";
 import { mkUserName } from "../../utils/user";
+import { emptyUserText } from "../../ui/strings";
 
 interface MessageProps {
     dialog: Dialog;
@@ -27,7 +28,10 @@ const Message = ({ message, dialog, self }: MessageProps) => (
         <Stack direction="row" justifyContent="space-between">
             <NextLink href={`/userProfile/${message.senderId}`}>
                 <Typography color="primary.main" fontWeight={500}>
-                    {message.senderId === self.id ? mkUserName(self, { middleName: false }) : dialog.memberName}
+                    {message.senderId === self.id
+                        ? mkUserName(self, { middleName: false })
+                        : dialog.memberName.trim() || emptyUserText
+                    }
                 </Typography>
             </NextLink>
             {message.status === "pending" && <CircularProgress size={30} />}

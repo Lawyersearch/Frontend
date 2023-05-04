@@ -2,6 +2,7 @@ import { Card, Stack, Typography } from "@mui/material";
 import { Dialog } from "../../types/message";
 import NextLink from "../../ui/components/NextLink";
 import Avatar from "../../ui/components/Avatar";
+import { emptyUserText } from "../../ui/strings";
 
 interface DialogProps {
     dialog: Dialog;
@@ -23,8 +24,8 @@ const DialogCard = ({ dialog, onDialogClick }: DialogProps) => (
                 <Avatar src={dialog.avatar} height={70} width={70} />
             </NextLink>
             <Stack justifyContent="space-around">
-                <Typography fontWeight={600}>{dialog.memberName}</Typography>
-                <Typography>{dialog.memberName}</Typography>
+                <Typography fontWeight={600}>{dialog.memberName.trim() || emptyUserText}</Typography>
+                <Typography>{dialog.memberName.trim() || emptyUserText}</Typography>
             </Stack>
         </Stack>
     </Card>

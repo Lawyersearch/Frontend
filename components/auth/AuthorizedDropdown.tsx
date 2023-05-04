@@ -26,7 +26,7 @@ const AuthorizedDropdown = ({ onClick }: AuthorizedDropdownProps) => {
         <Stack alignItems="center" width="max-content">
             <Avatar src={user?.avatar} height={70} width={70} />
             <Typography fontWeight="medium" fontSize={20} color="text.primary">
-                {user?.firstName || emptyUserText}
+                {user?.firstName?.trim?.() || emptyUserText}
             </Typography>
             <Typography fontSize={16} color="text.secondary" gutterBottom>
                 {user?.email}

@@ -6,6 +6,7 @@ import { queryDialogs } from "../utils/query";
 import { Grid, Stack, Typography } from "@mui/material";
 import DialogCard from "../components/message/gialogCard";
 import DialogExtended from "../components/message/gialogExtended";
+import { hideScrollbars } from "../ui/utils";
 
 interface MessagesPageProps {
     dialogs: Dialog[];
@@ -21,8 +22,12 @@ const MessagesPage = ({ dialogs }: MessagesPageProps) => {
                 item
                 xs={3}
                 height="inherit"
-                overflow="scroll"
-                sx={{ border: "1px solid", borderColor: "primary.main" }}
+                sx={{
+                    border: "1px solid",
+                    borderColor: "primary.main",
+                    overflowY: 'scroll',
+                    ...hideScrollbars
+                }}
             >
                 <Stack>
                     {dialogs.map(dialog => (

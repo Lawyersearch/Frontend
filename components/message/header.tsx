@@ -4,6 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Dialog } from "../../types/message";
 import Avatar from "../../ui/components/Avatar";
+import { emptyUserText } from "../../ui/strings";
 
 interface DialogHeaderProps {
     dialog: Dialog;
@@ -23,8 +24,8 @@ const DialogHeader = ({ dialog, searchQuery, setSearchQuery }: DialogHeaderProps
         >
             <Avatar src={dialog.avatar} height={64} width={64} />
             <Stack justifyContent="space-around">
-                <Typography fontWeight={600}>{dialog.memberName}</Typography>
-                <Typography>{dialog.memberName}</Typography>
+                <Typography fontWeight={600}>{dialog.memberName.trim() || emptyUserText}</Typography>
+                <Typography>{dialog.memberName.trim() || emptyUserText}</Typography>
             </Stack>
             <Stack direction="row" ml="auto !important" spacing={2}>
                 <SearchIcon fontSize="medium" />
