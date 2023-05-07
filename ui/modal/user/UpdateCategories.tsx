@@ -51,30 +51,28 @@ const UpdateUserCategoriesModal = ({ pickedCategories, open, onClose, confirm }:
 
     return (
         <GenericModal open={open} onClose={onClose}>
-            <>
-                <Typography variant="h5" component="h2" gutterBottom>
-                    Обновление категорий
-                </Typography>
-                <FormControl fullWidth>
-                    <Stack spacing={2} width={{ xs: "min(80vw, 100%)", md: "min(80vw, 1100px)" }}>
-                        <Autocomplete
-                            multiple
-                            value={value}
-                            onChange={(_, newValue) => setValue(newValue)}
-                            options={options}
-                            groupBy={(option: Option) => option.parent ?? ""}
-                            disableCloseOnSelect
-                            getOptionLabel={(option: Option) => option.label}
-                            isOptionEqualToValue={(option, { value }) => option.value === value}
-                            renderOption={renderOption}
-                            renderInput={params => <TextField {...params} label="Категори" />}
-                        />
-                        <Button variant="outlined" onClick={submit} startIcon={<SaveIcon />}>
-                            Сохранить
-                        </Button>
-                    </Stack>
-                </FormControl>
-            </>
+            <Typography variant="h5" component="h2" gutterBottom>
+                Обновление категорий
+            </Typography>
+            <FormControl fullWidth>
+                <Stack spacing={2} width={{ xs: "min(80vw, 100%)", md: "min(80vw, 1100px)" }}>
+                    <Autocomplete
+                        multiple
+                        value={value}
+                        onChange={(_, newValue) => setValue(newValue)}
+                        options={options}
+                        groupBy={(option: Option) => option.parent ?? ""}
+                        disableCloseOnSelect
+                        getOptionLabel={(option: Option) => option.label}
+                        isOptionEqualToValue={(option, { value }) => option.value === value}
+                        renderOption={renderOption}
+                        renderInput={params => <TextField {...params} label="Категори" />}
+                    />
+                    <Button variant="outlined" onClick={submit} startIcon={<SaveIcon />}>
+                        Сохранить
+                    </Button>
+                </Stack>
+            </FormControl>
         </GenericModal>
     );
 };

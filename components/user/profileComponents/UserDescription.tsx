@@ -1,6 +1,6 @@
 import React from "react";
 import { isEmpty } from "lodash";
-import { Button, Card, Chip, Divider, Rating, Stack, SxProps, Typography, Box } from "@mui/material";
+import { Button, Card, Chip, Divider, Rating, Stack, SxProps, Typography, Box, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import MessageIcon from "@mui/icons-material/Message";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -16,6 +16,8 @@ import UpdateUserGeneralModal from "../../../ui/modal/user/UpdateGeneral";
 import useUpdateCategories from "../../../hooks/user/useUpdateCategories";
 import UpdateUserCategoriesModal from "../../../ui/modal/user/UpdateCategories";
 import { isUserPerformer, mkUserName } from "../../../utils/user";
+import UpdateAvatarModal from "../../../ui/modal/user/UpdateAvatar";
+import useUpdateAvatar from "../../../hooks/user/useUpdateAvatar";
 
 interface UserProfileProps {
     avatar: string;
@@ -59,6 +61,7 @@ const UserDescription = ({
         useUpdateGeneral(onUserUpdate);
     const [showUpdateCategory, openUpdateCategory, closeUpdateCategory, confirmUpdateCategory] =
         useUpdateCategories(onUserUpdate);
+    const [showUpdateAvatar, openUpdateAvatar, closeUpdateAvatar, confirmUpdateAvatar] = useUpdateAvatar(onUserUpdate);
     const showCategories = (isUserPerformer(role) && !isEmpty(tasks)) || isMyPage;
 
     return (
@@ -67,6 +70,15 @@ const UserDescription = ({
                 <Stack>
                     <Box alignSelf="center">
                         <Avatar src={avatar} height={250} width={250} />
+                        {isMyPage && (
+                            <IconButton
+                                color="info"
+                                sx={{ float: "right", mb: "-100%", ml: "-100%" }}
+                                onClick={openUpdateAvatar}
+                            >
+                                <EditIcon />
+                            </IconButton>
+                        )}
                     </Box>
                     <Stack alignItems="center" spacing={1}>
                         <Stack direction={{ xs: "column", md: "row" }} alignItems="center" width="max-content" mt={2}>
@@ -168,6 +180,7 @@ const UserDescription = ({
                 onClose={closeUpdateCategory}
                 confirm={confirmUpdateCategory}
             />
+            <UpdateAvatarModal open={showUpdateAvatar} onClose={closeUpdateAvatar} confirm={confirmUpdateAvatar} />
         </Card>
     );
 };

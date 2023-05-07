@@ -1,5 +1,5 @@
 import React from "react";
-import { Fade, Modal, Container, ModalProps, SxProps } from "@mui/material";
+import { Fade, Modal, Container, ModalProps, SxProps, ContainerProps } from "@mui/material";
 
 const modalStyle: SxProps = {
     position: "absolute" as "absolute",
@@ -14,7 +14,7 @@ const modalStyle: SxProps = {
     maxWidth: "min(90vw, auto) !important",
 };
 
-const GenericModal = (props: ModalProps) => {
+const GenericModal = (props: Omit<ModalProps, "children"> & Pick<ContainerProps, "children">) => {
     const { open, children } = props;
     return (
         <Modal closeAfterTransition {...props}>

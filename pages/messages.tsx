@@ -25,8 +25,8 @@ const MessagesPage = ({ dialogs }: MessagesPageProps) => {
                 sx={{
                     border: "1px solid",
                     borderColor: "primary.main",
-                    overflowY: 'scroll',
-                    ...hideScrollbars
+                    overflowY: "scroll",
+                    ...hideScrollbars,
                 }}
             >
                 <Stack>

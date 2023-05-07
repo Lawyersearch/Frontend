@@ -70,7 +70,7 @@ const DialogExtended = ({ dialog }: DialogExtendedProps) => {
         <Stack height="inherit">
             <DialogHeader dialog={dialog} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
             <NetHandler isLoading={isLoading} isSuccess={isSuccess} error={error} h="50vh - 177px" w="9 / 12 * 100vw">
-                <Stack px={2} sx={{overflowY: "scroll", ...hideScrollbars}}>
+                <Stack px={2} sx={{ overflowY: "scroll", ...hideScrollbars }}>
                     {messages.map(message => (
                         <Message key={message.id} message={message} dialog={dialog} self={self} />
                     ))}

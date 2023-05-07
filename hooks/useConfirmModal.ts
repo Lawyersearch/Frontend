@@ -3,8 +3,6 @@ import { UseMutation } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect } from "react";
 import { mkAuthenticatedBaseQuery } from "../services/utils";
-import { pushSnack } from "../store/reducers/uiSlice";
-import { useAppDispatch } from "./redux/useTypedRedux";
 import useBoolean from "./utils/useBoolean";
 
 interface UseConfirmModalArgs<ModalData, MutationResult, MutationData> {

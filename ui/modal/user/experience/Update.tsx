@@ -40,12 +40,10 @@ const UpdateQualification = forwardRef<UpdateQualificationRef, UpdateQualificati
 
     return (
         <GenericModal open={show} onClose={setHide}>
-            <>
-                <Typography variant="h5" component="h2" mb={4}>
-                    Изменение места работы
-                </Typography>
-                <ExperienceForm workExp={workExpRef.current} onSubmit={updateEducation} />
-            </>
+            <Typography variant="h5" component="h2" mb={4}>
+                Изменение места работы
+            </Typography>
+            <ExperienceForm workExp={workExpRef.current} onSubmit={updateEducation} />
         </GenericModal>
     );
 });

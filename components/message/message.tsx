@@ -30,8 +30,7 @@ const Message = ({ message, dialog, self }: MessageProps) => (
                 <Typography color="primary.main" fontWeight={500}>
                     {message.senderId === self.id
                         ? mkUserName(self, { middleName: false })
-                        : dialog.memberName.trim() || emptyUserText
-                    }
+                        : dialog.memberName.trim() || emptyUserText}
                 </Typography>
             </NextLink>
             {message.status === "pending" && <CircularProgress size={30} />}

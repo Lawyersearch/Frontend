@@ -5,6 +5,14 @@ import { mkAuthenticatedBaseQuery, getData, mkExtractRehydrationInfo } from "./u
 
 export type UpdateUserGeneralRequest = Omit<UserShort, "id" | "avatar">;
 export type UpdateUserCategoriesResponse = Pick<User, "id" | "categories">;
+export type UpdateUserAvatarResponse = Pick<User, "id" | "avatar">;
+
+const createAvatarFormData = (avatar: File) => {
+    const formData = new FormData();
+    formData.append("uploadedFile", avatar);
+
+    return formData;
+};
 
 export const userApi = createApi({
     reducerPath: "userApi",
@@ -42,13 +50,14 @@ export const userApi = createApi({
             }),
             transformResponse: getData<UpdateUserCategoriesResponse>,
         }),
-        uploadAvatar: builder.mutation<WebResponse<null>, FormData>({
-            query: data => ({
-                url: "/uploadAvatar",
-                method: "POST",
+        updateAvatar: builder.mutation<UpdateUserAvatarResponse, File>({
+            query: avatar => ({
+                url: "/avatar",
+                method: "PUT",
                 credentials: "include",
-                body: data,
+                body: createAvatarFormData(avatar),
             }),
+            transformResponse: getData<UpdateUserAvatarResponse>,
         }),
     }),
 });
@@ -58,5 +67,6 @@ export const {
     useLazyGetUsersByCategorIdQuery,
     useUpdateUserGeneralMutation,
     useUpdateUserCategoriesMutation,
+    useUpdateAvatarMutation,
     util: { getRunningQueriesThunk },
 } = userApi;

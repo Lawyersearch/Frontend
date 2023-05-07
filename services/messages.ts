@@ -12,7 +12,7 @@ export const messageApi = createApi({
                 method: "GET",
             }),
             transformResponse: getData<MessageResponse[]>,
-        })
+        }),
     }),
 });
 

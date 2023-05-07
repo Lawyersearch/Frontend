@@ -36,36 +36,34 @@ const UpdateOfferModal = ({ offer, open, onClose, edit }: UpdateOfferModalProps)
 
     return (
         <GenericModal open={open} onClose={onClose}>
-            <>
-                <Typography variant="h5" component="h2" gutterBottom>
-                    Изменение отклика
-                </Typography>
-                <FormControl fullWidth sx={{ width: 600 }}>
-                    <Stack spacing={2}>
-                        <ValidInput
-                            label="Сообщение"
-                            value={message}
-                            multiline
-                            bindChange={setMessage}
-                            valid={isNotEmpty}
-                            invalidText={invalidEmptyText}
-                            showError={submited}
-                        />
-                        <ValidInput
-                            label="Цена"
-                            value={price}
-                            InputProps={{ endAdornment: <InputAdornment position="end">₽</InputAdornment> }}
-                            bindChange={setPrice}
-                            valid={isNumberLike}
-                            invalidText={invalidPriceText}
-                            showError={submited}
-                        />
-                        <Button variant="outlined" startIcon={<SaveIcon />} onClick={submit}>
-                            Сохранить
-                        </Button>
-                    </Stack>
-                </FormControl>
-            </>
+            <Typography variant="h5" component="h2" gutterBottom>
+                Изменение отклика
+            </Typography>
+            <FormControl fullWidth sx={{ width: 600 }}>
+                <Stack spacing={2}>
+                    <ValidInput
+                        label="Сообщение"
+                        value={message}
+                        multiline
+                        bindChange={setMessage}
+                        valid={isNotEmpty}
+                        invalidText={invalidEmptyText}
+                        showError={submited}
+                    />
+                    <ValidInput
+                        label="Цена"
+                        value={price}
+                        InputProps={{ endAdornment: <InputAdornment position="end">₽</InputAdornment> }}
+                        bindChange={setPrice}
+                        valid={isNumberLike}
+                        invalidText={invalidPriceText}
+                        showError={submited}
+                    />
+                    <Button variant="outlined" startIcon={<SaveIcon />} onClick={submit}>
+                        Сохранить
+                    </Button>
+                </Stack>
+            </FormControl>
         </GenericModal>
     );
 };

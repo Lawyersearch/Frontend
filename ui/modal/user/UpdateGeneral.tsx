@@ -40,48 +40,46 @@ const UpdateUserGeneralModal = ({ userData, open, onClose, confirm }: UpdateUser
 
     return (
         <GenericModal open={open} onClose={onClose}>
-            <>
-                <Typography variant="h5" component="h2" gutterBottom>
-                    Обновление информации о профиле
-                </Typography>
-                <FormControl fullWidth>
-                    <Stack spacing={2}>
-                        <ValidInput
-                            label="Фамилия"
-                            value={lastName}
-                            bindChange={setLastName}
-                            valid={isNotEmpty}
-                            invalidText={invalidEmptyText}
-                            showError={submited}
-                        />
-                        <ValidInput
-                            label="Имя"
-                            value={firstName}
-                            bindChange={setFirstName}
-                            valid={isNotEmpty}
-                            invalidText={invalidEmptyText}
-                            showError={submited}
-                        />
-                        <ValidInput label="Отчество" value={middleName} bindChange={setMiddleName} />
-                        <ValidInput label="Описание" value={description} bindChange={setDescription} multiline />
-                        <FormControl>
-                            <InputLabel id="user-role-label">Роль</InputLabel>
-                            <Select
-                                labelId="user-role-label"
-                                value={role}
-                                label="Роль"
-                                onChange={event => setRole(+event.target.value)}
-                            >
-                                <MenuItem value={0}>Заказчик</MenuItem>
-                                <MenuItem value={1}>Исполнитель</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <Button variant="outlined" onClick={submit} startIcon={<SaveIcon />}>
-                            Сохранить
-                        </Button>
-                    </Stack>
-                </FormControl>
-            </>
+            <Typography variant="h5" component="h2" gutterBottom>
+                Обновление информации о профиле
+            </Typography>
+            <FormControl fullWidth>
+                <Stack spacing={2}>
+                    <ValidInput
+                        label="Фамилия"
+                        value={lastName}
+                        bindChange={setLastName}
+                        valid={isNotEmpty}
+                        invalidText={invalidEmptyText}
+                        showError={submited}
+                    />
+                    <ValidInput
+                        label="Имя"
+                        value={firstName}
+                        bindChange={setFirstName}
+                        valid={isNotEmpty}
+                        invalidText={invalidEmptyText}
+                        showError={submited}
+                    />
+                    <ValidInput label="Отчество" value={middleName} bindChange={setMiddleName} />
+                    <ValidInput label="Описание" value={description} bindChange={setDescription} multiline />
+                    <FormControl>
+                        <InputLabel id="user-role-label">Роль</InputLabel>
+                        <Select
+                            labelId="user-role-label"
+                            value={role}
+                            label="Роль"
+                            onChange={event => setRole(+event.target.value)}
+                        >
+                            <MenuItem value={0}>Заказчик</MenuItem>
+                            <MenuItem value={1}>Исполнитель</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <Button variant="outlined" onClick={submit} startIcon={<SaveIcon />}>
+                        Сохранить
+                    </Button>
+                </Stack>
+            </FormControl>
         </GenericModal>
     );
 };

@@ -39,26 +39,24 @@ const ForgetPasswordModal = ({ show, onClose, ...rest }: ForgetPasswordProps & S
 
     return (
         <GenericModal sx={rest} open={show} onClose={onClose}>
-            <>
-                <Typography variant="h5" component="h2" gutterBottom>
-                    Восстановление пароля
-                </Typography>
-                <FormControl fullWidth>
-                    <Stack spacing={2}>
-                        <ValidInput
-                            label="Email"
-                            value={email}
-                            bindChange={setEmail}
-                            valid={isValidEmail}
-                            invalidText={invalidMailText}
-                            showError={submited}
-                        />
-                        <Button variant="outlined" onClick={submit} startIcon={<RestoreIcon />}>
-                            Восстановить пароль
-                        </Button>
-                    </Stack>
-                </FormControl>
-            </>
+            <Typography variant="h5" component="h2" gutterBottom>
+                Восстановление пароля
+            </Typography>
+            <FormControl fullWidth>
+                <Stack spacing={2}>
+                    <ValidInput
+                        label="Email"
+                        value={email}
+                        bindChange={setEmail}
+                        valid={isValidEmail}
+                        invalidText={invalidMailText}
+                        showError={submited}
+                    />
+                    <Button variant="outlined" onClick={submit} startIcon={<RestoreIcon />}>
+                        Восстановить пароль
+                    </Button>
+                </Stack>
+            </FormControl>
         </GenericModal>
     );
 };
