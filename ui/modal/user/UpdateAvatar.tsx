@@ -1,10 +1,11 @@
-import { Typography, FormControl, Stack, Button, Autocomplete, TextField, Box, SxProps } from "@mui/material";
+import { Typography, FormControl, Stack, Button, Box, SxProps } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/Upload";
 import FolderIcon from "@mui/icons-material/Folder";
 import React, { useEffect, useMemo, useState } from "react";
 import _last from "lodash/last";
 import useEnterPress from "../../../hooks/utils/useEnterPress";
 import GenericModal from "../Generic";
+import mime from "../../../utils/mime";
 
 interface UpdateUserGeneralModalProps {
     open: boolean;
@@ -66,7 +67,7 @@ const UpdateAvatarModal = ({ open, onClose, confirm }: UpdateUserGeneralModalPro
                             Выбрать
                             <input
                                 type="file"
-                                accept="image/png, image/jpeg"
+                                accept={mime.image}
                                 hidden
                                 onChange={e => setFile(e.target.files?.[0])}
                             />

@@ -2,6 +2,7 @@ export interface MessageResponse {
     id: string;
     senderId: string;
     text: string;
+    files: {name: string, url?: string}[]
     dateTime?: string;
 }
 

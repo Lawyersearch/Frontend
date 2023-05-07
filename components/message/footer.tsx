@@ -1,14 +1,16 @@
 import React, { useCallback, useState } from "react";
-import { InputBase, Stack } from "@mui/material";
+import { Badge, IconButton, InputBase, Stack } from "@mui/material";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SendIcon from "@mui/icons-material/Send";
 import useEventListener from "../../hooks/utils/useEventListener";
 
 interface DialogFooterProps {
+    filesCount: number;
     onSubmit: (message: string) => void;
+    onOpenFilesModal: () => void;
 }
 
-const DialogFooter = ({ onSubmit }: DialogFooterProps) => {
+const DialogFooter = ({ filesCount, onSubmit, onOpenFilesModal }: DialogFooterProps) => {
     const [value, setValue] = useState("");
     const submit = useCallback(() => {
         onSubmit(value);
@@ -32,7 +34,11 @@ const DialogFooter = ({ onSubmit }: DialogFooterProps) => {
             borderTop="1px solid"
             borderColor="primary.main"
         >
-            <AttachFileIcon sx={{ mb: "4px !important" }} />
+            <IconButton onClick={onOpenFilesModal}>
+                <Badge badgeContent={filesCount} color="primary" sx={{ display: filesCount ? "block" : "contents" }}>
+                    <AttachFileIcon />
+                </Badge>
+            </IconButton>
             <InputBase
                 autoFocus={true}
                 placeholder="Введите сообщение..."
@@ -41,7 +47,9 @@ const DialogFooter = ({ onSubmit }: DialogFooterProps) => {
                 value={value}
                 onChange={ev => setValue(ev.target.value)}
             />
-            <SendIcon sx={{ mb: "4px !important" }} />
+            <IconButton onClick={submit}>
+                <SendIcon />
+            </IconButton>
         </Stack>
     );
 };

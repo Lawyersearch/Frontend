@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Stack, Box, Typography, SxProps } from "@mui/material";
 import fnsFormat from "date-fns/format";
-import { ClientOrder, Order } from "../../../types/order";
+import { ClientOrder, Order, OrderStatus } from "../../../types/order";
 import ProfileLink from "../../../ui/components/ProfileLink";
 
 interface GenericOrderCardProps {
@@ -9,6 +9,15 @@ interface GenericOrderCardProps {
     children?: React.ReactNode | React.ReactNode[];
     sx?: SxProps;
 }
+
+const statusReverseMap: { [key: number]: string } = {
+    [OrderStatus.OPEN]: "Открыт",
+    [OrderStatus.IN_WORK]: "В работе",
+    [OrderStatus.COMPLETED]: "Выполнен исполнителем",
+    [OrderStatus.CLOSED]: "Закрыт",
+    [OrderStatus.DISMISS]: "Отменен",
+    [OrderStatus.DISPUT]: "Оспаривается",
+};
 
 const GenericOrderCard = ({ order, sx, children, ...rest }: GenericOrderCardProps) => (
     <Card sx={{ borderRadius: 4, ...sx }} {...rest}>
@@ -20,6 +29,8 @@ const GenericOrderCard = ({ order, sx, children, ...rest }: GenericOrderCardProp
             <Box display="grid" gridTemplateColumns="auto 1fr" gap={2}>
                 <Typography fontWeight={550}>Заказчик</Typography>
                 <ProfileLink id={order.userId} userName={order.creatorName} src={order.avatar} />
+                <Typography fontWeight={550}>Статус</Typography>
+                <Typography fontWeight={600}>{statusReverseMap[order.orderStatus]}</Typography>
                 {Boolean(order.offerCount) && (
                     <>
                         <Typography fontWeight={550}>Отклики</Typography>

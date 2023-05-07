@@ -10,41 +10,61 @@ import DialogFooter from "./footer";
 import * as crypto from "../../utils/crypto";
 import Message from "./message";
 import { hideScrollbars } from "../../ui/utils";
+import AttachDocumentModal from "../../ui/modal/message/AttachDocument";
+import useBoolean from "../../hooks/utils/useBoolean";
 
 interface DialogExtendedProps {
     dialog: Dialog;
 }
 
-const sendMessage = (dialogId: string, message: string) =>
+const createMessageFormData = (text: string, files: File[] = []) => {
+    const formData = new FormData();
+
+    formData.append("text", text);
+
+    for (let i = 0; i < files.length; i++) {
+        formData.append(`files`, files[i]);
+    }
+
+    return formData;
+};
+
+const sendMessage = (dialogId: string, message: string, files: File[]) =>
     fetch(`${process.env.BACK_SERVER_API}/message/${dialogId}`, {
         method: "POST",
         headers: {
             Authorization: "Bearer " + Cookie.get("token"),
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
         },
-        body: JSON.stringify({ text: message }),
+        body: createMessageFormData(message, files),
     }).then(res => res.json());
 
 const DialogExtended = ({ dialog }: DialogExtendedProps) => {
     const self = useAppSelector(state => state.user.self!);
     const { data, isLoading, isSuccess, error } = useGetMessagesQuery(dialog.id);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const [filesModalOpen, openFilesModal, closeFilesModal] = useBoolean(false);
+    const [files, setFiles] = useState<File[]>([]);
     const [messages, setMessages] = useState([] as Array<MessageExtended>);
     const [searchQuery, setSearchQuery] = useState("");
     const onMessageSent = useCallback(
         (message: string) => {
+            const sendingFiles = files;
             const newMessage: MessageExtended = {
                 id: crypto.randomKey(),
                 text: message,
+                files: sendingFiles.map((file) => ({name: file.name})),
                 senderId: self.id,
                 status: "pending",
             };
             setMessages(messages => [...messages, newMessage]);
+            setFiles([]);
             scrollRef.current?.scrollIntoView();
-            sendMessage(dialog.id, message)
+            sendMessage(dialog.id, message, sendingFiles)
                 .then(() => {
                     delete newMessage.status;
                     newMessage.dateTime = String(new Date());
+                    newMessage.files = sendingFiles.map(file => ({name: file.name, url: URL.createObjectURL(file)}));
                 })
                 .catch(() => {
                     newMessage.status = "error";
@@ -57,7 +77,7 @@ const DialogExtended = ({ dialog }: DialogExtendedProps) => {
                     });
                 });
         },
-        [setMessages],
+        [setMessages, files, setFiles],
     );
 
     useEffect(() => {
@@ -77,7 +97,8 @@ const DialogExtended = ({ dialog }: DialogExtendedProps) => {
                     <Box key={0} ref={scrollRef} />
                 </Stack>
             </NetHandler>
-            <DialogFooter onSubmit={onMessageSent} />
+            <DialogFooter filesCount={files.length} onOpenFilesModal={openFilesModal} onSubmit={onMessageSent} />
+            <AttachDocumentModal files={files} setFiles={setFiles} open={filesModalOpen} onClose={closeFilesModal} />
         </Stack>
     );
 };
