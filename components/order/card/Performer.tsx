@@ -6,7 +6,7 @@ import { Order, OrderType, PerformerOrder } from "../../../types/order";
 import GenericOrderCard from "./Generic";
 import { useAppSelector } from "../../../hooks/redux/useTypedRedux";
 import { MyOffer } from "../../../types/offer";
-import { shouldShowRespond, isOrderPrivate, shouldShowMarkCompleted } from "../../../utils/order";
+import { shouldShowRespond, shouldShowMarkCompleted } from "../../../utils/order";
 import RespondOrderModal from "../../../ui/modal/order/Respond";
 import useRespondOrder from "../../../hooks/order/useRespondOrder";
 import PerformerOfferCard from "../../offer/Performer";
@@ -68,7 +68,7 @@ const PerformerOrderCard = ({ order: orderProp, orderType }: PerformerOrderCardP
     const showControls = [showRespond, showMarkComplete].some(Boolean);
 
     return (
-        <GenericOrderCard order={order} sx={isOrderPrivate(orderType) && !order.myOffer ? { opacity: 0.4 } : {}}>
+        <GenericOrderCard order={order}>
             {Boolean(order.myOffer) && (
                 <>
                     <Divider>Мой отклик</Divider>

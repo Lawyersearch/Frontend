@@ -10,3 +10,16 @@ export const isValidPassword = (password: string): boolean => {
 export const isNotEmpty = (str?: string) => str && str?.trim();
 
 export const isNumberLike = (str?: string) => str && /^[1-9][0-9]*$/.test(str);
+
+export const getProfileId = (str?: string) => {
+    if (!str) {
+        return false;
+    }
+
+    const hexChar = "[0-9a-f]";
+    const hexString = (length: number) => `${hexChar}{${length}}`;
+    const regStr = [8, 4, 4, 4, 12].map(hexString).join("-");
+    const match = str.match(new RegExp(regStr));
+
+    return match ? match[0] : false;
+};

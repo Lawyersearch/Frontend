@@ -2,10 +2,9 @@ import { useState } from "react";
 import { Typography, FormControl, Stack, InputAdornment, Button } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import useEnterPress from "../../../hooks/utils/useEnterPress";
-import { Order } from "../../../types/order";
-import { isNotEmpty, isNumberLike } from "../../../utils/validation";
+import { getProfileId, isNotEmpty, isNumberLike } from "../../../utils/validation";
 import ValidInput from "../../components/ValidInput";
-import { invalidEmptyText, invalidPriceText } from "../../strings";
+import { invalidEmptyText, invalidPriceText, invalidProfileId } from "../../strings";
 import GenericModal from "../Generic";
 import { OrderPost } from "../../../services/order";
 
@@ -19,6 +18,7 @@ const CreateOrderModal = ({ open, onClose, create }: CreateOrderModalProps) => {
     const [submited, setSubmited] = useState(false);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [performerProfile, setPerformerProfile] = useState("");
     const [price, setPrice] = useState("");
 
     const submit = () => {
@@ -28,8 +28,9 @@ const CreateOrderModal = ({ open, onClose, create }: CreateOrderModalProps) => {
 
         setSubmited(true);
 
-        if (isNotEmpty(title) && isNotEmpty(description) && isNumberLike(price)) {
-            create({ title, description, price: +price });
+        const performerId = getProfileId(performerProfile);
+        if (isNotEmpty(title) && isNotEmpty(description) && isNumberLike(price) && performerId) {
+            create({ title, description, price: +price, performerId });
         }
     };
 
@@ -57,6 +58,14 @@ const CreateOrderModal = ({ open, onClose, create }: CreateOrderModalProps) => {
                         bindChange={setDescription}
                         valid={isNotEmpty}
                         invalidText={invalidEmptyText}
+                        showError={submited}
+                    />
+                    <ValidInput
+                        label="Профиль исполнителя (не обязательно)"
+                        value={performerProfile}
+                        bindChange={setPerformerProfile}
+                        valid={getProfileId}
+                        invalidText={invalidProfileId}
                         showError={submited}
                     />
                     <ValidInput

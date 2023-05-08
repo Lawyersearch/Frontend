@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Stack, Box, Typography, SxProps } from "@mui/material";
 import fnsFormat from "date-fns/format";
-import { ClientOrder, Order, OrderStatus } from "../../../types/order";
+import { ClientOrder, Order, OrderStatus, OrderType } from "../../../types/order";
 import ProfileLink from "../../../ui/components/ProfileLink";
 
 interface GenericOrderCardProps {
@@ -19,6 +19,11 @@ const statusReverseMap: { [key: number]: string } = {
     [OrderStatus.DISPUT]: "Оспаривается",
 };
 
+const typeReverseMap: { [key: number]: string } = {
+    [OrderType.PRIVATE]: "Приватный",
+    [OrderType.PUBLIC]: "Публичный",
+};
+
 const GenericOrderCard = ({ order, sx, children, ...rest }: GenericOrderCardProps) => (
     <Card sx={{ borderRadius: 4, ...sx }} {...rest}>
         <Stack p={2} spacing={3}>
@@ -31,6 +36,8 @@ const GenericOrderCard = ({ order, sx, children, ...rest }: GenericOrderCardProp
                 <ProfileLink id={order.userId} userName={order.creatorName} src={order.avatar} />
                 <Typography fontWeight={550}>Статус</Typography>
                 <Typography fontWeight={600}>{statusReverseMap[order.orderStatus]}</Typography>
+                <Typography fontWeight={550}>Тип</Typography>
+                <Typography fontWeight={600}>{typeReverseMap[order.orderType]}</Typography>
                 {Boolean(order.offerCount) && (
                     <>
                         <Typography fontWeight={550}>Отклики</Typography>

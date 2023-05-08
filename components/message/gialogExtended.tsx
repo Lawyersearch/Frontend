@@ -17,26 +17,23 @@ interface DialogExtendedProps {
     dialog: Dialog;
 }
 
-const createMessageFormData = (text: string, files: File[] = []) => {
+const createMessageFormData = (files: File[] = []) => {
     const formData = new FormData();
 
-    formData.append("text", text);
-
     for (let i = 0; i < files.length; i++) {
-        formData.append(`files`, files[i]);
+        formData.append("uploadedFiles", files[i]);
     }
 
     return formData;
 };
 
-const sendMessage = (dialogId: string, message: string, files: File[]) =>
-    fetch(`${process.env.BACK_SERVER_API}/message/${dialogId}`, {
+const sendMessage = (dialogId: string, text: string, files: File[]) =>
+    fetch(`${process.env.BACK_SERVER_API}/message/${dialogId}?text=${text}`, {
         method: "POST",
         headers: {
-            Authorization: "Bearer " + Cookie.get("token"),
-            "Content-Type": "multipart/form-data",
+            Authorization: "Bearer " + Cookie.get("token")
         },
-        body: createMessageFormData(message, files),
+        body: createMessageFormData(files),
     }).then(res => res.json());
 
 const DialogExtended = ({ dialog }: DialogExtendedProps) => {
@@ -50,10 +47,11 @@ const DialogExtended = ({ dialog }: DialogExtendedProps) => {
     const onMessageSent = useCallback(
         (message: string) => {
             const sendingFiles = files;
+            const pendingFiles = sendingFiles.map(file => ({ name: file.name, url: URL.createObjectURL(file) }));
             const newMessage: MessageExtended = {
                 id: crypto.randomKey(),
                 text: message,
-                files: sendingFiles.map((file) => ({name: file.name})),
+                files: pendingFiles,
                 senderId: self.id,
                 status: "pending",
             };
@@ -64,7 +62,6 @@ const DialogExtended = ({ dialog }: DialogExtendedProps) => {
                 .then(() => {
                     delete newMessage.status;
                     newMessage.dateTime = String(new Date());
-                    newMessage.files = sendingFiles.map(file => ({name: file.name, url: URL.createObjectURL(file)}));
                 })
                 .catch(() => {
                     newMessage.status = "error";

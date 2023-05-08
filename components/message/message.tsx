@@ -1,4 +1,5 @@
 import { CircularProgress, Stack, Typography } from "@mui/material";
+import { isEmpty } from "lodash";
 import FileIcon from "@mui/icons-material/InsertDriveFile";
 import ErrorIcon from "@mui/icons-material/Error";
 import fnsFormat from "date-fns/format";
@@ -44,20 +45,23 @@ const Message = ({ message, dialog, self }: MessageProps) => (
             </NextLink>
             <Typography whiteSpace="pre-line">{message.text}</Typography>
         </Stack>
-        {Boolean(message.files) && <Stack ml={5}>
-            <Typography fontWeight={600}>Вложения</Typography>
-            {message.files.map(file => (
-                <Stack direction="row" spacing={1}>
-                    <FileIcon color="primary"/>
-                    {file.url
-                        ? <a href={file.url} target="_blank">
-                            <Typography color="primary">{file.name}</Typography>
-                        </a>
-                        : <Typography>{file.name}</Typography>
-                    }
-                </Stack>)
-            )}
-        </Stack>}
+        {!isEmpty(message.files) && (
+            <Stack ml={5}>
+                <Typography fontWeight={600}>Вложения</Typography>
+                {message.files.map(file => (
+                    <Stack key={file.name + Math.random().toString(36).slice(2)} direction="row" spacing={1}>
+                        <FileIcon color="primary" />
+                        {file.url ? (
+                            <a href={file.url} target="_blank">
+                                <Typography color="primary">{file.name}</Typography>
+                            </a>
+                        ) : (
+                            <Typography>{file.name}</Typography>
+                        )}
+                    </Stack>
+                ))}
+            </Stack>
+        )}
     </Stack>
 );
 

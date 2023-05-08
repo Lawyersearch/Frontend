@@ -8,3 +8,4 @@ export const mailVerifiedText = "Почта успешно подтвержде�
 export const invalidEmptyText = "Это поле не может быть пустым";
 export const invalidPriceText = "Цена должна быть числом больше нуля";
 export const emptyUserText = "Аноним";
+export const invalidProfileId = "Это поле должно содержать ссылку на исполнителя, или быть пустым";
