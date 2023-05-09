@@ -66,7 +66,7 @@ const ClientOrderCard = ({ order: orderProp }: ClientOrderCardProps) => {
     );
 
     return (
-        <GenericOrderCard order={order}>
+        <GenericOrderCard order={order} user={user}>
             {showControls && (
                 <>
                     <Divider>Действия с заказом</Divider>

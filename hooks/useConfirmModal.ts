@@ -38,7 +38,7 @@ const useConfirmModal = <ModalData, MutationResult = void, MutationData = ModalD
 
     const confirm = useCallback(
         (modalData: ModalData) => {
-            console.log(trigger(modalDataToMutation(modalData)));
+            trigger(modalDataToMutation(modalData));
             closeConfirmModal();
         },
         [trigger],

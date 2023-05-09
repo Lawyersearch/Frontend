@@ -13,7 +13,16 @@ export const isOrderPrivate = (order: OrderType) => order === OrderType.PRIVATE;
 export const isOrderPublic = (order: OrderType) => order === OrderType.PUBLIC;
 
 export const shouldShowRespond = (user: User | null, order: Order) =>
-    isUserPerformer(user?.role) && isOrderOpen(order.orderStatus) && !(order as PerformerOrder).myOffer;
+    isUserPerformer(user?.role) &&
+    isOrderOpen(order.orderStatus) &&
+    !(order as PerformerOrder).myOffer &&
+    isOrderPublic(order.orderType);
+
+export const shouldShowTakeInWork = (user: User | null, order: Order) =>
+    isUserPerformer(user?.role) &&
+    isOrderOpen(order.orderStatus) &&
+    !(order as PerformerOrder).myOffer &&
+    isOrderPrivate(order.orderType);
 
 export const shouldShowCancellOffer = (user: User | null, order: Order) =>
     isUserPerformer(user?.role) && isOrderOpen(order.orderStatus) && (order as PerformerOrder).myOffer;

@@ -1,17 +1,19 @@
 import React, { useCallback, useState } from "react";
 import { Button, Divider, Stack } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 import CommentIcon from "@mui/icons-material/Comment";
 import { Order, OrderType, PerformerOrder } from "../../../types/order";
 import GenericOrderCard from "./Generic";
 import { useAppSelector } from "../../../hooks/redux/useTypedRedux";
 import { MyOffer } from "../../../types/offer";
-import { shouldShowRespond, shouldShowMarkCompleted } from "../../../utils/order";
+import { shouldShowRespond, shouldShowMarkCompleted, shouldShowTakeInWork } from "../../../utils/order";
 import RespondOrderModal from "../../../ui/modal/order/Respond";
 import useRespondOrder from "../../../hooks/order/useRespondOrder";
 import PerformerOfferCard from "../../offer/Performer";
 import { useMarkOrderCompleted } from "../../../hooks/order/useMarkOrder";
 import { ChangeStatusCompletedModal } from "../../../ui/modal/order/ChangeStatus";
+import useAcceptOrder from "../../../hooks/order/useAcceptOrder";
 
 interface PerformerOrderCardProps {
     order: PerformerOrder;
@@ -57,6 +59,7 @@ const PerformerOrderCard = ({ order: orderProp, orderType }: PerformerOrderCardP
         [setOrder],
     );
 
+    const accept = useAcceptOrder(order, onOrderUpdate);
     const [showRespondModal, openRespondModal, closeRespondModal, respond] = useRespondOrder(order, onRespond);
     const [showCompletedModal, openCompletedModal, closeCompletedModal, complete] = useMarkOrderCompleted(
         order.id,
@@ -64,11 +67,12 @@ const PerformerOrderCard = ({ order: orderProp, orderType }: PerformerOrderCardP
     );
 
     const showRespond = shouldShowRespond(user, order);
+    const showTakeInWork = shouldShowTakeInWork(user, order);
     const showMarkComplete = shouldShowMarkCompleted(user, order);
-    const showControls = [showRespond, showMarkComplete].some(Boolean);
+    const showControls = [showRespond, showTakeInWork, showMarkComplete].some(Boolean);
 
     return (
-        <GenericOrderCard order={order}>
+        <GenericOrderCard order={order} user={user}>
             {Boolean(order.myOffer) && (
                 <>
                     <Divider>Мой отклик</Divider>
@@ -80,13 +84,18 @@ const PerformerOrderCard = ({ order: orderProp, orderType }: PerformerOrderCardP
                     <Divider />
                     <Stack spacing={2} direction="row" flexWrap="wrap" alignItems="center" justifyContent="end" p={1}>
                         {showMarkComplete && (
-                            <Button variant="contained" startIcon={<CheckIcon />} onClick={openCompletedModal}>
+                            <Button variant="contained" startIcon={<DoneAllIcon />} onClick={openCompletedModal}>
                                 Отметить как выполненный
                             </Button>
                         )}
                         {showRespond && (
                             <Button variant="contained" startIcon={<CommentIcon />} onClick={openRespondModal}>
                                 Оставить отклик
+                            </Button>
+                        )}
+                        {showTakeInWork && (
+                            <Button variant="contained" startIcon={<CheckIcon />} onClick={accept}>
+                                Взять в работу
                             </Button>
                         )}
                     </Stack>

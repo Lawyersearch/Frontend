@@ -3,9 +3,12 @@ import { Card, Stack, Box, Typography, SxProps } from "@mui/material";
 import fnsFormat from "date-fns/format";
 import { ClientOrder, Order, OrderStatus, OrderType } from "../../../types/order";
 import ProfileLink from "../../../ui/components/ProfileLink";
+import { mkUserName } from "../../../utils/user";
+import { User } from "../../../types/user";
 
 interface GenericOrderCardProps {
     order: Order | ClientOrder;
+    user: User | null;
     children?: React.ReactNode | React.ReactNode[];
     sx?: SxProps;
 }
@@ -24,7 +27,7 @@ const typeReverseMap: { [key: number]: string } = {
     [OrderType.PUBLIC]: "Публичный",
 };
 
-const GenericOrderCard = ({ order, sx, children, ...rest }: GenericOrderCardProps) => (
+const GenericOrderCard = ({ order, user, sx, children, ...rest }: GenericOrderCardProps) => (
     <Card sx={{ borderRadius: 4, ...sx }} {...rest}>
         <Stack p={2} spacing={3}>
             <Stack direction="row" justifyContent="space-between">
@@ -39,8 +42,12 @@ const GenericOrderCard = ({ order, sx, children, ...rest }: GenericOrderCardProp
                         <Typography fontWeight={550}>Исполнитель</Typography>
                         <ProfileLink
                             id={order.performerId}
-                            userName={order.performerName!}
-                            src={order.performerAvatar!}
+                            userName={
+                                order.performerId === user?.id
+                                    ? mkUserName(user, { middleName: false })
+                                    : order.performerName!
+                            }
+                            src={order.performerId === user?.id ? user!.avatar : order.performerAvatar!}
                         />
                     </>
                 )}
