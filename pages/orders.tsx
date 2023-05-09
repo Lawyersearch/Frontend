@@ -11,7 +11,7 @@ import { isUserClient } from "../utils/user";
 import { wrapper } from "../store";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
 import CreateOrderModal from "../ui/modal/order/Create";
-import useCreateOrder from "../hooks/order/UseCreateOrder";
+import useCreateOrder from "../hooks/order/useCreateOrder";
 
 interface OrdersPageProps {
     orders: { [key in OrderType]: ClientOrder[] | PerformerOrder[] }; // eslint-disable-line no-unused-vars
