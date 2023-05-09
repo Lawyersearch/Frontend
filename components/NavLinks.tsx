@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Stack } from "@mui/material";
 import NextLink from "../ui/components/NextLink";
 import { useAppSelector } from "../hooks/redux/useTypedRedux";
+import { mkUserProfileLink } from "../ui/utils";
 
 const NavLinks = () => {
     const user = useAppSelector(store => store.user.self);
@@ -10,7 +11,7 @@ const NavLinks = () => {
         { title: "Главная", to: "/", show: true },
         {
             title: "Моя страница",
-            to: `/userProfile/${user?.id}`,
+            to: mkUserProfileLink(user?.id),
             show: Boolean(user),
         },
         { title: "Сообщения", to: "/messages", show: Boolean(user) },

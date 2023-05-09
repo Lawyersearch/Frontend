@@ -2,11 +2,14 @@ import { Box, Button, Divider, Stack } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
+import ReviewsIcon from "@mui/icons-material/Reviews";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { useAppSelector } from "../../../hooks/redux/useTypedRedux";
 import { ClientOrder, Order, OrderType } from "../../../types/order";
 import {
+    shouldShowActiveOffer,
     shouldShowEditOrder,
+    shouldShowLeaveReview,
     shouldShowMarkClosed,
     shouldShowMarkDismiss,
     shouldShowMarkDisput,
@@ -23,6 +26,9 @@ import {
     ChangeStatusDismissModal,
     ChangeStatusDisputModal,
 } from "../../../ui/modal/order/ChangeStatus";
+import NextLink from "../../../ui/components/NextLink";
+import { mkUserProfileLink } from "../../../ui/utils";
+import GenericOfferCard from "../../offer/Generic";
 
 interface ClientOrderCardProps {
     order: ClientOrder;
@@ -49,11 +55,15 @@ const ClientOrderCard = ({ order: orderProp }: ClientOrderCardProps) => {
     const [showClosedModal, openClosedModal, closeClosedModal, close] = useMarkOrderClosed(order.id, onOrderUpdate);
 
     const showOffers = shouldShowOffers(user, order);
+    const showActiveOffer = shouldShowActiveOffer(user, order);
     const showUpdateOrder = shouldShowEditOrder(user, order);
     const showMarkDismiss = shouldShowMarkDismiss(user, order);
     const showMarkDisput = shouldShowMarkDisput(user, order);
     const showMarkClosed = shouldShowMarkClosed(user, order);
-    const showControls = [showUpdateOrder, showMarkClosed, showMarkDismiss, showMarkDisput].some(Boolean);
+    const showLeaveReview = shouldShowLeaveReview(user, order);
+    const showControls = [showUpdateOrder, showMarkClosed, showMarkDismiss, showMarkDisput, showLeaveReview].some(
+        Boolean,
+    );
 
     return (
         <GenericOrderCard order={order}>
@@ -91,7 +101,20 @@ const ClientOrderCard = ({ order: orderProp }: ClientOrderCardProps) => {
                                 Закрыть
                             </Button>
                         )}
+                        {showLeaveReview && (
+                            <NextLink href={mkUserProfileLink(order.performerId) + "#reviews"}>
+                                <Button variant="contained" startIcon={<ReviewsIcon />}>
+                                    Оставить отзыв
+                                </Button>
+                            </NextLink>
+                        )}
                     </Stack>
+                </>
+            )}
+            {showActiveOffer && (
+                <>
+                    <Divider>Выбранный отклик</Divider>
+                    <GenericOfferCard offer={order.offers.find(offer => offer.userId === order.performerId)!} />
                 </>
             )}
             {showOffers && (
@@ -99,7 +122,7 @@ const ClientOrderCard = ({ order: orderProp }: ClientOrderCardProps) => {
                     <Divider>Отклики</Divider>
                     {order.offers.map(offer => (
                         <Box key={offer.id} mt={1}>
-                            <ClientOfferCard offer={offer} onPick={() => {}} />
+                            <ClientOfferCard offer={offer} onPick={onOrderUpdate} />
                             <Divider />
                         </Box>
                     ))}

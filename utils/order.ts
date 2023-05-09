@@ -25,6 +25,8 @@ export const shouldShowOffers = (user: User | null, order: ClientOrder) =>
     isOrderOpen(order.orderStatus) &&
     order.userId === user?.id &&
     Boolean(order.offers?.length);
+export const shouldShowActiveOffer = (user: User | null, order: ClientOrder) =>
+    isUserClient(user?.role) && Boolean(order.performerId);
 export const shouldShowEditOrder = (user: User | null, order: ClientOrder) =>
     isUserClient(user?.role) &&
     isOrderOpen(order.orderStatus) &&
@@ -39,3 +41,5 @@ export const shouldShowMarkDismiss = (user: User | null, order: ClientOrder) =>
     isUserClient(user?.role) && isOrderOpen(order.orderStatus) && order.userId === user?.id;
 export const shouldShowMarkDisput = (user: User | null, order: ClientOrder) =>
     isUserClient(user?.role) && isOrderCompleted(order.orderStatus) && order.userId === user?.id;
+export const shouldShowLeaveReview = (user: User | null, order: ClientOrder) =>
+    isUserClient(user?.role) && isOrderClosed(order.orderStatus);

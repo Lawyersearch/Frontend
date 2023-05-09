@@ -20,6 +20,7 @@ export interface Dialog {
     memberId: string;
     createdDate: string;
     orderId: string;
+    orderTitle: string;
     isClosed: boolean;
     memberName: string;
     avatar: string;

@@ -31,7 +31,7 @@ const sendMessage = (dialogId: string, text: string, files: File[]) =>
     fetch(`${process.env.BACK_SERVER_API}/message/${dialogId}?text=${text}`, {
         method: "POST",
         headers: {
-            Authorization: "Bearer " + Cookie.get("token")
+            Authorization: "Bearer " + Cookie.get("token"),
         },
         body: createMessageFormData(files),
     }).then(res => res.json());
@@ -66,13 +66,13 @@ const DialogExtended = ({ dialog }: DialogExtendedProps) => {
                 .catch(() => {
                     newMessage.status = "error";
                 })
-                .finally(() => {
+                .finally(() =>
                     setMessages(messages => {
                         const deletingIndex = messages.findIndex(message => message === newMessage);
 
                         return [...messages.slice(0, deletingIndex), newMessage, ...messages.slice(deletingIndex + 1)];
-                    });
-                });
+                    }),
+                );
         },
         [setMessages, files, setFiles],
     );

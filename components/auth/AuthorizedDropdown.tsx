@@ -6,6 +6,7 @@ import NextLink from "../../ui/components/NextLink";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux/useTypedRedux";
 import { removeSelf } from "../../store/reducers/userSlice";
 import { emptyUserText } from "../../ui/strings";
+import { mkUserProfileLink } from "../../ui/utils";
 
 interface AuthorizedDropdownProps {
     onClick?: () => void;
@@ -31,7 +32,7 @@ const AuthorizedDropdown = ({ onClick }: AuthorizedDropdownProps) => {
             <Typography fontSize={16} color="text.secondary" gutterBottom>
                 {user?.email}
             </Typography>
-            <NextLink href={`/userProfile/${user?.id}`}>
+            <NextLink href={mkUserProfileLink(user?.id)}>
                 <Button component="div" variant="outlined" sx={{ my: 2 }} onClick={onClickAction}>
                     Моя страница
                 </Button>

@@ -10,6 +10,7 @@ import NextLink from "../../ui/components/NextLink";
 import { User } from "../../types/user";
 import { mkUserName } from "../../utils/user";
 import { emptyUserText } from "../../ui/strings";
+import { mkUserProfileLink } from "../../ui/utils";
 
 interface MessageProps {
     dialog: Dialog;
@@ -28,7 +29,7 @@ const createDateString = (dateTime: string) => {
 const Message = ({ message, dialog, self }: MessageProps) => (
     <Stack>
         <Stack direction="row" justifyContent="space-between">
-            <NextLink href={`/userProfile/${message.senderId}`}>
+            <NextLink href={mkUserProfileLink(message.senderId)}>
                 <Typography color="primary.main" fontWeight={500}>
                     {message.senderId === self.id
                         ? mkUserName(self, { middleName: false })
@@ -40,7 +41,7 @@ const Message = ({ message, dialog, self }: MessageProps) => (
             {Boolean(message.dateTime) && <Typography color="gray">{createDateString(message.dateTime!)}</Typography>}
         </Stack>
         <Stack direction="row" spacing={2}>
-            <NextLink href={`/userProfile/${message.senderId}`} sx={{ flexShrink: 0 }}>
+            <NextLink href={mkUserProfileLink(message.senderId)} sx={{ flexShrink: 0 }}>
                 <Avatar width={40} height={40} src={message.senderId === self.id ? self.avatar : dialog.avatar} />
             </NextLink>
             <Typography whiteSpace="pre-line">{message.text}</Typography>

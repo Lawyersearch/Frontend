@@ -2,6 +2,7 @@ import { Chip, Stack, Typography } from "@mui/material";
 import { emptyUserText } from "../strings";
 import Avatar from "./Avatar";
 import NextLink from "./NextLink";
+import { mkUserProfileLink } from "../utils";
 
 interface ProfileLinkProps {
     id: string;
@@ -11,7 +12,7 @@ interface ProfileLinkProps {
 
 const ProfileLink = ({ userName, src, id }: ProfileLinkProps) => {
     return (
-        <NextLink href={`/userProfile/${id}`}>
+        <NextLink href={mkUserProfileLink(id)}>
             <Chip
                 label={
                     <Stack direction="row" spacing={1}>

@@ -25,9 +25,6 @@ const UpdateAvatarModal = ({ open, onClose, confirm }: UpdateUserGeneralModalPro
     const [file, setFile] = useState<File | undefined>(undefined);
     const fileUrl = useMemo(() => (file ? URL.createObjectURL(file) : null), [file]);
 
-    useEffect(() => {
-        console.log(file);
-    }, [file]);
     const submit = () => open && file && confirm(file);
 
     useEnterPress(submit);

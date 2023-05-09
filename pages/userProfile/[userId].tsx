@@ -78,7 +78,11 @@ const UserProfilePage = ({ user: userProp, isMyPage }: UserProfilePageProps) => 
                     <></>
                 )}
 
-                {user?.reviewsTo?.length ? <UserReviews {...primaryBorder} reviews={user?.reviewsTo} /> : <></>}
+                {user?.reviewsTo?.length ? (
+                    <UserReviews {...primaryBorder} userId={user.id} reviews={user?.reviewsTo} />
+                ) : (
+                    <></>
+                )}
             </Stack>
         </Container>
     );

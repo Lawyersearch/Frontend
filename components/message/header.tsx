@@ -25,7 +25,7 @@ const DialogHeader = ({ dialog, searchQuery, setSearchQuery }: DialogHeaderProps
             <Avatar src={dialog.avatar} height={64} width={64} />
             <Stack justifyContent="space-around">
                 <Typography fontWeight={600}>{dialog.memberName.trim() || emptyUserText}</Typography>
-                <Typography>{dialog.memberName.trim() || emptyUserText}</Typography>
+                <Typography>{dialog.orderTitle || dialog.memberName.trim() || emptyUserText}</Typography>
             </Stack>
             <Stack direction="row" ml="auto !important" spacing={2}>
                 <SearchIcon fontSize="medium" />

@@ -5,6 +5,7 @@ import { feedBacksString } from "../../utils/wordsEndings";
 import { Category } from "../../types/category";
 import Avatar from "../../ui/components/Avatar";
 import NextLink from "../../ui/components/NextLink";
+import { mkUserProfileLink } from "../../ui/utils";
 
 interface UserProfileProps {
     id: string;
@@ -32,12 +33,12 @@ function UserCard({
         <Card sx={{ borderRadius: 4, ...rest }}>
             <Box display="flex" p={2}>
                 <Box mr={2}>
-                    <NextLink href={`/userProfile/${id}`}>
+                    <NextLink href={mkUserProfileLink(id)}>
                         <Avatar src={avatar} height={250} width={250} sx={{ mr: 2, mb: 2 }} />
                     </NextLink>
                 </Box>
                 <Stack spacing={1} width="100%">
-                    <NextLink href={`/userProfile/${id}`}>
+                    <NextLink href={mkUserProfileLink(id)}>
                         <Typography
                             fontWeight={700}
                             sx={{
@@ -59,7 +60,7 @@ function UserCard({
                         <Typography variant="body1" fontWeight={300}>
                             ({Math.round(rating * 100) / 100} / 5.0)
                         </Typography>
-                        <NextLink href={`/userProfile/${id}#reviews`}>
+                        <NextLink href={mkUserProfileLink(id) + "#reviews"}>
                             <Typography variant="body1" fontWeight={300} color="primary.main">
                                 {feedBacksString(feedBacks)}
                             </Typography>

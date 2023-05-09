@@ -1,6 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { User, UserShort } from "../types/user";
-import { WebResponse } from "../types/webResponseBody";
 import { mkAuthenticatedBaseQuery, getData, mkExtractRehydrationInfo } from "./utils";
 
 export type UpdateUserGeneralRequest = Omit<UserShort, "id" | "avatar">;
