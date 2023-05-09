@@ -34,6 +34,16 @@ const GenericOrderCard = ({ order, sx, children, ...rest }: GenericOrderCardProp
             <Box display="grid" gridTemplateColumns="auto 1fr" gap={2}>
                 <Typography fontWeight={550}>Заказчик</Typography>
                 <ProfileLink id={order.userId} userName={order.creatorName} src={order.avatar} />
+                {order.performerId && (
+                    <>
+                        <Typography fontWeight={550}>Исполнитель</Typography>
+                        <ProfileLink
+                            id={order.performerId}
+                            userName={order.performerName!}
+                            src={order.performerAvatar!}
+                        />
+                    </>
+                )}
                 <Typography fontWeight={550}>Статус</Typography>
                 <Typography fontWeight={600}>{statusReverseMap[order.orderStatus]}</Typography>
                 <Typography fontWeight={550}>Тип</Typography>

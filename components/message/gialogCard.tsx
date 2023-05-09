@@ -26,7 +26,7 @@ const DialogCard = ({ dialog, onDialogClick }: DialogProps) => (
             </NextLink>
             <Stack justifyContent="space-around">
                 <Typography fontWeight={600}>{dialog.memberName.trim() || emptyUserText}</Typography>
-                <Typography>{dialog.memberName.trim() || emptyUserText}</Typography>
+                <Typography>{dialog.orderTitle || dialog.memberName.trim() || emptyUserText}</Typography>
             </Stack>
         </Stack>
     </Card>

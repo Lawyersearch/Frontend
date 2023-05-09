@@ -15,6 +15,8 @@ export interface Order {
     createdDate: string;
     orderStatus: OrderStatus;
     orderType: OrderType;
+    performerName?: string; // Client
+    performerAvatar?: string; // Client
 }
 
 export type PerformerOrder = Order & { offerCount: number; myOffer: MyOffer | null };

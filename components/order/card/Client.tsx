@@ -114,7 +114,9 @@ const ClientOrderCard = ({ order: orderProp }: ClientOrderCardProps) => {
             {showActiveOffer && (
                 <>
                     <Divider>Выбранный отклик</Divider>
-                    <GenericOfferCard offer={order.offers.find(offer => offer.userId === order.performerId)!} />
+                    <Box p={2}>
+                        <GenericOfferCard offer={order.offers.find(offer => offer.userId === order.performerId)!} />
+                    </Box>
                 </>
             )}
             {showOffers && (
