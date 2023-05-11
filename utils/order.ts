@@ -37,7 +37,7 @@ export const shouldShowOffers = (user: User | null, order: ClientOrder) =>
 export const shouldShowActiveOffer = (user: User | null, order: ClientOrder) =>
     isUserClient(user?.role) &&
     Boolean(order.performerId) &&
-    Boolean(order.offers.find(offer => offer.userId === order.performerId));
+    Boolean(order.offers?.find(offer => offer.userId === order.performerId));
 export const shouldShowEditOrder = (user: User | null, order: ClientOrder) =>
     isUserClient(user?.role) &&
     isOrderOpen(order.orderStatus) &&
