@@ -29,8 +29,9 @@ const CreateOrderModal = ({ open, onClose, create }: CreateOrderModalProps) => {
         setSubmited(true);
 
         const performerId = getProfileId(performerProfile);
-        if (isNotEmpty(title) && isNotEmpty(description) && isNumberLike(price) && performerId) {
-            create({ title, description, price: +price, performerId });
+        const validPerformer = !performerProfile || performerId;
+        if (isNotEmpty(title) && isNotEmpty(description) && isNumberLike(price) && validPerformer) {
+            create({ title, description, price: +price, performerId: performerId || undefined });
         }
     };
 
@@ -64,7 +65,7 @@ const CreateOrderModal = ({ open, onClose, create }: CreateOrderModalProps) => {
                         label="Профиль исполнителя (не обязательно)"
                         value={performerProfile}
                         bindChange={setPerformerProfile}
-                        valid={getProfileId}
+                        valid={(value: string) => !value || getProfileId(value)}
                         invalidText={invalidProfileId}
                         showError={submited}
                     />
