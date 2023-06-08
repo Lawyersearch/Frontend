@@ -36,7 +36,11 @@ const GenericOrderCard = ({ order, user, sx, children, ...rest }: GenericOrderCa
             </Stack>
             <Box display="grid" gridTemplateColumns="auto 1fr" gap={2}>
                 <Typography fontWeight={550}>Заказчик</Typography>
-                <ProfileLink id={order.userId} userName={order.creatorName} src={order.avatar} />
+                <ProfileLink
+                    id={order.userId}
+                    userName={order.userId === user?.id ? mkUserName(user, { middleName: false }) : order.creatorName}
+                    src={order.userId === user?.id ? user?.avatar : order.avatar}
+                />
                 {order.performerId && (
                     <>
                         <Typography fontWeight={550}>Исполнитель</Typography>
